@@ -5,15 +5,50 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="#F4FAFF">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+    <LinearLayout
+        android:id="@+id/LinearLayoutCategoryAndFavorites"
+        android:layout_width="328dp"
+        android:layout_height="36dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="8dp"
+        android:weightSum="2"
+        >
+
+        <android.widget.Button
+            android:id="@+id/TextViewCategory"
+            style="@style/StyleNavButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:text="Категории"
+            android:backgroundTint="#525DC0"
+            android:background="@drawable/shape_button_textview_category_favorites"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/ButtonFavorites"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Избранное"
+            style="@style/StyleNavButton"
+            app:backgroundTint="#E13E3E"
+            app:icon="@drawable/ic_heart_empty"
+            app:iconGravity="end"
+            android:background="@drawable/shape_button_textview_category_favorites"
+            />
+
+    </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
