@@ -34,7 +34,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:backgroundTint="#525DC0"
+            android:backgroundTint="#E13E3E"
             android:text="@string/text_favorites"
             app:icon="@drawable/ic_heart_empty"
             app:iconGravity="end" />
