@@ -28,7 +28,7 @@
             android:backgroundTint="#525DC0"
             android:text="@string/text_category"
             android:textColor="@color/white"
-            />
+             />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/ButtonFavorites"
