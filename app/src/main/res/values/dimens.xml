@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="linearLayoutButtonMarginHorizontal">16dp</dimen>
+    <dimen name="linearLayoutButtonMarginBottom">8dp</dimen>
+    <dimen name="halfDistanceBetweenButtonCategoryAndFavorites">2dp</dimen>
+    <dimen name="buttonCategoryAndFavoritesWidth">0dp</dimen>
+    <dimen name="buttonCategoryAndFavoritesPaddingVertical">10dp</dimen>
+    <dimen name="textSizeButtonCategoryAndFavorites">14sp</dimen>
+
+</resources>

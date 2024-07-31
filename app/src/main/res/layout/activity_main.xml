@@ -5,44 +5,37 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4FAFF"
+    android:background="@color/backgroundAppColor"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:id="@+id/LinearLayoutButtonCategoryAndFavorites"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/linearLayoutButtonMarginHorizontal"
+        android:layout_marginBottom="@dimen/linearLayoutButtonMarginBottom"
         android:orientation="horizontal"
-        android:weightSum="2"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <android.widget.Button
+        <Button
             android:id="@+id/ButtonCategory"
             style="@style/StyleNavButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="@dimen/halfDistanceBetweenButtonCategoryAndFavorites"
             android:layout_weight="1"
-            android:backgroundTint="#525DC0"
+            android:backgroundTint="@color/buttonCategoryColor"
             android:text="@string/text_category"
-            android:textColor="@color/white"
-             />
+            android:textColor="@color/white" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/ButtonFavorites"
             style="@style/StyleNavButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/halfDistanceBetweenButtonCategoryAndFavorites"
             android:layout_weight="1"
-            android:backgroundTint="#E13E3E"
+            android:backgroundTint="@color/buttonFavoritesColor"
             android:text="@string/text_favorites"
             app:icon="@drawable/ic_heart_empty"
             app:iconGravity="end" />
     </LinearLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
