@@ -16,7 +16,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:textAppearance">@style/StyleTitle14</item>
         <item name="android:paddingVertical">@dimen/buttonCategoryAndFavoritesPaddingVertical</item>
-        <item name="android:background">@drawable/shape_button_textview_category_favorites</item>
+        <item name="cornerRadius">@dimen/cornerRadiusButtonCategoryAndFavorites</item>
 
     </style>
 

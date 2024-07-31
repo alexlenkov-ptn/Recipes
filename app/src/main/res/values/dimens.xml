@@ -7,5 +7,6 @@
     <dimen name="buttonCategoryAndFavoritesWidth">0dp</dimen>
     <dimen name="buttonCategoryAndFavoritesPaddingVertical">10dp</dimen>
     <dimen name="textSizeButtonCategoryAndFavorites">14sp</dimen>
+    <dimen name="cornerRadiusButtonCategoryAndFavorites">8dp</dimen>
 
 </resources>
