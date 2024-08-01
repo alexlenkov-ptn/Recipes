@@ -5,6 +5,10 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="android:statusBarColor">@color/backgroundAppColor</item>
         <item name="android:navigationBarColor">@color/backgroundAppColor</item>
+
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+
     </style>
 
     <style name="Theme.Recipes" parent="Base.Theme.Recipes" />

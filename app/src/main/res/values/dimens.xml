@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="linearLayoutButtonMarginHorizontal">16dp</dimen>
-    <dimen name="linearLayoutButtonMarginBottom">8dp</dimen>
-    <dimen name="halfDistanceBetweenButtonCategoryAndFavorites">2dp</dimen>
-    <dimen name="buttonCategoryAndFavoritesWidth">0dp</dimen>
-    <dimen name="buttonCategoryAndFavoritesPaddingVertical">10dp</dimen>
-    <dimen name="textSizeButtonCategoryAndFavorites">14sp</dimen>
-    <dimen name="cornerRadiusButtonCategoryAndFavorites">8dp</dimen>
+    <dimen name="margin_normal_16">16dp</dimen>
+    <dimen name="margin_small_8">8dp</dimen>
+    <dimen name="margin_small_2">2dp</dimen>
+    <dimen name="width_0">0dp</dimen>
+    <dimen name="padding_vertical_small_10">10dp</dimen>
+    <dimen name="text_size_small_14">14sp</dimen>
+    <dimen name="corner_radius_small_8">8dp</dimen>
 
 </resources>

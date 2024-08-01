@@ -12,15 +12,15 @@
         android:id="@+id/LinearLayoutButtonCategoryAndFavorites"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/linearLayoutButtonMarginHorizontal"
-        android:layout_marginBottom="@dimen/linearLayoutButtonMarginBottom"
+        android:layout_marginHorizontal="@dimen/margin_normal_16"
+        android:layout_marginBottom="@dimen/margin_small_8"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <Button
             android:id="@+id/ButtonCategory"
             style="@style/StyleNavButton"
-            android:layout_marginEnd="@dimen/halfDistanceBetweenButtonCategoryAndFavorites"
+            android:layout_marginEnd="@dimen/margin_small_2"
             android:layout_weight="1"
             android:backgroundTint="@color/buttonCategoryColor"
             android:text="@string/text_category"
@@ -29,7 +29,7 @@
         <Button
             android:id="@+id/ButtonFavorites"
             style="@style/StyleNavButton"
-            android:layout_marginStart="@dimen/halfDistanceBetweenButtonCategoryAndFavorites"
+            android:layout_marginStart="@dimen/margin_small_2"
             android:layout_weight="1"
             android:backgroundTint="@color/buttonFavoritesColor"
             android:text="@string/text_favorites"
