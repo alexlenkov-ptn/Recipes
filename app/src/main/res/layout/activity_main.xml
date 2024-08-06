@@ -8,6 +8,19 @@
     android:background="@color/backgroundAppColor"
     tools:context=".MainActivity">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/mainContainer"
+        android:name="com.lnkov.recipes.CategoriesListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/LinearLayoutButtonCategoryAndFavorites"
+        app:layout_constraintStart_toStartOf="@+id/main"
+        app:layout_constraintEnd_toEndOf="@+id/main"
+        app:layout_constraintTop_toTopOf="@+id/main"
+        >
+
+    </androidx.fragment.app.FragmentContainerView>
+
     <LinearLayout
         android:id="@+id/LinearLayoutButtonCategoryAndFavorites"
         android:layout_width="match_parent"
