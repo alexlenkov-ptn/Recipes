@@ -8,22 +8,13 @@ import androidx.fragment.app.Fragment
 import com.lnkov.recipes.databinding.FragmentListCategoriesBinding
 
 class CategoriesListFragment : Fragment() {
-    private var _binding: FragmentListCategoriesBinding? = null
-    private val binding get() = _binding!!
+    private val binding by lazy { FragmentListCategoriesBinding.inflate(layoutInflater) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentListCategoriesBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
 }
