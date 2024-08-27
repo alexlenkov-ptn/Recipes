@@ -20,4 +20,13 @@
 
     </style>
 
+    <style name="StyleTitle20" parent="TextAppearance.AppCompat">
+
+        <item name="android:fontFamily">@font/montserrat_alternates_semi_bold</item>
+        <item name="android:textSize">@dimen/text_size_small_20</item>
+        <item name="android:textColor">@color/textCategory</item>
+        <item name="android:textAllCaps">true</item>
+
+    </style>
+
 </resources>

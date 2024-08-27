@@ -22,7 +22,7 @@ private var _binding: ActivityMainBinding? = null
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                add<CategoriesListFragment>(R.id.fragment_favorites)
+                add<CategoriesListFragment>(R.id.fragmentFavorites)
             }
         }
         setContentView(binding.root)
