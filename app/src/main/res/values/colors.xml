@@ -6,7 +6,8 @@
     <color name="backgroundAppColor">#F4FAFF</color>
     <color name="buttonCategoryColor">#525DC0</color>
     <color name="buttonFavoritesColor">#E13E3E</color>
-    <color name="textCategory">#5F3678</color>
+    <color name="textTitleCategoryCard">#5F3678</color>
+    <color name="textDescriptionCategoryCard">#666666</color>
 
 
 </resources>

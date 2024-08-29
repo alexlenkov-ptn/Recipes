@@ -10,6 +10,15 @@
 
     </style>
 
+    <style name="StyleTitleCategoryCard14" parent="TextAppearance.AppCompat">
+
+        <item name="android:fontFamily">@font/montserrat_alternates_semi_bold</item>
+        <item name="android:textSize">@dimen/text_size_small_14</item>
+        <item name="android:textColor">@color/textTitleCategoryCard</item>
+        <item name="android:textAllCaps">true</item>
+
+    </style>
+
     <style name="StyleNavButton" parent="Widget.Material3.Button">
 
         <item name="android:layout_width">@dimen/width_0</item>
@@ -24,8 +33,16 @@
 
         <item name="android:fontFamily">@font/montserrat_alternates_semi_bold</item>
         <item name="android:textSize">@dimen/text_size_small_20</item>
-        <item name="android:textColor">@color/textCategory</item>
+        <item name="android:textColor">@color/textTitleCategoryCard</item>
         <item name="android:textAllCaps">true</item>
+
+    </style>
+
+    <style name="StyleDescriptionCategoryCard14" parent="TextAppearance.AppCompat">
+
+        <item name="android:fontFamily">@font/montserrat_alternates_regular</item>
+        <item name="android:textSize">@dimen/text_size_small_12</item>
+        <item name="android:textColor">@color/textDescriptionCategoryCard</item>
 
     </style>
 
