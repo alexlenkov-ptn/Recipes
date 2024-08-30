@@ -7,12 +7,11 @@
     <dimen name="width_0">0dp</dimen>
     <dimen name="padding_vertical_small_10">10dp</dimen>
     <dimen name="padding_10">10dp</dimen>
+    <dimen name="constraint_layout_category_height">224dp</dimen>
+    <dimen name="image_view_category_card_height">130dp</dimen>
 
     <dimen name="text_size_small_12">12sp</dimen>
     <dimen name="text_size_small_14">14sp</dimen>
     <dimen name="text_size_small_20">20sp</dimen>
-    <dimen name="text_margin">16dp</dimen>
-    
-    <dimen name="corner_radius_8">8dp</dimen>
 
 </resources>

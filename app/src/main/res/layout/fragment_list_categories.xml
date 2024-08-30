@@ -14,12 +14,13 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="224dp">
+            android:layout_height="@dimen/constraint_layout_category_height">
 
             <ImageView
                 android:id="@+id/ivBcgCategories"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/cd_image_category"
                 android:scaleType="centerCrop"
                 android:src="@drawable/bcg_categories" />
 
@@ -40,7 +41,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvCategories"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_small_8"
             android:layout_marginTop="@dimen/margin_small_8"
