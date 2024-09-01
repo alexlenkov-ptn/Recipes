@@ -25,6 +25,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:textAppearance">@style/StyleTitle14</item>
         <item name="android:paddingVertical">@dimen/padding_vertical_small_10</item>
+        <item name="cornerRadius">@dimen/margin_small_8</item>
 
     </style>
 
@@ -46,12 +47,12 @@
     </style>
 
     <style name="StyleItemCategoryCardView" parent="TextAppearance.AppCompat">
-        
+
         <item name="cardCornerRadius">@dimen/margin_small_8</item>
         <item name="android:layout_marginVertical">@dimen/margin_small_8</item>
         <item name="android:clickable">true</item>
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
-        
+
     </style>
 
 </resources>
