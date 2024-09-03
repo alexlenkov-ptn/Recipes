@@ -10,9 +10,10 @@ import androidx.fragment.app.replace
 
 class MainActivity : AppCompatActivity() {
 
-private var _binding: ActivityMainBinding? = null
+    private var _binding: ActivityMainBinding? = null
     private val binding
-        get() = _binding ?: throw IllegalStateException ("Binding for ActivityLearnWordBinding ust not be null")
+        get() = _binding
+            ?: throw IllegalStateException("Binding for ActivityLearnWordBinding ust not be null")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +23,7 @@ private var _binding: ActivityMainBinding? = null
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
                 setReorderingAllowed(true)
-                add<CategoriesListFragment>(R.id.fragment_favorites)
+                add<CategoriesListFragment>(R.id.fragmentFavorites)
             }
         }
         setContentView(binding.root)

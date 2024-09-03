@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cvCategory"
+    style="@style/StyleItemCategoryCardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/margin_small_8"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivCardCategory"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/image_view_category_card_height"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/rectangle" />
+
+        <TextView
+            style="@style/StyleTitleCategoryCard14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small_8"
+            android:layout_marginTop="@dimen/margin_small_8"
+            tools:text="Бургеры" />
+
+        <TextView
+            style="@style/StyleDescriptionCategoryCard14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/margin_small_8"
+            android:layout_marginStart="@dimen/margin_small_8"
+            tools:text="Рецепты всех популярных видов бургеров" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
