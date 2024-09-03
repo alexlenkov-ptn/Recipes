@@ -5,8 +5,7 @@
     <dimen name="margin_small_8">8dp</dimen>
     <dimen name="margin_small_2">2dp</dimen>
     <dimen name="width_0">0dp</dimen>
-    <dimen name="padding_vertical_small_10">10dp</dimen>
-    <dimen name="padding_10">10dp</dimen>
+    <dimen name="padding_normal_10">10dp</dimen>
     <dimen name="constraint_layout_category_height">224dp</dimen>
     <dimen name="image_view_category_card_height">130dp</dimen>
 

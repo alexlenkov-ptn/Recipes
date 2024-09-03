@@ -2,5 +2,4 @@
     <string name="app_name">Recipes</string>
     <string name="text_category">Категории</string>
     <string name="text_favorites">Избранное</string>
-    <string name="text_content_description_categories">Категории</string>
 </resources>

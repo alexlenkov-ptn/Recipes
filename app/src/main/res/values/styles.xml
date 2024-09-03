@@ -24,7 +24,7 @@
         <item name="android:layout_width">@dimen/width_0</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:textAppearance">@style/StyleTitle14</item>
-        <item name="android:paddingVertical">@dimen/padding_vertical_small_10</item>
+        <item name="android:paddingVertical">@dimen/padding_normal_10</item>
         <item name="cornerRadius">@dimen/margin_small_8</item>
 
     </style>

@@ -1,58 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragmentFavorites"
+    android:id="@+id/linearLayoutFragmentListCategories"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundAppColor">
+    android:background="@color/backgroundAppColor"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="@dimen/constraint_layout_category_height">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ImageView
+            android:id="@+id/ivBcgCategories"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/constraint_layout_category_height">
+            android:layout_height="match_parent"
+            android:contentDescription="@string/text_category"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bcg_categories" />
 
-            <ImageView
-                android:id="@+id/ivBcgCategories"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/text_content_description_categories"
-                android:scaleType="centerCrop"
-                android:src="@drawable/bcg_categories" />
-
-            <TextView
-                android:id="@+id/tvCategory"
-                style="@style/StyleTitle20"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_normal_16"
-                android:layout_marginBottom="@dimen/margin_normal_16"
-                android:background="@drawable/shape_drawable"
-                android:padding="@dimen/padding_10"
-                android:text="@string/text_category"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvCategories"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvCategory"
+            style="@style/StyleTitle20"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_small_8"
-            android:layout_marginTop="@dimen/margin_small_8"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2"
-            tools:itemCount="6"
-            tools:listitem="@layout/item_category">
+            android:layout_marginStart="@dimen/margin_normal_16"
+            android:layout_marginBottom="@dimen/margin_normal_16"
+            android:background="@drawable/shape_drawable"
+            android:padding="@dimen/padding_normal_10"
+            android:text="@string/text_category"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCategories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_small_8"
+        android:layout_marginTop="@dimen/margin_small_8"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
+        tools:itemCount="6"
+        tools:listitem="@layout/item_category">
 
-</FrameLayout>
+    </androidx.recyclerview.widget.RecyclerView>
 
+</LinearLayout>
