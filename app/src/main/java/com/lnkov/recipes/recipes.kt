@@ -1,7 +1,5 @@
 package com.lnkov.recipes
 
-import java.util.ArrayList
-
 object STUB {
     private val categories: List<Category> = listOf(
         Category(
