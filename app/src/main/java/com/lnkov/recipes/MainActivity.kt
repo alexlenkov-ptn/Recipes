@@ -2,7 +2,6 @@ package com.lnkov.recipes
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import com.lnkov.recipes.databinding.ActivityMainBinding
 import androidx.fragment.app.replace
