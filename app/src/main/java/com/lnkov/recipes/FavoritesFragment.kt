@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.lnkov.recipes.databinding.FragmentFavoritesBinding
-import com.lnkov.recipes.databinding.FragmentListCategoriesBinding
 
 class FavoritesFragment : Fragment() {
     private val binding by lazy { FragmentFavoritesBinding.inflate(layoutInflater) }

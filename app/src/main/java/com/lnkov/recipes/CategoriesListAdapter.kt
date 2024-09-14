@@ -11,11 +11,6 @@ import com.lnkov.recipes.databinding.ItemCategoryBinding
 class CategoriesListAdapter(private val dataSet: List<Category>) :
     RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
 
-    private var _binding: ItemCategoryBinding? = null
-    private val binding
-        get() = _binding
-            ?: throw IllegalStateException("Binding for ActivityLearnWordBinding ust not be null")
-
 
     class ViewHolder(val binding: ItemCategoryBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -28,7 +23,9 @@ class CategoriesListAdapter(private val dataSet: List<Category>) :
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+
         val category: Category = dataSet[position]
+
         viewHolder.binding.tvTitleCardCategory.text = category.title
         viewHolder.binding.tvDescriptionCardCategory.text = category.description
 

@@ -20,12 +20,6 @@ class MainActivity : AppCompatActivity() {
 
         _binding = ActivityMainBinding.inflate(layoutInflater)
 
-        if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                add<CategoriesListFragment>(R.id.fragmentFavorites)
-            }
-        }
         setContentView(binding.root)
 
         binding.buttonCategory.setOnClickListener {
