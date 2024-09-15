@@ -12,9 +12,7 @@ class CategoriesListAdapter(private val dataSet: List<Category>) :
     RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
 
 
-    class ViewHolder(val binding: ItemCategoryBinding) : RecyclerView.ViewHolder(binding.root) {
-
-    }
+    class ViewHolder(val binding: ItemCategoryBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
@@ -40,7 +38,9 @@ class CategoriesListAdapter(private val dataSet: List<Category>) :
         }
 
         viewHolder.binding.ivCardCategory.setImageDrawable(drawable)
-
+        viewHolder.binding.ivCardCategory.contentDescription =
+            viewHolder.binding.root.context.getString(R.string.category_name) + " " +
+                    category.title
     }
 
     override fun getItemCount() = dataSet.size
