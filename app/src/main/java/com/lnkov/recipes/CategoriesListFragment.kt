@@ -1,6 +1,7 @@
 package com.lnkov.recipes
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,8 +37,9 @@ class CategoriesListFragment : Fragment() {
 
             object : CategoriesListAdapter.OnItemClickListener {
                 override fun onItemClick() {
-
+                    Log.d("FragmentTransaction", "Attempting to replace fragment")
                     parentFragmentManager.commit {
+
                         replace(R.id.linearLayoutFragmentListCategories, RecipesListFragment())
                         setReorderingAllowed(true)
                         addToBackStack(null)

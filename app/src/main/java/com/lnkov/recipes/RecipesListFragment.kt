@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.lnkov.recipes.databinding.FragmentFavoritesBinding
+import com.lnkov.recipes.databinding.FragmentListCategoriesBinding
 
 class RecipesListFragment : Fragment() {
-    private val binding by lazy { FragmentFavoritesBinding.inflate(layoutInflater) }
+    private val binding by lazy { FragmentListCategoriesBinding.inflate(layoutInflater) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
