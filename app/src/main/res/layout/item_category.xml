@@ -8,6 +8,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/margin_small_8"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
@@ -26,6 +29,7 @@
             tools:src="@drawable/rectangle" />
 
         <TextView
+            android:id="@+id/tvTitleCardCategory"
             style="@style/StyleTitleCategoryCard14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,6 +38,7 @@
             tools:text="Бургеры" />
 
         <TextView
+            android:id="@+id/tvDescriptionCardCategory"
             style="@style/StyleDescriptionCategoryCard14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
