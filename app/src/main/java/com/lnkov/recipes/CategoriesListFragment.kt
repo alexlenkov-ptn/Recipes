@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import com.lnkov.recipes.databinding.FragmentListCategoriesBinding
 
 class CategoriesListFragment : Fragment() {
@@ -28,6 +31,20 @@ class CategoriesListFragment : Fragment() {
     private fun initRecycler() {
         categoriesListAdapter = CategoriesListAdapter(STUB.getCategories())
         binding.rvCategories.adapter = categoriesListAdapter
+
+        categoriesListAdapter.setOnItemClickListener(
+
+            object : CategoriesListAdapter.OnItemClickListener {
+                override fun onItemClick() {
+
+                    parentFragmentManager.commit {
+                        replace(R.id.linearLayoutFragmentListCategories, RecipesListFragment())
+                        setReorderingAllowed(true)
+                        addToBackStack(null)
+                    }
+
+                }
+            })
     }
 
 }
