@@ -34,7 +34,7 @@ class CategoriesListFragment : Fragment() {
             object : CategoriesListAdapter.OnItemClickListener {
                 override fun onItemClick() {
                     parentFragmentManager.commit {
-                        replace<RecipesListFragment>(R.id.linearLayoutFragmentListCategories)
+                        replace<RecipesListFragment>(R.id.mainContainer)
                         setReorderingAllowed(true)
                         addToBackStack(null)
                     }
