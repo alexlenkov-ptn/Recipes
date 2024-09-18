@@ -1,12 +1,10 @@
 package com.lnkov.recipes
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.lnkov.recipes.databinding.FragmentListCategoriesBinding
@@ -31,22 +29,19 @@ class CategoriesListFragment : Fragment() {
 
     private fun initRecycler() {
         categoriesListAdapter = CategoriesListAdapter(STUB.getCategories())
-        binding.rvCategories.adapter = categoriesListAdapter
 
         categoriesListAdapter.setOnItemClickListener(
-
             object : CategoriesListAdapter.OnItemClickListener {
                 override fun onItemClick() {
-                    Log.d("FragmentTransaction", "Attempting to replace fragment")
                     parentFragmentManager.commit {
-
-                        replace(R.id.linearLayoutFragmentListCategories, RecipesListFragment())
+                        replace<RecipesListFragment>(R.id.linearLayoutFragmentListCategories)
                         setReorderingAllowed(true)
                         addToBackStack(null)
                     }
-
                 }
             })
+
+        binding.rvCategories.adapter = categoriesListAdapter
     }
 
 }
