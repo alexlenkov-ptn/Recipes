@@ -33,6 +33,7 @@ class CategoriesListFragment : Fragment() {
         openRecipesByCategoryId()
 
         binding.rvCategories.adapter = categoriesListAdapter
+
     }
 
     private fun openRecipesByCategoryId() {
