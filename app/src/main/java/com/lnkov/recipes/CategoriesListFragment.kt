@@ -12,7 +12,7 @@ import com.lnkov.recipes.databinding.FragmentListCategoriesBinding
 class CategoriesListFragment : Fragment() {
     private val binding by lazy { FragmentListCategoriesBinding.inflate(layoutInflater) }
 
-    private lateinit var categoriesListAdapter : CategoriesListAdapter
+    private lateinit var categoriesListAdapter: CategoriesListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +30,12 @@ class CategoriesListFragment : Fragment() {
     private fun initRecycler() {
         categoriesListAdapter = CategoriesListAdapter(STUB.getCategories())
 
+        openRecipesByCategoryId()
+
+        binding.rvCategories.adapter = categoriesListAdapter
+    }
+
+    private fun openRecipesByCategoryId() {
         categoriesListAdapter.setOnItemClickListener(
             object : CategoriesListAdapter.OnItemClickListener {
                 override fun onItemClick() {
@@ -40,8 +46,6 @@ class CategoriesListFragment : Fragment() {
                     }
                 }
             })
-
-        binding.rvCategories.adapter = categoriesListAdapter
     }
 
 }
