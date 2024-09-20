@@ -30,23 +30,25 @@ class CategoriesListFragment : Fragment() {
     private fun initRecycler() {
         categoriesListAdapter = CategoriesListAdapter(STUB.getCategories())
 
-        openRecipesByCategoryId()
+        categoriesListAdapter.setOnItemClickListener(
+            object : CategoriesListAdapter.OnItemClickListener {
+                override fun onItemClick() {
+                    openRecipesByCategoryId()
+                }
+            })
 
         binding.rvCategories.adapter = categoriesListAdapter
 
     }
 
     private fun openRecipesByCategoryId() {
-        categoriesListAdapter.setOnItemClickListener(
-            object : CategoriesListAdapter.OnItemClickListener {
-                override fun onItemClick() {
-                    parentFragmentManager.commit {
-                        replace<RecipesListFragment>(R.id.mainContainer)
-                        setReorderingAllowed(true)
-                        addToBackStack(null)
-                    }
-                }
-            })
+
+        parentFragmentManager.commit {
+            replace<RecipesListFragment>(R.id.mainContainer)
+            setReorderingAllowed(true)
+            addToBackStack(null)
+        }
+
     }
 
 }
