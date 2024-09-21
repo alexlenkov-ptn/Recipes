@@ -11,6 +11,16 @@ import com.lnkov.recipes.databinding.ItemCategoryBinding
 class CategoriesListAdapter(private val dataSet: List<Category>) :
     RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
 
+    interface OnItemClickListener {
+        fun onItemClick()
+    }
+
+    private var itemClickListener : OnItemClickListener? = null
+
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        itemClickListener = listener
+    }
+
 
     class ViewHolder(val binding: ItemCategoryBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -41,6 +51,10 @@ class CategoriesListAdapter(private val dataSet: List<Category>) :
         viewHolder.binding.ivCardCategory.contentDescription =
             viewHolder.binding.root.context.getString(R.string.category_name) + " " +
                     category.title
+
+        viewHolder.binding.cvCategory.setOnClickListener() {
+            itemClickListener?.onItemClick()
+        }
     }
 
     override fun getItemCount() = dataSet.size
