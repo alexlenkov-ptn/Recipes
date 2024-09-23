@@ -9,7 +9,6 @@
     tools:context=".RecipesListFragment">
 
     <TextView
-        android:id="@+id/tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="fragment_recipes_list">
