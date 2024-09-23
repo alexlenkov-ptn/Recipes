@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.lnkov.recipes.databinding.ItemCategoryBinding
 
@@ -12,10 +13,10 @@ class CategoriesListAdapter(private val dataSet: List<Category>) :
     RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
-        fun onItemClick()
+        fun onItemClick(categoryId: Int)
     }
 
-    private var itemClickListener : OnItemClickListener? = null
+    private var itemClickListener: OnItemClickListener? = null
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
         itemClickListener = listener
@@ -53,7 +54,7 @@ class CategoriesListAdapter(private val dataSet: List<Category>) :
                     category.title
 
         viewHolder.binding.cvCategory.setOnClickListener() {
-            itemClickListener?.onItemClick()
+            itemClickListener?.onItemClick(category.id)
         }
     }
 
