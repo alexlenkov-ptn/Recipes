@@ -21,10 +21,10 @@ class RecipesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireArguments().let {
-            val categoryId = it.getInt(ARG_CATEGORY_ID)
-            val categoryName = it.getString(ARG_CATEGORY_NAME)
-            val categoryImageUrl = it.getString(ARG_CATEGORY_IMAGE_URL)
+        arguments?.let {
+            val categoryId = it.getInt(Constants.ARG_CATEGORY_ID)
+            val categoryName = it.getString(Constants.ARG_CATEGORY_ID)
+            val categoryImageUrl = it.getString(Constants.ARG_CATEGORY_IMAGE_URL)
         }
 
     }

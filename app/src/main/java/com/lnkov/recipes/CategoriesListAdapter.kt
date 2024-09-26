@@ -4,7 +4,6 @@ import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.lnkov.recipes.databinding.ItemCategoryBinding
 
@@ -34,9 +33,10 @@ class CategoriesListAdapter(private val dataSet: List<Category>) :
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
         val category: Category = dataSet[position]
+        val binding = viewHolder.binding
 
-        viewHolder.binding.tvTitleCardCategory.text = category.title
-        viewHolder.binding.tvDescriptionCardCategory.text = category.description
+        binding.tvTitleCardCategory.text = category.title
+        binding.tvDescriptionCardCategory.text = category.description
 
         val drawable = try {
             Drawable.createFromStream(
@@ -48,12 +48,12 @@ class CategoriesListAdapter(private val dataSet: List<Category>) :
             null
         }
 
-        viewHolder.binding.ivCardCategory.setImageDrawable(drawable)
-        viewHolder.binding.ivCardCategory.contentDescription =
-            viewHolder.binding.root.context.getString(R.string.category_name) + " " +
-                    category.title
+        binding.ivCardCategory.setImageDrawable(drawable)
 
-        viewHolder.binding.cvCategory.setOnClickListener() {
+        binding.ivCardCategory.contentDescription =
+            binding.root.context.getString(R.string.content_description, category.title)
+
+        binding.cvCategory.setOnClickListener() {
             itemClickListener?.onItemClick(category.id)
         }
     }
