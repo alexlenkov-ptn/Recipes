@@ -2,6 +2,6 @@
     <string name="app_name">Recipes</string>
     <string name="text_category">Категории</string>
     <string name="text_favorites">Избранное</string>
-    <string name="category_name">Имя категории</string>
+    <string name="text_content_description_card_category">Имя категории %1$s</string>
 
 </resources>

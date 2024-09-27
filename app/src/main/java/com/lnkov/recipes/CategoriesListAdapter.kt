@@ -12,10 +12,10 @@ class CategoriesListAdapter(private val dataSet: List<Category>) :
     RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
-        fun onItemClick()
+        fun onItemClick(categoryId: Int)
     }
 
-    private var itemClickListener : OnItemClickListener? = null
+    private var itemClickListener: OnItemClickListener? = null
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
         itemClickListener = listener
@@ -33,9 +33,10 @@ class CategoriesListAdapter(private val dataSet: List<Category>) :
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
         val category: Category = dataSet[position]
+        val binding = viewHolder.binding
 
-        viewHolder.binding.tvTitleCardCategory.text = category.title
-        viewHolder.binding.tvDescriptionCardCategory.text = category.description
+        binding.tvTitleCardCategory.text = category.title
+        binding.tvDescriptionCardCategory.text = category.description
 
         val drawable = try {
             Drawable.createFromStream(
@@ -47,13 +48,13 @@ class CategoriesListAdapter(private val dataSet: List<Category>) :
             null
         }
 
-        viewHolder.binding.ivCardCategory.setImageDrawable(drawable)
-        viewHolder.binding.ivCardCategory.contentDescription =
-            viewHolder.binding.root.context.getString(R.string.category_name) + " " +
-                    category.title
+        binding.ivCardCategory.setImageDrawable(drawable)
 
-        viewHolder.binding.cvCategory.setOnClickListener() {
-            itemClickListener?.onItemClick()
+        binding.ivCardCategory.contentDescription =
+            binding.root.context.getString(R.string.text_content_description_card_category, category.title)
+
+        binding.cvCategory.setOnClickListener() {
+            itemClickListener?.onItemClick(category.id)
         }
     }
 

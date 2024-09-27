@@ -1,4 +1,5 @@
 package com.lnkov.recipes
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,4 +18,14 @@ class RecipesListFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        arguments?.let {
+            val categoryId = it.getInt(Constants.ARG_CATEGORY_ID)
+            val categoryName = it.getString(Constants.ARG_CATEGORY_ID)
+            val categoryImageUrl = it.getString(Constants.ARG_CATEGORY_IMAGE_URL)
+        }
+
+    }
 }

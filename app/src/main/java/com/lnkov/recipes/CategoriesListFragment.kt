@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
@@ -30,10 +31,11 @@ class CategoriesListFragment : Fragment() {
     private fun initRecycler() {
         categoriesListAdapter = CategoriesListAdapter(STUB.getCategories())
 
+
         categoriesListAdapter.setOnItemClickListener(
             object : CategoriesListAdapter.OnItemClickListener {
-                override fun onItemClick() {
-                    openRecipesByCategoryId()
+                override fun onItemClick(categoryId: Int) {
+                    openRecipesByCategoryId(categoryId)
                 }
             })
 
@@ -41,14 +43,24 @@ class CategoriesListFragment : Fragment() {
 
     }
 
-    private fun openRecipesByCategoryId() {
+    private fun openRecipesByCategoryId(categoryId: Int) {
+        var bundle: Bundle? = null
 
+        val category = STUB.getCategories().find {
+            it.id == categoryId
+        }
+        category?.let {
+            bundle = bundleOf(
+                Constants.ARG_CATEGORY_ID to category.id,
+                Constants.ARG_CATEGORY_NAME to category.title,
+                Constants.ARG_CATEGORY_IMAGE_URL to category.imageUrl
+            )
+        }
         parentFragmentManager.commit {
-            replace<RecipesListFragment>(R.id.mainContainer)
+            replace<RecipesListFragment>(R.id.mainContainer, args = bundle)
             setReorderingAllowed(true)
             addToBackStack(null)
         }
-
     }
 
 }
