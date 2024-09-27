@@ -51,7 +51,7 @@ class CategoriesListAdapter(private val dataSet: List<Category>) :
         binding.ivCardCategory.setImageDrawable(drawable)
 
         binding.ivCardCategory.contentDescription =
-            binding.root.context.getString(R.string.content_description, category.title)
+            binding.root.context.getString(R.string.text_content_description_card_category, category.title)
 
         binding.cvCategory.setOnClickListener() {
             itemClickListener?.onItemClick(category.id)

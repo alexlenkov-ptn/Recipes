@@ -44,23 +44,18 @@ class CategoriesListFragment : Fragment() {
     }
 
     private fun openRecipesByCategoryId(categoryId: Int) {
-        var categoryName = ""
-        var categoryImageUrl = ""
+        var bundle: Bundle? = null
 
-        STUB.getCategories().forEach() {
-            if (it.id == categoryId) {
-                categoryName = it.title
-                categoryImageUrl = it.imageUrl
-            }
+        val category = STUB.getCategories().find {
+            it.id == categoryId
         }
-
-        val bundle = bundleOf(
-            Constants.ARG_CATEGORY_ID to categoryId,
-            Constants.ARG_CATEGORY_NAME to categoryName,
-            Constants.ARG_CATEGORY_IMAGE_URL to categoryImageUrl
-        )
-
-
+        category?.let {
+            bundle = bundleOf(
+                Constants.ARG_CATEGORY_ID to category.id,
+                Constants.ARG_CATEGORY_NAME to category.title,
+                Constants.ARG_CATEGORY_IMAGE_URL to category.imageUrl
+            )
+        }
         parentFragmentManager.commit {
             replace<RecipesListFragment>(R.id.mainContainer, args = bundle)
             setReorderingAllowed(true)
