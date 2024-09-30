@@ -3,7 +3,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cvCategory"
+    android:id="@+id/cvRecipe"
     style="@style/StyleItemCategoryAndRecipeCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -22,29 +22,20 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/ivCardCategory"
+            android:id="@+id/ivCardRecipe"
             android:layout_width="match_parent"
             android:layout_height="@dimen/image_view_category_card_height"
             android:scaleType="centerCrop"
             tools:src="@drawable/rectangle" />
 
         <TextView
-            android:id="@+id/tvTitleCardCategory"
+            android:id="@+id/tvTitleCardRecipe"
             style="@style/StyleTitleCategoryAndRecipeCard14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_small_8"
-            android:layout_marginTop="@dimen/margin_small_8"
-            tools:text="Бургеры" />
-
-        <TextView
-            android:id="@+id/tvDescriptionCardCategory"
-            style="@style/StyleDescriptionCategoryCard14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/margin_small_8"
-            android:layout_marginStart="@dimen/margin_small_8"
-            tools:text="Рецепты всех популярных видов бургеров" />
+            android:layout_margin="@dimen/margin_small_8"
+            tools:text="Чизбургер" />
 
     </LinearLayout>
 

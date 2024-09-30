@@ -10,7 +10,7 @@
 
     </style>
 
-    <style name="StyleTitleCategoryCard14" parent="TextAppearance.AppCompat">
+    <style name="StyleTitleCategoryAndRecipeCard14" parent="TextAppearance.AppCompat">
 
         <item name="android:fontFamily">@font/montserrat_alternates_semi_bold</item>
         <item name="android:textSize">@dimen/text_size_small_14</item>
@@ -46,7 +46,7 @@
 
     </style>
 
-    <style name="StyleItemCategoryCardView" parent="TextAppearance.AppCompat">
+    <style name="StyleItemCategoryAndRecipeCardView" parent="TextAppearance.AppCompat">
 
         <item name="cardCornerRadius">@dimen/margin_small_8</item>
         <item name="android:layout_marginVertical">@dimen/margin_small_8</item>
