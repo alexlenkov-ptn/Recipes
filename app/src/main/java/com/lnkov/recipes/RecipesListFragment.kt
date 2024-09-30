@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
@@ -54,22 +55,34 @@ class RecipesListFragment : Fragment() {
 
     }
 
-    private fun initRecycler(id : Int) {
-        recipesListAdapter = RecipesListAdapter(STUB.getRecipesByCategoryId(id))
+    private fun initRecycler(categoryId: Int) {
+        recipesListAdapter = RecipesListAdapter(STUB.getRecipesByCategoryId(categoryId))
         binding.rvRecipes.adapter = recipesListAdapter
 
         recipesListAdapter.setOnItemClickListener(
             object : RecipesListAdapter.OnItemClickListener {
                 override fun onItemClick(recipeId: Int) {
-                    openRecipeByRecipesId(recipeId)
+                    openRecipeByRecipesId(categoryId, recipeId)
                 }
             }
         )
     }
 
-    private fun openRecipeByRecipesId(recipeId: Int) {
+    private fun openRecipeByRecipesId(categoryId: Int, recipeId: Int) {
+        var bundle: Bundle? = null
+
+        val recipe = STUB.getRecipesByCategoryId(categoryId).find {
+            it.id == recipeId
+        }
+
+        recipe?.let {
+            bundle = bundleOf(
+                Constants.ARG_RECIPE_ID to recipe.id
+            )
+        }
+
         parentFragmentManager.commit {
-            replace<RecipeFragment>(R.id.mainContainer)
+            replace<RecipeFragment>(R.id.mainContainer, args = bundle)
             setReorderingAllowed(true)
             addToBackStack(null)
         }
