@@ -6,4 +6,3 @@ object Constants {
     const val ARG_CATEGORY_IMAGE_URL = "ARG_CATEGORY_IMAGE_URL"
     const val ARG_RECIPE = "ARG_RECIPE"
 }
-
