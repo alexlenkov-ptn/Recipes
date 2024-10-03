@@ -22,16 +22,15 @@ class RecipeFragment : Fragment() {
         return binding.root
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.let {
             var recipe: Recipe? = null
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                recipe = it.getParcelable(Constants.ARG_RECIPE, Recipe::class.java)
+            recipe = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                it.getParcelable(Constants.ARG_RECIPE, Recipe::class.java)
             } else {
-                recipe = it.getParcelable(Constants.ARG_RECIPE)
+                it.getParcelable(Constants.ARG_RECIPE)
             }
 
             Log.d("!!!", "recipeDeprecatedMethod title: ${recipe?.title}")
