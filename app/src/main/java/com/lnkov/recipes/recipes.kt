@@ -274,6 +274,7 @@ object STUB {
         }
     }
 
-
+    fun getRecipeById(categoryId: Int, recipesId: Int): Recipe? =
+        getRecipesByCategoryId(categoryId).find { it.id == recipesId }
 }
 
