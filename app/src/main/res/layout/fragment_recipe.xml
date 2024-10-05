@@ -1,14 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RecipeFragment">
 
-    <TextView
-        android:id="@+id/tvRecipe"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:text="fragment_recipe" />
 
-</FrameLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="224dp">
+
+        <ImageView
+            android:id="@+id/ivBcgRecipe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="test"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/rectangle" />
+
+        <TextView
+            android:id="@+id/tvRecipe"
+            style="@style/StyleTitle20"
+            android:layout_width="242dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/margin_normal_16"
+            android:layout_marginBottom="@dimen/margin_normal_16"
+            android:background="@drawable/shape_drawable"
+            android:padding="@dimen/padding_normal_10"
+            app:layout_constraintBottom_toBottomOf="@+id/ivBcgRecipe"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Бургер с грибами и сыром" />
+
+        <TextView
+            android:id="@+id/tvRecipeHeadingIngredients"
+            style="@style/StyleTitle20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ингредиенты"
+            app:layout_constraintTop_toBottomOf="@+id/ivBcgRecipe"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvRecipeIngredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tvRecipeHeadingIngredients"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="1"
+            />
+
+        <TextView
+            android:id="@+id/tvRecipeHeadingCookingMethod"
+            style="@style/StyleTitle20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Способ приготовления"
+            app:layout_constraintTop_toBottomOf="@+id/rvRecipeIngredients"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvRecipeCookingMethod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tvRecipeHeadingCookingMethod"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="1"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</androidx.core.widget.NestedScrollView>

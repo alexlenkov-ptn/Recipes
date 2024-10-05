@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/text_content_description_card_category"
             android:scaleType="centerCrop"
-            android:src="@drawable/rectangle" />
+            tools:src="@drawable/rectangle" />
 
         <TextView
             android:id="@+id/tvBcgRecipeList"
