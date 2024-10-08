@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="1"
-            tools:listitem="@layout/item_ingredient"
+            tools:listitem="@layout/item_recipe_ingredients"
             />
 
         <TextView
@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="1"
-            tools:listitem="@layout/item_ingredient_description" />
+            tools:listitem="@layout/item_recipe_method" />
 
     </LinearLayout>
 

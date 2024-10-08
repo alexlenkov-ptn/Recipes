@@ -46,7 +46,7 @@
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="1"
         tools:itemCount="8"
-        tools:listitem="@layout/item_recipe_list">
+        tools:listitem="@layout/item_recipe">
 
     </androidx.recyclerview.widget.RecyclerView>
 

@@ -5,7 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.lnkov.recipes.databinding.ItemRecipeListBinding
+import com.lnkov.recipes.databinding.ItemRecipeBinding
 
 class RecipesListAdapter(private val dataSet: List<Recipe>) :
     RecyclerView.Adapter<RecipesListAdapter.ViewHolder>() {
@@ -20,11 +20,11 @@ class RecipesListAdapter(private val dataSet: List<Recipe>) :
         itemClickListener = listener
     }
 
-    class ViewHolder(val binding: ItemRecipeListBinding) : RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(val binding: ItemRecipeBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
-        val binding = ItemRecipeListBinding.inflate(inflater, viewGroup, false)
+        val binding = ItemRecipeBinding.inflate(inflater, viewGroup, false)
         return ViewHolder(binding)
     }
 
