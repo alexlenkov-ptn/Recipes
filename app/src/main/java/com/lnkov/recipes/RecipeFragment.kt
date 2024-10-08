@@ -13,6 +13,7 @@ import com.lnkov.recipes.databinding.FragmentRecipeBinding
 class RecipeFragment : Fragment() {
     private val binding by lazy { FragmentRecipeBinding.inflate(layoutInflater) }
 
+    private lateinit var ingredientsListAdapter: IngredientsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +49,16 @@ class RecipeFragment : Fragment() {
 
             binding.ivBcgRecipe.setImageDrawable(drawable)
             binding.tvRecipe.text = recipe?.title
+
+            if (recipe != null) initRecycler(recipe)
         }
 
     }
+
+    private fun initRecycler(recipe: Recipe) {
+        ingredientsListAdapter = IngredientsAdapter(recipe.ingredients)
+        binding.rvRecipeIngredients.adapter = ingredientsListAdapter
+    }
+
+
 }

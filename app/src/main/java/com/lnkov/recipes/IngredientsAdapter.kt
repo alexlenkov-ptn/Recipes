@@ -1,23 +1,20 @@
 package com.lnkov.recipes
 
 import androidx.recyclerview.widget.RecyclerView
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.lnkov.recipes.databinding.FragmentRecipeBinding
-
+import com.lnkov.recipes.databinding.ItemIngredientBinding
 
 
 class IngredientsAdapter(private val dataSet: List<Ingredient>) :
     RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
 
-    class ViewHolder(val binding: FragmentRecipeBinding) : RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(val binding: ItemIngredientBinding) : RecyclerView.ViewHolder(binding.root)
 
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(viewGroup.context)
-        val binding = FragmentRecipeBinding.inflate(inflater, viewGroup, false)
+        val binding = ItemIngredientBinding.inflate(inflater, viewGroup, false)
         return ViewHolder(binding)
     }
 
@@ -25,7 +22,8 @@ class IngredientsAdapter(private val dataSet: List<Ingredient>) :
         val ingredient: Ingredient = dataSet[position]
         val binding = viewHolder.binding
 
-        binding.rvRecipeIngredients
+        binding.tvRecipeDescription.text = ingredient.description
+        binding.tvIngredientQuantity.text = "${ingredient.quantity} ${ingredient.unitOfMeasure}"
 
     }
 
