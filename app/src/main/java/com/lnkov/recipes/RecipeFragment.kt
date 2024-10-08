@@ -1,5 +1,6 @@
 package com.lnkov.recipes
 
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -26,6 +27,7 @@ class RecipeFragment : Fragment() {
 
         arguments?.let {
             var recipe: Recipe? = null
+
             recipe = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 it.getParcelable(Constants.ARG_RECIPE, Recipe::class.java)
             } else {
@@ -34,6 +36,17 @@ class RecipeFragment : Fragment() {
 
             Log.d("!!!", "recipeDeprecatedMethod title: ${recipe?.title}")
 
+            val drawable: Drawable? = try {
+                Drawable.createFromStream(
+                    context?.assets?.open(recipe?.imageUrl ?: ""),
+                    null
+                )
+            } catch (e: Exception) {
+                Log.d("!!!", "Image not found: ${recipe?.imageUrl}")
+                null
+            }
+
+            binding.ivBcgRecipe.setImageDrawable(drawable)
             binding.tvRecipe.text = recipe?.title
         }
 

@@ -37,7 +37,7 @@ class RecipesListFragment : Fragment() {
             Log.d("!!!", "Text: $categoryName")
             Log.d("!!!", "Image: $categoryImageUrl")
 
-            val drawable = try {
+            val drawable: Drawable? = try {
                 Drawable.createFromStream(
                     context?.assets?.open(categoryImageUrl),
                     null
