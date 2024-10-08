@@ -14,6 +14,7 @@ class RecipeFragment : Fragment() {
     private val binding by lazy { FragmentRecipeBinding.inflate(layoutInflater) }
 
     private lateinit var ingredientsListAdapter: IngredientsAdapter
+    private lateinit var methodAdapter: MethodAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,7 +58,10 @@ class RecipeFragment : Fragment() {
 
     private fun initRecycler(recipe: Recipe) {
         ingredientsListAdapter = IngredientsAdapter(recipe.ingredients)
+        methodAdapter = MethodAdapter(recipe.method)
+
         binding.rvRecipeIngredients.adapter = ingredientsListAdapter
+        binding.rvRecipeCookingMethod.adapter = methodAdapter
     }
 
 
