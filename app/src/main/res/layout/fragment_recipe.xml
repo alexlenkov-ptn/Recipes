@@ -7,48 +7,65 @@
     tools:context=".RecipeFragment">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="224dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/ivBcgRecipe"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="test"
-            android:scaleType="centerCrop"
-            tools:src="@drawable/rectangle" />
+            android:layout_height="224dp">
 
-        <TextView
-            android:id="@+id/tvRecipe"
-            style="@style/StyleTitle20"
-            android:layout_width="242dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/margin_normal_16"
-            android:layout_marginBottom="@dimen/margin_normal_16"
-            android:background="@drawable/shape_drawable"
-            android:padding="@dimen/padding_normal_10"
-            app:layout_constraintBottom_toBottomOf="@+id/ivBcgRecipe"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Бургер с грибами и сыром" />
+            <ImageView
+                android:id="@+id/ivBcgRecipe"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="test"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/rectangle" />
 
-        <TextView
-            android:id="@+id/tvRecipeHeadingIngredients"
-            style="@style/StyleTitle20"
+            <TextView
+                android:id="@+id/tvRecipe"
+                style="@style/StyleTitle20"
+                android:layout_width="242dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_normal_16"
+                android:layout_marginBottom="@dimen/margin_normal_16"
+                android:background="@drawable/shape_drawable"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/ivBcgRecipe"
+                tools:text="Бургер с грибами и сыром" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ингредиенты"
-            app:layout_constraintTop_toBottomOf="@+id/ivBcgRecipe"
-            app:layout_constraintStart_toStartOf="parent"
-            />
+            android:layout_margin="@dimen/margin_normal_16">
+
+            <TextView
+                android:id="@+id/tvRecipeHeadingIngredients"
+                style="@style/StyleTitle20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ингредиенты"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvRecipeIngredients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/tvRecipeHeadingIngredients"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="1"
+            tools:listitem="@layout/item_ingredient"
             />
 
         <TextView
@@ -56,23 +73,18 @@
             style="@style/StyleTitle20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Способ приготовления"
-            app:layout_constraintTop_toBottomOf="@+id/rvRecipeIngredients"
-            app:layout_constraintStart_toStartOf="parent"
-            />
+            android:layout_marginVertical="@dimen/margin_normal_16"
+            android:layout_marginStart="@dimen/margin_normal_16"
+            android:text="Способ приготовления" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvRecipeCookingMethod"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/tvRecipeHeadingCookingMethod"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="1"
-            />
+            tools:listitem="@layout/item_ingredient_description" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
+    </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
