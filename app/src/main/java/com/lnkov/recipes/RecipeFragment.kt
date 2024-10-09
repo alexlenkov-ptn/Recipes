@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.lnkov.recipes.databinding.FragmentRecipeBinding
 
 class RecipeFragment : Fragment() {
@@ -59,6 +60,20 @@ class RecipeFragment : Fragment() {
     private fun initRecycler(recipe: Recipe) {
         ingredientsListAdapter = IngredientsAdapter(recipe.ingredients)
         methodAdapter = MethodAdapter(recipe.method)
+
+        val decorator = MaterialDividerItemDecoration(
+            requireContext(),
+            MaterialDividerItemDecoration.VERTICAL,
+        )
+        decorator.isLastItemDecorated = false
+
+        val inset = (12 * requireContext().resources.displayMetrics.density).toInt()
+
+        decorator.dividerInsetStart = inset
+        decorator.dividerInsetEnd = inset
+
+        binding.rvRecipeIngredients.addItemDecoration(decorator)
+        binding.rvRecipeCookingMethod.addItemDecoration(decorator)
 
         binding.rvRecipeIngredients.adapter = ingredientsListAdapter
         binding.rvRecipeCookingMethod.adapter = methodAdapter
