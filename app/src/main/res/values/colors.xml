@@ -8,6 +8,7 @@
     <color name="buttonFavoritesColor">#E13E3E</color>
     <color name="textTitleCategoryCard">#5F3678</color>
     <color name="textDescriptionCategoryCard">#666666</color>
+    <color name="gray">#F5F5F5</color>
 
 
 </resources>

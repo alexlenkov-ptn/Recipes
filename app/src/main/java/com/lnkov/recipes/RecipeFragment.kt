@@ -39,22 +39,27 @@ class RecipeFragment : Fragment() {
 
             Log.d("!!!", "recipeDeprecatedMethod title: ${recipe?.title}")
 
-            val drawable: Drawable? = try {
-                Drawable.createFromStream(
-                    context?.assets?.open(recipe?.imageUrl ?: ""),
-                    null
-                )
-            } catch (e: Exception) {
-                Log.d("!!!", "Image not found: ${recipe?.imageUrl}")
-                null
+            if (recipe != null) {
+                initUI(recipe)
+                initRecycler(recipe)
             }
-
-            binding.ivBcgRecipe.setImageDrawable(drawable)
-            binding.tvRecipe.text = recipe?.title
-
-            if (recipe != null) initRecycler(recipe)
         }
 
+    }
+
+    private fun initUI(recipe: Recipe) {
+        val drawable: Drawable? = try {
+            Drawable.createFromStream(
+                context?.assets?.open(recipe.imageUrl ?: ""),
+                null
+            )
+        } catch (e: Exception) {
+            Log.d("!!!", "Image not found: ${recipe.imageUrl}")
+            null
+        }
+
+        binding.ivBcgRecipe.setImageDrawable(drawable)
+        binding.tvRecipe.text = recipe.title
     }
 
     private fun initRecycler(recipe: Recipe) {
@@ -64,19 +69,19 @@ class RecipeFragment : Fragment() {
         val decorator = MaterialDividerItemDecoration(
             requireContext(),
             MaterialDividerItemDecoration.VERTICAL,
-        )
-        decorator.isLastItemDecorated = false
+        ).apply {
+            isLastItemDecorated = false
+            dividerInsetStart = resources.getDimensionPixelSize(R.dimen.margin_normal_12)
+            dividerInsetEnd = resources.getDimensionPixelSize(R.dimen.margin_normal_12)
+            dividerColor = resources.getColor(R.color.gray)
+        }
 
-        val inset = (12 * requireContext().resources.displayMetrics.density).toInt()
-
-        decorator.dividerInsetStart = inset
-        decorator.dividerInsetEnd = inset
-
-        binding.rvRecipeIngredients.addItemDecoration(decorator)
-        binding.rvRecipeCookingMethod.addItemDecoration(decorator)
-
-        binding.rvRecipeIngredients.adapter = ingredientsListAdapter
-        binding.rvRecipeCookingMethod.adapter = methodAdapter
+        binding.apply {
+            rvRecipeIngredients.addItemDecoration(decorator)
+            rvRecipeCookingMethod.addItemDecoration(decorator)
+            rvRecipeIngredients.adapter = ingredientsListAdapter
+            rvRecipeCookingMethod.adapter = methodAdapter
+        }
     }
 
 

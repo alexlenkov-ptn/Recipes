@@ -82,6 +82,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvRecipeCookingMethod"
+            android:layout_marginHorizontal="@dimen/margin_normal_16"
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"

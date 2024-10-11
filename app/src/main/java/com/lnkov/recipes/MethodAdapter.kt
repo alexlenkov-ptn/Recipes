@@ -22,8 +22,25 @@ class MethodAdapter(private val dataSet: List<String>) :
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val method: String = dataSet[position]
         val binding = viewHolder.binding
+        val layout = binding.llIngredientDescription
 
         binding.tvIngredientDescription.text = method
+
+        if (position == 0) {
+            layout.setPadding(
+                0,
+                layout.context.resources.getDimensionPixelSize(R.dimen.padding_small_4),
+                0,
+                0
+            )
+        }
+
+        if (position == dataSet.size - 1) layout.setPadding(
+            0,
+            0,
+            0,
+            layout.context.resources.getDimensionPixelSize(R.dimen.padding_small_4)
+        )
 
     }
 
