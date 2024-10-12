@@ -47,8 +47,14 @@ class RecipesListFragment : Fragment() {
                 null
             }
 
-            binding.ivBcgRecipeList.setImageDrawable(drawable)
-            binding.tvBcgRecipeList.text = categoryName
+
+            binding.apply {
+                ivBcgRecipeList.setImageDrawable(drawable)
+                ivBcgRecipeList.contentDescription = "Image: $categoryImageUrl"
+                tvBcgRecipeList.text = categoryName
+            }
+
+
 
             initRecycler(categoryId)
         }

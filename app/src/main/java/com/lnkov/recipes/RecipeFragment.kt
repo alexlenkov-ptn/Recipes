@@ -58,8 +58,11 @@ class RecipeFragment : Fragment() {
             null
         }
 
-        binding.ivBcgRecipe.setImageDrawable(drawable)
-        binding.tvRecipe.text = recipe.title
+        binding.apply {
+            ivBcgRecipe.setImageDrawable(drawable)
+            ivBcgRecipe.contentDescription = "Image: ${recipe.imageUrl}"
+            tvRecipe.text = recipe.title
+        }
     }
 
     private fun initRecycler(recipe: Recipe) {

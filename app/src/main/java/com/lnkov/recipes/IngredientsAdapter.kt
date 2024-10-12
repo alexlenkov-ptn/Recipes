@@ -1,5 +1,6 @@
 package com.lnkov.recipes
 
+import android.annotation.SuppressLint
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ class IngredientsAdapter(private val dataSet: List<Ingredient>) :
         return ViewHolder(binding)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val ingredient: Ingredient = dataSet[position]
         val binding = viewHolder.binding
@@ -26,11 +28,8 @@ class IngredientsAdapter(private val dataSet: List<Ingredient>) :
         binding.tvIngredientDescription.text = ingredient.description
 
         binding.tvIngredientQuantityAndUnitOfMeasure.text =
-            binding.root.context.getString(
-                R.string.text_space,
-                ingredient.quantity,
-                ingredient.unitOfMeasure
-            )
+            "${ingredient.quantity} ${ingredient.unitOfMeasure}"
+
     }
 
     override fun getItemCount() = dataSet.size
