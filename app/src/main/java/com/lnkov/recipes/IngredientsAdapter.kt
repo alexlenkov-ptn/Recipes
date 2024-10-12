@@ -22,7 +22,6 @@ class IngredientsAdapter(private val dataSet: List<Ingredient>) :
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val ingredient: Ingredient = dataSet[position]
         val binding = viewHolder.binding
-        val layout = binding.llIngredient
 
         binding.tvIngredientDescription.text = ingredient.description
 
@@ -32,22 +31,6 @@ class IngredientsAdapter(private val dataSet: List<Ingredient>) :
                 ingredient.quantity,
                 ingredient.unitOfMeasure
             )
-
-        if (position == 0) {
-            binding.llIngredient.setPadding(
-                0,
-                layout.context.resources.getDimensionPixelSize(R.dimen.padding_small_4),
-                0,
-                0,
-            )
-        }
-
-        if (position == dataSet.size - 1) binding.llIngredient.setPadding(
-            0,
-            0,
-            0,
-            layout.context.resources.getDimensionPixelSize(R.dimen.padding_small_8)
-        )
     }
 
     override fun getItemCount() = dataSet.size

@@ -53,8 +53,6 @@ class RecipesListAdapter(private val dataSet: List<Recipe>) :
         binding.cvRecipe.setOnClickListener() {
             itemClickListener?.onItemClick(recipe.id)
         }
-
-
     }
 
     override fun getItemCount() = dataSet.size

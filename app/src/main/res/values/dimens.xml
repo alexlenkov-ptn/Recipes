@@ -12,6 +12,7 @@
 
     <dimen name="width_0">0dp</dimen>
 
+    <dimen name="padding_normal_12">12dp</dimen>
     <dimen name="padding_normal_10">10dp</dimen>
     <dimen name="padding_small_8">8dp</dimen>
     <dimen name="padding_small_4">4dp</dimen>

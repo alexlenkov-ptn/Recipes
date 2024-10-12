@@ -14,17 +14,20 @@
         style="@style/StyleDescriptionRecipeIngredient"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:textAllCaps="true"
+        android:layout_weight="6"
         tools:text="Подсолнечное масло" />
 
     <TextView
         android:id="@+id/tvIngredientQuantityAndUnitOfMeasure"
         style="@style/StyleDescriptionRecipeIngredient"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="4"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_large_129"
         android:textAllCaps="true"
-        tools:text="5 с. ложек" />
+        android:gravity="end"
+        tools:text="5 с. ложек"
+
+        />
 
 </LinearLayout>

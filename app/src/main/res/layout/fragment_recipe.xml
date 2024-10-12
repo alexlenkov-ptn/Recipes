@@ -35,8 +35,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_normal_16"
                 android:layout_marginBottom="@dimen/margin_normal_16"
-                android:padding="@dimen/padding_normal_10"
                 android:background="@drawable/shape_drawable"
+                android:padding="@dimen/padding_normal_10"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/ivBcgRecipe"
                 tools:text="Бургер с грибами и сыром" />
@@ -64,12 +64,13 @@
             android:id="@+id/rvRecipeIngredients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_normal_16"
+            android:background="@color/white"
+            android:paddingTop="@dimen/padding_small_4"
+            android:paddingBottom="@dimen/padding_small_8"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="1"
-            tools:listitem="@layout/item_recipe_ingredients"
-            android:background="@color/white"
-            android:layout_marginHorizontal="@dimen/margin_normal_16"
-            />
+            tools:listitem="@layout/item_recipe_ingredients" />
 
         <TextView
             android:id="@+id/tvRecipeHeadingCookingMethod"
@@ -82,13 +83,16 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvRecipeCookingMethod"
-            android:layout_marginHorizontal="@dimen/margin_normal_16"
-            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_small_4"
+            android:paddingBottom="@dimen/padding_small_4"
+            android:layout_marginHorizontal="@dimen/margin_normal_16"
+            android:background="@color/white"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="1"
-            tools:listitem="@layout/item_recipe_method" />
+            tools:listitem="@layout/item_recipe_method"
+            />
 
     </LinearLayout>
 
