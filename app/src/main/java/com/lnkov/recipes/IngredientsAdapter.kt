@@ -27,7 +27,7 @@ class IngredientsAdapter(private val dataSet: List<Ingredient>) :
 
         binding.tvIngredientQuantityAndUnitOfMeasure.text =
             binding.root.context.getString(
-                R.string.text_space,
+                R.string.text_concat,
                 ingredient.quantity,
                 ingredient.unitOfMeasure
             )

@@ -1,5 +1,6 @@
 package com.lnkov.recipes
 
+import android.annotation.SuppressLint
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -19,16 +20,13 @@ class MethodAdapter(private val dataSet: List<String>) :
         return ViewHolder(binding)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val method: String = dataSet[position]
         val binding = viewHolder.binding
-        val positionString = (position + 1).toString() + ". "
+        val positionString = (position + 1).toString()
 
-        binding.tvIngredientDescription.text = binding.root.context.getString(
-            R.string.text_space,
-            positionString,
-            method,
-        )
+        binding.tvIngredientDescription.text = "$positionString. $method"
 
     }
 

@@ -63,4 +63,12 @@
 
     </style>
 
+    <style name="StyleSubtitle16" parent="TextAppearance.AppCompat">
+
+        <item name="android:fontFamily">@font/montserrat_alternates_semi_bold</item>
+        <item name="android:textSize">@dimen/text_size_small_16</item>
+        <item name="android:textColor">@color/colorStyleSubtitle16</item>
+
+    </style>
+
 </resources>

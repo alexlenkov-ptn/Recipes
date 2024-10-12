@@ -9,6 +9,8 @@
     <color name="textTitleCategoryCard">#5F3678</color>
     <color name="textDescriptionCategoryCard">#666666</color>
     <color name="gray">#F5F5F5</color>
+    <color name="colorStyleSubtitle16">#626466</color>
+
 
 
 </resources>
