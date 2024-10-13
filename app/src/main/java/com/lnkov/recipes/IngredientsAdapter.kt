@@ -23,9 +23,7 @@ class IngredientsAdapter(private val dataSet: List<Ingredient>) :
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val ingredient: Ingredient = dataSet[position]
         val binding = viewHolder.binding
-        var ingredientQuantity = ingredient.quantity.toDouble() * quantity
-
-
+        val ingredientQuantity = ingredient.quantity.toDouble() * quantity
 
         binding.tvIngredientDescription.text = ingredient.description
 
