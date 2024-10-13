@@ -9,6 +9,7 @@
     <string name="bcg_recipes_list">bcg recipe list</string>
     <string name="text_ingredients">Ингредиенты</string>
     <string name="text_cooking_method">Способ приготовления</string>
+    <string name="text_subtitle_portions">Порции:</string>
 
 
 </resources>

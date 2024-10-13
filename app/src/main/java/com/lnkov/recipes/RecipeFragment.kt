@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.lnkov.recipes.databinding.FragmentRecipeBinding
 
@@ -84,7 +85,22 @@ class RecipeFragment : Fragment() {
             rvRecipeCookingMethod.addItemDecoration(decorator)
             rvRecipeIngredients.adapter = ingredientsListAdapter
             rvRecipeCookingMethod.adapter = methodAdapter
+
+            sbCountsOfRecipes.setOnSeekBarChangeListener(
+                object : SeekBar.OnSeekBarChangeListener {
+                    override fun onProgressChanged(p0: SeekBar?, progress: Int, p2: Boolean) {
+                        val currentProgress = progress + 1
+                        ingredientsListAdapter.updateIngredients(currentProgress)
+                        rvRecipeIngredients.adapter = ingredientsListAdapter
+                    }
+
+                    override fun onStartTrackingTouch(p0: SeekBar?) {}
+                    override fun onStopTrackingTouch(p0: SeekBar?) {}
+                }
+            )
         }
+
+
     }
 
 

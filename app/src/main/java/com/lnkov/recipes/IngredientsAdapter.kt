@@ -9,6 +9,7 @@ import com.lnkov.recipes.databinding.ItemRecipeIngredientsBinding
 
 class IngredientsAdapter(private val dataSet: List<Ingredient>) :
     RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
+    private var quantity: Double = 1.0
 
     class ViewHolder(val binding: ItemRecipeIngredientsBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -23,15 +24,21 @@ class IngredientsAdapter(private val dataSet: List<Ingredient>) :
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val ingredient: Ingredient = dataSet[position]
-        val binding = viewHolder.binding
+        val ingredientQuantity =
+            "${ingredient.quantity.toDouble() * quantity}".removeSuffix(".0")
 
-        binding.tvIngredientDescription.text = ingredient.description
-
-        binding.tvIngredientQuantityAndUnitOfMeasure.text =
-            "${ingredient.quantity} ${ingredient.unitOfMeasure}"
+        viewHolder.binding.apply {
+            tvIngredientDescription.text = ingredient.description
+            tvIngredientQuantityAndUnitOfMeasure.text =
+                "$ingredientQuantity ${ingredient.unitOfMeasure}"
+        }
 
     }
 
     override fun getItemCount() = dataSet.size
+
+    fun updateIngredients(progress: Int) {
+        quantity = progress.toDouble()
+    }
 
 }

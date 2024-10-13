@@ -18,7 +18,6 @@
             android:id="@+id/ivBcgRecipeList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/text_content_description_card_category"
             android:scaleType="centerCrop"
             tools:src="@drawable/test_burger" />
 
