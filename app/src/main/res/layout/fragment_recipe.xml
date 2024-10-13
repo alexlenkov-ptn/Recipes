@@ -14,7 +14,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height_large_224">
+            android:layout_height="224dp">
 
             <ImageView
                 android:id="@+id/ivBcgRecipe"
