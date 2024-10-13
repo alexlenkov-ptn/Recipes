@@ -11,13 +11,17 @@
     <dimen name="margin_small_4">4dp</dimen>
     <dimen name="margin_small_2">2dp</dimen>
 
-    <dimen name="width_0">0dp</dimen>
+    <dimen name="width_small_0">0dp</dimen>
+    <dimen name="width_small_8">8dp</dimen>
 
+    <dimen name="height_normal_16">16dp</dimen>
+    <dimen name="height_normal_30">30dp</dimen>
+
+    <dimen name="padding_small_0">0dp</dimen>
+    <dimen name="padding_small_4">4dp</dimen>
+    <dimen name="padding_small_8">8dp</dimen>
     <dimen name="padding_normal_12">12dp</dimen>
     <dimen name="padding_normal_10">10dp</dimen>
-    <dimen name="padding_small_8">8dp</dimen>
-    <dimen name="padding_small_4">4dp</dimen>
-
 
     <dimen name="constraint_layout_category_height">224dp</dimen>
     <dimen name="image_view_category_card_height">130dp</dimen>
@@ -26,5 +30,9 @@
     <dimen name="text_size_small_14">14sp</dimen>
     <dimen name="text_size_small_16">16sp</dimen>
     <dimen name="text_size_small_20">20sp</dimen>
+
+    <dimen name="radius_small_2">2dp</dimen>
+    <dimen name="radius_small_4">4dp</dimen>
+
 
 </resources>

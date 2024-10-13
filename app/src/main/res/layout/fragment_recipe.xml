@@ -89,8 +89,13 @@
                 android:layout_height="wrap_content"
                 android:max="4"
                 android:progress="0"
+                android:thumb="@drawable/shape_seekbar_thumb"
+                android:progressDrawable="@drawable/shape_seekbar_progress"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingStart="@dimen/padding_small_4"
+                android:paddingEnd="@dimen/padding_small_4"
                 />
 
         </LinearLayout>
