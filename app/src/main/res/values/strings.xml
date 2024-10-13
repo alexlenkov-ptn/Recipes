@@ -5,4 +5,10 @@
     <string name="text_content_description_card_category">Имя категории %1$s</string>
     <string name="text_content_description_card_recipe">Имя рецепта %1$s</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_concat">%1$s%2$s</string>
+    <string name="bcg_recipes_list">bcg recipe list</string>
+    <string name="text_ingredients">Ингредиенты</string>
+    <string name="text_cooking_method">Способ приготовления</string>
+
+
 </resources>

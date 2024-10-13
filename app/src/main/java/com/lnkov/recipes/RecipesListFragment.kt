@@ -37,7 +37,7 @@ class RecipesListFragment : Fragment() {
             Log.d("!!!", "Text: $categoryName")
             Log.d("!!!", "Image: $categoryImageUrl")
 
-            val drawable = try {
+            val drawable: Drawable? = try {
                 Drawable.createFromStream(
                     context?.assets?.open(categoryImageUrl),
                     null
@@ -47,8 +47,14 @@ class RecipesListFragment : Fragment() {
                 null
             }
 
-            binding.ivBcgRecipeList.setImageDrawable(drawable)
-            binding.tvBcgRecipeList.text = categoryName
+
+            binding.apply {
+                ivBcgRecipeList.setImageDrawable(drawable)
+                ivBcgRecipeList.contentDescription = "Image: $categoryImageUrl"
+                tvBcgRecipeList.text = categoryName
+            }
+
+
 
             initRecycler(categoryId)
         }

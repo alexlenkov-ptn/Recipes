@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/text_content_description_card_category"
             android:scaleType="centerCrop"
-            android:src="@drawable/rectangle" />
+            tools:src="@drawable/test_burger" />
 
         <TextView
             android:id="@+id/tvBcgRecipeList"
@@ -46,7 +46,7 @@
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="1"
         tools:itemCount="8"
-        tools:listitem="@layout/item_recipe_list">
+        tools:listitem="@layout/item_recipe">
 
     </androidx.recyclerview.widget.RecyclerView>
 
