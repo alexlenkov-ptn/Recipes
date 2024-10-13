@@ -27,7 +27,6 @@ class MethodAdapter(private val dataSet: List<String>) :
         val positionString = (position + 1).toString()
 
         binding.tvIngredientDescription.text = "$positionString. $method"
-
     }
 
     override fun getItemCount() = dataSet.size
