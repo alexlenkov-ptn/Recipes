@@ -14,8 +14,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height_large_224"
-            >
+            android:layout_height="@dimen/height_large_224">
 
             <ImageView
                 android:id="@+id/ivBcgRecipe"
@@ -88,17 +87,16 @@
                 android:id="@+id/sbCountsOfRecipes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:thumb="@drawable/shape_seekbar_thumb"
-                android:progressDrawable="@drawable/shape_seekbar_progress"
                 android:max="5"
                 android:min="1"
-                android:progress="1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:paddingStart="@dimen/padding_small_4"
                 android:paddingEnd="@dimen/padding_small_4"
+                android:progress="1"
+                android:progressDrawable="@drawable/shape_seekbar_progress"
+                android:thumb="@drawable/shape_seekbar_thumb"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
-            />
 
         </LinearLayout>
 
