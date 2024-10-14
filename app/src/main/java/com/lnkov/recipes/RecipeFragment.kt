@@ -86,8 +86,8 @@ class RecipeFragment : Fragment() {
             sbCountsOfRecipes.setOnSeekBarChangeListener(
                 object : SeekBar.OnSeekBarChangeListener {
                     override fun onProgressChanged(p0: SeekBar?, progress: Int, p2: Boolean) {
-                        val currentProgress = progress + 1
-                        ingredientsListAdapter.updateIngredients(currentProgress)
+                        ingredientsListAdapter.updateIngredients(progress)
+                        tvNumberOfPortions.text = progress.toString()
                         rvRecipeIngredients.adapter = ingredientsListAdapter
                     }
 
