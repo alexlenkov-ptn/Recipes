@@ -2,6 +2,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
     <solid android:color="@color/seekbarProgressColor" />
-    <corners android:radius="@dimen/radius_small_4" />
+    <corners android:radius="@dimen/main_space_4" />
 
 </shape>

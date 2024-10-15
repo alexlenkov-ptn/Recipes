@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <solid android:color="@color/seekbarThumbColor" />
-    <corners android:radius="@dimen/radius_small_2" />
-    <size android:width="@dimen/width_small_8"
+    <solid android:color="@color/blueColor" />
+    <corners android:radius="@dimen/main_space_2" />
+    <size android:width="@dimen/main_space_8"
         android:height="@dimen/height_normal_30" />
 
 </shape>

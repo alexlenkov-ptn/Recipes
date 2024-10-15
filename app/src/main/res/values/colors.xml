@@ -3,15 +3,14 @@
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="blueColor">#525DC0</color>
+
     <color name="backgroundAppColor">#F4FAFF</color>
-    <color name="buttonCategoryColor">#525DC0</color>
     <color name="buttonFavoritesColor">#E13E3E</color>
     <color name="textTitleCategoryCard">#5F3678</color>
     <color name="textDescriptionCategoryCard">#666666</color>
     <color name="gray">#F5F5F5</color>
     <color name="colorStyleSubtitle16">#626466</color>
     <color name="seekbarProgressColor">#A1A9F9</color>
-    <color name="seekbarThumbColor">#525DC0</color>
-
 
 </resources>

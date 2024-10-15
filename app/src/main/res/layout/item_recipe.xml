@@ -7,7 +7,7 @@
     style="@style/StyleItemCategoryAndRecipeCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/margin_small_8"
+    android:layout_marginHorizontal="@dimen/main_space_8"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
@@ -33,8 +33,8 @@
             style="@style/StyleTitleCategoryAndRecipeCard14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_small_8"
-            android:layout_margin="@dimen/margin_small_8"
+            android:layout_marginStart="@dimen/main_space_8"
+            android:layout_margin="@dimen/main_space_8"
             tools:text="Чизбургер" />
 
     </LinearLayout>

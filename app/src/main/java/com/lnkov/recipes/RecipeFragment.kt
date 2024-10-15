@@ -75,8 +75,8 @@ class RecipeFragment : Fragment() {
             MaterialDividerItemDecoration.VERTICAL,
         ).apply {
             isLastItemDecorated = false
-            dividerInsetStart = resources.getDimensionPixelSize(R.dimen.margin_normal_12)
-            dividerInsetEnd = resources.getDimensionPixelSize(R.dimen.margin_normal_12)
+            dividerInsetStart = resources.getDimensionPixelSize(R.dimen.main_space_12)
+            dividerInsetEnd = resources.getDimensionPixelSize(R.dimen.main_space_12)
             dividerColor = resources.getColor(R.color.gray)
         }
 

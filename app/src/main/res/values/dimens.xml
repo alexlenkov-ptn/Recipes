@@ -1,42 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="main_space_0">0dp</dimen>
+    <dimen name="main_space_2">2dp</dimen>
+    <dimen name="main_space_4">4dp</dimen>
+    <dimen name="main_space_8">8dp</dimen>
+    <dimen name="main_space_12">12dp</dimen>
+    <dimen name="main_space_16">16dp</dimen>
+    <dimen name="main_space_224">224dp</dimen>
 
     <dimen name="margin_large_129">129dp</dimen>
-    <dimen name="margin_normal_16">16dp</dimen>
-    <dimen name="margin_normal_12">12dp</dimen>
-
-    <dimen name="margin_small_8">8dp</dimen>
     <dimen name="margin_normal_6">6dp</dimen>
-    <dimen name="margin_small_4">4dp</dimen>
-    <dimen name="margin_small_2">2dp</dimen>
-
-    <dimen name="width_small_0">0dp</dimen>
-    <dimen name="width_small_8">8dp</dimen>
-
-    <dimen name="height_normal_16">16dp</dimen>
     <dimen name="height_normal_30">30dp</dimen>
-
-    <dimen name="padding_small_0">0dp</dimen>
-    <dimen name="padding_small_4">4dp</dimen>
-    <dimen name="padding_small_8">8dp</dimen>
-    <dimen name="padding_normal_12">12dp</dimen>
     <dimen name="padding_normal_10">10dp</dimen>
-
-    <dimen name="height_large_224">224dp</dimen>
-
-    <dimen name="width_large_242">224dp</dimen>
-
-
-    <dimen name="constraint_layout_category_height">224dp</dimen>
     <dimen name="image_view_category_card_height">130dp</dimen>
 
     <dimen name="text_size_small_12">12sp</dimen>
     <dimen name="text_size_small_14">14sp</dimen>
     <dimen name="text_size_small_16">16sp</dimen>
     <dimen name="text_size_small_20">20sp</dimen>
-
-    <dimen name="radius_small_2">2dp</dimen>
-    <dimen name="radius_small_4">4dp</dimen>
-
 
 </resources>

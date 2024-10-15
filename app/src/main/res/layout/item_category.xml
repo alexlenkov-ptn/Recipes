@@ -7,7 +7,7 @@
     style="@style/StyleItemCategoryAndRecipeCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/margin_small_8"
+    android:layout_marginHorizontal="@dimen/main_space_8"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
@@ -33,8 +33,8 @@
             style="@style/StyleTitleCategoryAndRecipeCard14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_small_8"
-            android:layout_marginTop="@dimen/margin_small_8"
+            android:layout_marginStart="@dimen/main_space_8"
+            android:layout_marginTop="@dimen/main_space_8"
             tools:text="Бургеры" />
 
         <TextView
@@ -42,8 +42,8 @@
             style="@style/StyleDescriptionCategoryCard14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/margin_small_8"
-            android:layout_marginStart="@dimen/margin_small_8"
+            android:layout_marginVertical="@dimen/main_space_8"
+            android:layout_marginStart="@dimen/main_space_8"
             tools:text="Рецепты всех популярных видов бургеров" />
 
     </LinearLayout>
