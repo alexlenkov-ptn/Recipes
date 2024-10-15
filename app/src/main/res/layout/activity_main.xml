@@ -24,24 +24,24 @@
         android:id="@+id/LinearLayoutButtonCategoryAndFavorites"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_normal_16"
-        android:layout_marginBottom="@dimen/margin_small_8"
+        android:layout_marginHorizontal="@dimen/main_space_16"
+        android:layout_marginBottom="@dimen/main_space_8"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <Button
             android:id="@+id/buttonCategory"
             style="@style/StyleNavButton"
-            android:layout_marginEnd="@dimen/margin_small_2"
+            android:layout_marginEnd="@dimen/main_space_2"
             android:layout_weight="1"
-            android:backgroundTint="@color/buttonCategoryColor"
+            android:backgroundTint="@color/blueColor"
             android:text="@string/text_category"
             android:textColor="@color/white" />
 
         <Button
             android:id="@+id/buttonFavorites"
             style="@style/StyleNavButton"
-            android:layout_marginStart="@dimen/margin_small_2"
+            android:layout_marginStart="@dimen/main_space_2"
             android:layout_weight="1"
             android:backgroundTint="@color/buttonFavoritesColor"
             android:text="@string/text_favorites"

@@ -12,7 +12,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/constraint_layout_category_height">
+        android:layout_height="@dimen/main_space_224">
 
         <ImageView
             android:id="@+id/ivBcgRecipeList"
@@ -26,8 +26,8 @@
             style="@style/StyleTitle20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_normal_16"
-            android:layout_marginBottom="@dimen/margin_normal_16"
+            android:layout_marginStart="@dimen/main_space_16"
+            android:layout_marginBottom="@dimen/main_space_16"
             android:background="@drawable/shape_drawable"
             android:padding="@dimen/padding_normal_10"
             tools:text="Бургеры"
@@ -40,8 +40,8 @@
         android:id="@+id/rvRecipes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_small_8"
-        android:layout_marginTop="@dimen/margin_small_8"
+        android:layout_marginHorizontal="@dimen/main_space_8"
+        android:layout_marginTop="@dimen/main_space_8"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="1"
         tools:itemCount="8"
