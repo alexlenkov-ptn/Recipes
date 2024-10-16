@@ -40,6 +40,17 @@
                 app:layout_constraintStart_toStartOf="@+id/ivBcgRecipe"
                 tools:text="Бургер с грибами и сыром" />
 
+            <ImageButton
+                android:id="@+id/ibIcHeart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                tools:src="@drawable/ic_heart"
+                android:layout_marginTop="@dimen/main_space_16"
+                android:layout_marginEnd="@dimen/main_space_16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

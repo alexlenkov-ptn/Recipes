@@ -63,6 +63,7 @@ class RecipeFragment : Fragment() {
             ivBcgRecipe.setImageDrawable(drawable)
             ivBcgRecipe.contentDescription = "Image: ${recipe.imageUrl}"
             tvRecipe.text = recipe.title
+            ibIcHeart.setImageResource(R.drawable.ic_heart)
         }
     }
 
