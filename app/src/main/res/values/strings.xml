@@ -11,6 +11,8 @@
     <string name="text_cooking_method">Способ приготовления</string>
     <string name="text_subtitle_portions">Порции:</string>
     <string name="_1">1</string>
+    <string name="icon_heart">icon heart</string>
+
 
 
 </resources>

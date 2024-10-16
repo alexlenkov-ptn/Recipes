@@ -49,6 +49,7 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initUI(recipe: Recipe) {
+
         val drawable: Drawable? = try {
             Drawable.createFromStream(
                 context?.assets?.open(recipe.imageUrl ?: ""),
@@ -63,7 +64,11 @@ class RecipeFragment : Fragment() {
             ivBcgRecipe.setImageDrawable(drawable)
             ivBcgRecipe.contentDescription = "Image: ${recipe.imageUrl}"
             tvRecipe.text = recipe.title
-            ibIcHeart.setImageResource(R.drawable.ic_heart)
+            ibIcHeart.setImageResource(R.drawable.ic_heart_empty_recipe)
+
+            ibIcHeart.setOnClickListener {
+                ibIcHeart.setImageResource(R.drawable.ic_heart_recipe)
+            }
         }
     }
 
