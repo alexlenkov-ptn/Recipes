@@ -1,5 +1,6 @@
 package com.lnkov.recipes
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
@@ -49,6 +50,8 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initUI(recipe: Recipe) {
+        var heartIconStatus = false
+
         val drawable: Drawable? = try {
             Drawable.createFromStream(
                 context?.assets?.open(recipe.imageUrl ?: ""),
@@ -63,6 +66,17 @@ class RecipeFragment : Fragment() {
             ivBcgRecipe.setImageDrawable(drawable)
             ivBcgRecipe.contentDescription = "Image: ${recipe.imageUrl}"
             tvRecipe.text = recipe.title
+
+            ibIcHeart.apply {
+                setImageResource(R.drawable.ic_heart_empty_recipe)
+
+                setOnClickListener {
+                    heartIconStatus = !heartIconStatus
+
+                    if (heartIconStatus) setImageResource(R.drawable.ic_heart_recipe)
+                    else setImageResource(R.drawable.ic_heart_empty_recipe)
+                }
+            }
         }
     }
 
@@ -101,6 +115,12 @@ class RecipeFragment : Fragment() {
         }
 
 
+    }
+
+    fun saveFavorites(set: Set<Int>) {
+        val sharePref = activity?.getSharedPreferences(
+            getString(R.string.favorites_file_key), Context.MODE_PRIVATE
+        )
     }
 
 

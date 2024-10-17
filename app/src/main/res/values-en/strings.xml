@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="icon_heart">favorites icon</string>
+    <string name="text_ingredients">Ingredients</string>
+    <string name="text_cooking_method">Cooking method</string>
+    <string name="text_subtitle_portions">Portions:</string>
+    <string name="text_category">Categories</string>
+    <string name="text_favorites">Favorites</string>
+    <string name="text_content_description_card_category">The name of the category %1$s</string>
+    <string name="text_content_description_card_recipe">The name of the recipe %1$s</string>
+</resources>
