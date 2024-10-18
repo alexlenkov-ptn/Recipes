@@ -1,5 +1,6 @@
 package com.lnkov.recipes
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Build
@@ -51,6 +52,8 @@ class RecipeFragment : Fragment() {
 
     private fun initUI(recipe: Recipe) {
         var heartIconStatus = false
+        var favoritesSet: MutableSet<String?>? = getFavorites()
+        val recipeIdString = recipe.id.toString()
 
         val drawable: Drawable? = try {
             Drawable.createFromStream(
@@ -68,13 +71,31 @@ class RecipeFragment : Fragment() {
             tvRecipe.text = recipe.title
 
             ibIcHeart.apply {
-                setImageResource(R.drawable.ic_heart_empty_recipe)
+
+                if (favoritesSet?.contains(recipeIdString) == true) {
+                    heartIconStatus = true
+                    setImageResource(R.drawable.ic_heart_recipe)
+                } else {
+                    heartIconStatus = false
+                    setImageResource(R.drawable.ic_heart_empty_recipe)
+                }
 
                 setOnClickListener {
                     heartIconStatus = !heartIconStatus
 
-                    if (heartIconStatus) setImageResource(R.drawable.ic_heart_recipe)
-                    else setImageResource(R.drawable.ic_heart_empty_recipe)
+                    when (heartIconStatus) {
+                        true -> {
+                            setImageResource(R.drawable.ic_heart_recipe)
+                            favoritesSet?.add(recipeIdString)
+                            saveFavorites(favoritesSet?.toSet() as Set<String>)
+                        }
+
+                        false -> {
+                            setImageResource(R.drawable.ic_heart_empty_recipe)
+                            favoritesSet?.remove(recipeIdString)
+                            saveFavorites(favoritesSet?.toSet() as Set<String>)
+                        }
+                    }
                 }
             }
         }
@@ -102,6 +123,7 @@ class RecipeFragment : Fragment() {
 
             sbCountsOfRecipes.setOnSeekBarChangeListener(
                 object : SeekBar.OnSeekBarChangeListener {
+                    @SuppressLint("SetTextI18n")
                     override fun onProgressChanged(p0: SeekBar?, progress: Int, p2: Boolean) {
                         ingredientsListAdapter.updateIngredients(progress)
                         tvNumberOfPortions.text = progress.toString()
@@ -117,10 +139,27 @@ class RecipeFragment : Fragment() {
 
     }
 
-    fun saveFavorites(set: Set<Int>) {
-        val sharePref = activity?.getSharedPreferences(
-            getString(R.string.favorites_file_key), Context.MODE_PRIVATE
-        )
+    fun saveFavorites(stringSet: Set<String>) {
+
+        val sharePrefs = context?.getSharedPreferences(
+            getString(R.string.com_lnkov_recipes_FAVORITES_FILE_KEY),
+            Context.MODE_PRIVATE
+        ) ?: return
+
+        with(sharePrefs.edit()) {
+            putStringSet("favorites_key", stringSet)
+            apply()
+        }
+    }
+
+    fun getFavorites(): MutableSet<String?>? {
+        val sharePrefs = context?.getSharedPreferences(
+            getString(R.string.com_lnkov_recipes_FAVORITES_FILE_KEY),
+            Context.MODE_PRIVATE
+        ) ?: return null
+        val stringHashSet: Set<String> = HashSet<String>()
+
+        return sharePrefs.getStringSet("favorites_key", stringHashSet)
     }
 
 
