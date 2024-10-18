@@ -78,13 +78,19 @@ class RecipeFragment : Fragment() {
             ibIcHeart.apply {
                 setImageResource(R.drawable.ic_heart_empty_recipe)
 
-                if (favoritesSet?.contains(recipeIdString) == true) heartIconStatus = true
-                else heartIconStatus = false
+                if (favoritesSet?.contains(recipeIdString) == true) {
+                    heartIconStatus = true
+                    setImageResource(R.drawable.ic_heart_recipe)
+                }
+                else {
+                    heartIconStatus = false
+                }
 
 // todo я вообще чего-то забыл по какому принципу у нас включается иконка
                 // todo нужно пересмотреть RA-16 и эту реализацию
 
                 setOnClickListener {
+                    heartIconStatus = !heartIconStatus
 
                     when(heartIconStatus) {
                         true -> {
