@@ -52,7 +52,7 @@ class RecipeFragment : Fragment() {
 
     private fun initUI(recipe: Recipe) {
         var heartIconStatus = false
-        var favoritesSet: MutableSet<String?>? = getFavorites()
+        var favoritesSet: MutableSet<String>? = getFavorites()
         val recipeIdString = recipe.id.toString()
 
         val drawable: Drawable? = try {
@@ -152,14 +152,15 @@ class RecipeFragment : Fragment() {
         }
     }
 
-    private fun getFavorites(): MutableSet<String?>? {
+    private fun getFavorites(): MutableSet<String>? {
         val sharePrefs = context?.getSharedPreferences(
             getString(R.string.com_lnkov_recipes_FAVORITES_FILE_KEY),
             Context.MODE_PRIVATE
         ) ?: return null
-        val stringHashSet: Set<String> = HashSet<String>()
 
-        return sharePrefs.getStringSet("favorites_key", stringHashSet)
+        val stringSet = sharePrefs.getStringSet("favorites_key", emptySet())
+
+        return HashSet(stringSet)
     }
 
 
