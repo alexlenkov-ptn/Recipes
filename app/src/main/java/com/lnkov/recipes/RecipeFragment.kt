@@ -139,7 +139,7 @@ class RecipeFragment : Fragment() {
 
     }
 
-    private fun saveFavorites(stringSet: Set<String>) {
+    fun saveFavorites(stringSet: Set<String>) {
 
         val sharePrefs = context?.getSharedPreferences(
             getString(R.string.com_lnkov_recipes_FAVORITES_FILE_KEY),
@@ -152,7 +152,7 @@ class RecipeFragment : Fragment() {
         }
     }
 
-    private fun getFavorites(): MutableSet<String>? {
+    fun getFavorites(): MutableSet<String>? {
         val sharePrefs = context?.getSharedPreferences(
             getString(R.string.com_lnkov_recipes_FAVORITES_FILE_KEY),
             Context.MODE_PRIVATE
