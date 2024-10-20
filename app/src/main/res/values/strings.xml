@@ -11,5 +11,7 @@
 
     <string name="app_name" translatable="false">Recipes</string>
     <string name="_1" translatable="false">1</string>
+    <string name="com.lnkov.recipes.FAVORITES_FILE_KEY" translatable="false">favorites file key</string>
+    <string name="text_favorites">Избранное</string>
 
 </resources>
