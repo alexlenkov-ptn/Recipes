@@ -16,9 +16,14 @@ import com.lnkov.recipes.databinding.FragmentRecipeBinding
 
 class RecipeFragment : Fragment() {
     private val binding by lazy { FragmentRecipeBinding.inflate(layoutInflater) }
-
     private lateinit var ingredientsListAdapter: IngredientsAdapter
     private lateinit var methodAdapter: MethodAdapter
+    private val sharePrefs by lazy {
+        context?.getSharedPreferences(
+            Constants.FAVORITES_KEY,
+            Context.MODE_PRIVATE
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,8 +56,8 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initUI(recipe: Recipe) {
-        var heartIconStatus = false
-        var favoritesSet: MutableSet<String>? = getFavorites()
+        var heartIconStatus: Boolean
+        val favoritesSet: MutableSet<String> = getFavorites()
         val recipeIdString = recipe.id.toString()
 
         val drawable: Drawable? = try {
@@ -71,14 +76,10 @@ class RecipeFragment : Fragment() {
             tvRecipe.text = recipe.title
 
             ibIcHeart.apply {
+                heartIconStatus = favoritesSet.contains(recipeIdString) == true
 
-                if (favoritesSet?.contains(recipeIdString) == true) {
-                    heartIconStatus = true
-                    setImageResource(R.drawable.ic_heart_recipe)
-                } else {
-                    heartIconStatus = false
-                    setImageResource(R.drawable.ic_heart_empty_recipe)
-                }
+                if (heartIconStatus) setImageResource(R.drawable.ic_heart_recipe)
+                else setImageResource(R.drawable.ic_heart_empty_recipe)
 
                 setOnClickListener {
                     heartIconStatus = !heartIconStatus
@@ -86,14 +87,14 @@ class RecipeFragment : Fragment() {
                     when (heartIconStatus) {
                         true -> {
                             setImageResource(R.drawable.ic_heart_recipe)
-                            favoritesSet?.add(recipeIdString)
-                            saveFavorites(favoritesSet?.toSet() as Set<String>)
+                            favoritesSet.add(recipeIdString)
+                            saveFavorites(favoritesSet.toSet() as Set<String>)
                         }
 
                         false -> {
                             setImageResource(R.drawable.ic_heart_empty_recipe)
-                            favoritesSet?.remove(recipeIdString)
-                            saveFavorites(favoritesSet?.toSet() as Set<String>)
+                            favoritesSet.remove(recipeIdString)
+                            saveFavorites(favoritesSet)
                         }
                     }
                 }
@@ -135,32 +136,17 @@ class RecipeFragment : Fragment() {
                 }
             )
         }
-
-
     }
 
     fun saveFavorites(stringSet: Set<String>) {
-
-        val sharePrefs = context?.getSharedPreferences(
-            getString(R.string.com_lnkov_recipes_FAVORITES_FILE_KEY),
-            Context.MODE_PRIVATE
-        ) ?: return
-
-        with(sharePrefs.edit()) {
-            putStringSet("favorites_key", stringSet)
-            apply()
+        with(sharePrefs?.edit()) {
+            this?.putStringSet(Constants.FAVORITES_KEY, stringSet)
+            this?.apply()
         }
     }
 
-    fun getFavorites(): MutableSet<String>? {
-        val sharePrefs = context?.getSharedPreferences(
-            getString(R.string.com_lnkov_recipes_FAVORITES_FILE_KEY),
-            Context.MODE_PRIVATE
-        ) ?: return null
-
-        val stringSet = sharePrefs.getStringSet("favorites_key", emptySet())
-
-        return HashSet(stringSet)
+    fun getFavorites(): MutableSet<String> {
+        return HashSet(sharePrefs?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
     }
 
 
