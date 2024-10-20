@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragmentFavorites"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundAppColor">
+    android:background="@color/backgroundAppColor"
+    android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -24,14 +25,27 @@
             style="@style/StyleTitle20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/main_space_16"
+            android:layout_marginBottom="@dimen/main_space_16"
             android:background="@drawable/shape_drawable"
             android:padding="@dimen/padding_normal_10"
             android:text="@string/text_favorites"
-            android:layout_marginBottom="@dimen/main_space_16"
-            android:layout_marginStart="@dimen/main_space_16"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRecipes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/main_space_8"
+        android:layout_marginTop="@dimen/main_space_8"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="1"
+        tools:itemCount="8"
+        tools:listitem="@layout/item_recipe">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>

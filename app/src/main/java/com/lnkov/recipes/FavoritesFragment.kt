@@ -9,6 +9,8 @@ import com.lnkov.recipes.databinding.FragmentFavoritesBinding
 
 class FavoritesFragment : Fragment() {
     private val binding by lazy { FragmentFavoritesBinding.inflate(layoutInflater) }
+    private lateinit var recipesListAdapter: RecipesListAdapter
+    val favoritesSet: MutableSet<String> = RecipeFragment.
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -16,5 +18,17 @@ class FavoritesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        recipesListAdapter = RecipesListAdapter(STUB.getRecipesByCategoryId(categoryId))
+
+        initRecycler(categoryId)
+    }
+
+    private fun initRecycler(categoryId: Int) {
+
     }
 }

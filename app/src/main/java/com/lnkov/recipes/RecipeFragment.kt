@@ -2,6 +2,7 @@ package com.lnkov.recipes
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
@@ -57,7 +58,7 @@ class RecipeFragment : Fragment() {
 
     private fun initUI(recipe: Recipe) {
         var heartIconStatus: Boolean
-        val favoritesSet: MutableSet<String> = getFavorites()
+        val favoritesSet: MutableSet<String> = getFavorites(sharePrefs)
         val recipeIdString = recipe.id.toString()
 
         val drawable: Drawable? = try {
@@ -88,13 +89,13 @@ class RecipeFragment : Fragment() {
                         true -> {
                             setImageResource(R.drawable.ic_heart_recipe)
                             favoritesSet.add(recipeIdString)
-                            saveFavorites(favoritesSet.toSet() as Set<String>)
+                            saveFavorites(sharePrefs, favoritesSet.toSet() as Set<String>)
                         }
 
                         false -> {
                             setImageResource(R.drawable.ic_heart_empty_recipe)
                             favoritesSet.remove(recipeIdString)
-                            saveFavorites(favoritesSet)
+                            saveFavorites(sharePrefs, favoritesSet)
                         }
                     }
                 }
@@ -138,16 +139,23 @@ class RecipeFragment : Fragment() {
         }
     }
 
-    fun saveFavorites(stringSet: Set<String>) {
+    companion object
+
+    {
+
+    fun saveFavorites(sharePrefs: SharedPreferences?, stringSet: Set<String>) {
         with(sharePrefs?.edit()) {
             this?.putStringSet(Constants.FAVORITES_KEY, stringSet)
             this?.apply()
         }
     }
 
-    fun getFavorites(): MutableSet<String> {
-        return HashSet(sharePrefs?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
+        fun getFavorites(sharePrefs: SharedPreferences?): MutableSet<String> {
+            return HashSet(sharePrefs?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
+        }
+
     }
 
 
+//todo
 }
