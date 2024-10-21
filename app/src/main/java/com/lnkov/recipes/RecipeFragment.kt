@@ -89,7 +89,7 @@ class RecipeFragment : Fragment() {
                         true -> {
                             setImageResource(R.drawable.ic_heart_recipe)
                             favoritesSet.add(recipeIdString)
-                            saveFavorites(sharePrefs, favoritesSet.toSet() as Set<String>)
+                            saveFavorites(sharePrefs, favoritesSet.toSet())
                         }
 
                         false -> {
@@ -139,23 +139,18 @@ class RecipeFragment : Fragment() {
         }
     }
 
-    companion object
+    companion object {
 
-    {
-
-    fun saveFavorites(sharePrefs: SharedPreferences?, stringSet: Set<String>) {
-        with(sharePrefs?.edit()) {
-            this?.putStringSet(Constants.FAVORITES_KEY, stringSet)
-            this?.apply()
+        fun saveFavorites(sharePrefs: SharedPreferences?, stringSet: Set<String>) {
+            with(sharePrefs?.edit()) {
+                this?.putStringSet(Constants.FAVORITES_KEY, stringSet)
+                this?.apply()
+            }
         }
-    }
 
         fun getFavorites(sharePrefs: SharedPreferences?): MutableSet<String> {
             return HashSet(sharePrefs?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
         }
 
     }
-
-
-//todo
 }
