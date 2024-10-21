@@ -277,5 +277,12 @@ object STUB {
     fun getRecipeById(categoryId: Int, recipesId: Int): Recipe? =
         getRecipesByCategoryId(categoryId).find { it.id == recipesId }
 
+    fun getRecipeByIds(set: Set<Int>): List<Recipe?> {
+        val list = set.map {
+            getRecipeById(0, it)
+        }
+
+        return list
+    }
 }
 

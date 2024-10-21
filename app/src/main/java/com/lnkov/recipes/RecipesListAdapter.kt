@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.lnkov.recipes.databinding.ItemRecipeBinding
 
-class RecipesListAdapter(private val dataSet: List<Recipe>) :
+class RecipesListAdapter(private val dataSet: List<Recipe?>) :
     RecyclerView.Adapter<RecipesListAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
@@ -30,28 +30,30 @@ class RecipesListAdapter(private val dataSet: List<Recipe>) :
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
 
-        val recipe: Recipe = dataSet[position]
+        val recipe: Recipe? = dataSet[position]
         val binding = viewHolder.binding
 
         val drawable = try {
             Drawable.createFromStream(
-                viewHolder.itemView.context.assets.open(recipe.imageUrl),
+                viewHolder.itemView.context.assets.open(recipe?.imageUrl.toString()),
                 null
             )
         } catch (e: Exception) {
-            Log.d("!!!", "Image not found: ${recipe.imageUrl}")
+            Log.d("!!!", "Image not found: ${recipe?.imageUrl}")
             null
         }
 
-        binding.tvTitleCardRecipe.text = recipe.title
+        binding.tvTitleCardRecipe.text = recipe?.title
         binding.ivCardRecipe.setImageDrawable(drawable)
         binding.ivCardRecipe.contentDescription =
             binding.root.context.getString(
                 R.string.text_content_description_card_recipe,
-                recipe.title
+                recipe?.title
             )
         binding.cvRecipe.setOnClickListener() {
-            itemClickListener?.onItemClick(recipe.id)
+            if (recipe != null) {
+                itemClickListener?.onItemClick(recipe.id)
+            }
         }
     }
 
