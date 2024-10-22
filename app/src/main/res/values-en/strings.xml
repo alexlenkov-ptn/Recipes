@@ -8,4 +8,5 @@
     <string name="text_favorites">Favorites</string>
     <string name="text_content_description_card_category">The name of the category %1$s</string>
     <string name="text_content_description_card_recipe">The name of the recipe %1$s</string>
+    <string name="tvFavoritesRecyclerIsNull">You haven\'t added any recipes to your favorites yet</string>
 </resources>

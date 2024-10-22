@@ -41,11 +41,21 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/main_space_8"
         android:layout_marginTop="@dimen/main_space_8"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="1"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="8"
         tools:listitem="@layout/item_recipe">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/tvFavoritesRecyclerIsNull"
+        style="@style/tvFavoritesRecyclerIsNull"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/main_space_16"
+        android:layout_marginTop="@dimen/margin_large_202"
+        android:text="@string/tvFavoritesRecyclerIsNull"
+        android:textAlignment="center"
+        tools:visibility="gone" />
 
 </LinearLayout>

@@ -37,11 +37,19 @@ class FavoritesFragment : Fragment() {
 
         favoritesSet = RecipeFragment.getFavorites(sharePrefs)
 
-        initRecycler()
+        if (favoritesSet.isEmpty()) {
+            binding.rvRecipes.visibility = View.GONE
+            binding.tvFavoritesRecyclerIsNull.visibility = View.VISIBLE
+        } else {
+            binding.tvFavoritesRecyclerIsNull.visibility = View.GONE
+            initRecycler()
+        }
+
     }
 
     private fun initRecycler() {
-        recipesListAdapter = RecipesListAdapter(STUB.getRecipeByIds(favoritesSet.map { it.toInt() }.toSet()))
+        recipesListAdapter =
+            RecipesListAdapter(STUB.getRecipeByIds(favoritesSet.map { it.toInt() }.toSet()))
         binding.rvRecipes.adapter = recipesListAdapter
 
         recipesListAdapter.setOnItemClickListener(

@@ -9,6 +9,7 @@
     <dimen name="main_space_40">40dp</dimen>
     <dimen name="main_space_224">224dp</dimen>
 
+    <dimen name="margin_large_202">202dp</dimen>
     <dimen name="margin_large_129">129dp</dimen>
     <dimen name="margin_normal_129">21dp</dimen>
     <dimen name="margin_normal_6">6dp</dimen>
