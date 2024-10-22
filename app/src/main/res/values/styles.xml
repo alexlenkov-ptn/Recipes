@@ -71,4 +71,12 @@
 
     </style>
 
+    <style name="tvFavoritesRecyclerIsNull" parent="TextAppearance.AppCompat">
+
+        <item name="android:fontFamily">@font/montserrat_regular</item>
+        <item name="android:textSize">@dimen/text_size_small_16</item>
+        <item name="android:textColor">@color/textDescriptionCategoryCard</item>
+
+    </style>
+
 </resources>
