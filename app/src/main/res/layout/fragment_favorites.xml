@@ -35,27 +35,40 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvRecipes"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/main_space_8"
-        android:layout_marginTop="@dimen/main_space_8"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:itemCount="8"
-        tools:listitem="@layout/item_recipe">
+        android:layout_height="match_parent">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvRecipes"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_space_0"
+            android:layout_marginTop="@dimen/main_space_8"
+            android:layout_marginHorizontal="@dimen/main_space_8"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:itemCount="8"
+            tools:listitem="@layout/item_recipe"
+            >
 
-    <TextView
-        android:id="@+id/tvFavoritesRecyclerIsNull"
-        style="@style/tvFavoritesRecyclerIsNull"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/main_space_16"
-        android:layout_marginTop="@dimen/margin_large_202"
-        android:text="@string/tvFavoritesRecyclerIsNull"
-        android:textAlignment="center"
-        tools:visibility="gone" />
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/tvFavoritesRecyclerIsNull"
+            style="@style/tvFavoritesRecyclerIsNull"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/main_space_16"
+            android:text="@string/tv_favorites_recycler_is_null"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

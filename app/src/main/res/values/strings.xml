@@ -11,7 +11,6 @@
 
     <string name="app_name" translatable="false">Recipes</string>
     <string name="_1" translatable="false">1</string>
-    <string name="com.lnkov.recipes.FAVORITES_FILE_KEY" translatable="false">favorites file key</string>
-    <string name="tvFavoritesRecyclerIsNull">Вы еще не добавили ни одного рецепта в избранное</string>
+    <string name="tv_favorites_recycler_is_null">Вы еще не добавили ни одного рецепта в избранное</string>
 
 </resources>
