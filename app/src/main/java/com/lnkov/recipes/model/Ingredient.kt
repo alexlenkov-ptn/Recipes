@@ -1,4 +1,4 @@
-package com.lnkov.recipes
+package com.lnkov.recipes.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

@@ -1,4 +1,4 @@
-package com.lnkov.recipes
+package com.lnkov.recipes.ui.recipes.recipe
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -13,7 +13,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import com.google.android.material.divider.MaterialDividerItemDecoration
+import com.lnkov.recipes.R
+import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.databinding.FragmentRecipeBinding
+import com.lnkov.recipes.model.Recipe
+import com.lnkov.recipes.ui.IngredientsAdapter
+import com.lnkov.recipes.ui.MethodAdapter
 
 class RecipeFragment : Fragment() {
     private val binding by lazy { FragmentRecipeBinding.inflate(layoutInflater) }
@@ -25,6 +30,8 @@ class RecipeFragment : Fragment() {
             Context.MODE_PRIVATE
         )
     }
+
+    private lateinit var viewModel : ViewModelRecipe
 
     override fun onCreateView(
         inflater: LayoutInflater,

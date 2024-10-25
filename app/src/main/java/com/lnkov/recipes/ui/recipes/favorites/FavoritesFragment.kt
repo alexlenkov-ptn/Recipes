@@ -1,4 +1,4 @@
-package com.lnkov.recipes
+package com.lnkov.recipes.ui.recipes.favorites
 
 import android.content.Context
 import android.os.Bundle
@@ -9,7 +9,12 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import com.lnkov.recipes.R
+import com.lnkov.recipes.data.Constants
+import com.lnkov.recipes.data.STUB
 import com.lnkov.recipes.databinding.FragmentFavoritesBinding
+import com.lnkov.recipes.ui.recipes.recipe.RecipeFragment
+import com.lnkov.recipes.ui.recipes.recipe_list.RecipesListAdapter
 
 class FavoritesFragment : Fragment() {
     private val binding by lazy { FragmentFavoritesBinding.inflate(layoutInflater) }

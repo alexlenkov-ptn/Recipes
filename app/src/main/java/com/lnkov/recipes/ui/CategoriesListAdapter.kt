@@ -1,10 +1,12 @@
-package com.lnkov.recipes
+package com.lnkov.recipes.ui
 
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.lnkov.recipes.model.Category
+import com.lnkov.recipes.R
 import com.lnkov.recipes.databinding.ItemCategoryBinding
 
 
