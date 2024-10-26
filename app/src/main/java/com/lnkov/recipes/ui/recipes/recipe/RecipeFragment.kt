@@ -31,7 +31,7 @@ class RecipeFragment : Fragment() {
         )
     }
 
-    private lateinit var viewModel : ViewModelRecipe
+    private lateinit var viewModel : RecipeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -133,9 +133,9 @@ class RecipeFragment : Fragment() {
             sbCountsOfRecipes.setOnSeekBarChangeListener(
                 object : SeekBar.OnSeekBarChangeListener {
                     @SuppressLint("SetTextI18n")
-                    override fun onProgressChanged(p0: SeekBar?, progress: Int, p2: Boolean) {
-                        ingredientsListAdapter.updateIngredients(progress)
-                        tvNumberOfPortions.text = progress.toString()
+                    override fun onProgressChanged(p0: SeekBar?, numberOfPortions: Int, p2: Boolean) {
+                        ingredientsListAdapter.updateIngredients(numberOfPortions)
+                        tvNumberOfPortions.text = numberOfPortions.toString()
                         rvRecipeIngredients.adapter = ingredientsListAdapter
                     }
 
