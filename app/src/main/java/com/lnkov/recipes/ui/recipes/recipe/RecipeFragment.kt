@@ -33,7 +33,7 @@ class RecipeFragment : Fragment() {
         )
     }
 
-    private val vmRecipe : RecipeViewModel by activityViewModels()
+    private val vmRecipe: RecipeViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
