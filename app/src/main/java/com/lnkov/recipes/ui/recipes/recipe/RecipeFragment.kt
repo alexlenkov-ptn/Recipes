@@ -47,7 +47,9 @@ class RecipeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        vmRecipe.recipeUiState.observe(viewLifecycleOwner, Observer {})
+        vmRecipe.recipeUiState.observe(viewLifecycleOwner, Observer {
+            state -> Log.i("!!!", "${state.heartIconStatus}")
+        })
 
         arguments?.let {
             var recipe: Recipe? = null
