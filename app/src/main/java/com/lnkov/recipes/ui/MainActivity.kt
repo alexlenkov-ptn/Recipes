@@ -24,8 +24,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        vmRecipe.recipeUiState.observe(this, Observer {})
-
         _binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
