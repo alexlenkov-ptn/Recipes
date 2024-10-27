@@ -1,11 +1,17 @@
 package com.lnkov.recipes.ui.recipes.recipe
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lnkov.recipes.model.RecipeUiState
 
 class RecipeViewModel : ViewModel() {
+
+    init {
+        Log.i("!!!", "RecipeViewModel created")
+        updateHeartIconStatus(true)
+    }
 
     private val _recipeUiState = MutableLiveData<RecipeUiState>()
 
