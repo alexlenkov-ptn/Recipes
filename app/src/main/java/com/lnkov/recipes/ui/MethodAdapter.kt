@@ -1,4 +1,4 @@
-package com.lnkov.recipes
+package com.lnkov.recipes.ui
 
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.RecyclerView

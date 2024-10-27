@@ -1,9 +1,10 @@
-package com.lnkov.recipes
+package com.lnkov.recipes.ui
 
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.lnkov.recipes.model.Ingredient
 import com.lnkov.recipes.databinding.ItemRecipeIngredientsBinding
 
 

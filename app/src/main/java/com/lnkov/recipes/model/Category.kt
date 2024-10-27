@@ -1,4 +1,4 @@
-package com.lnkov.recipes
+package com.lnkov.recipes.model
 
 data class Category(
     val id: Int,

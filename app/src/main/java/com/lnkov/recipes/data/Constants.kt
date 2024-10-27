@@ -1,4 +1,4 @@
-package com.lnkov.recipes
+package com.lnkov.recipes.data
 
 object Constants {
     const val ARG_CATEGORY_ID = "ARG_CATEGORY_ID"

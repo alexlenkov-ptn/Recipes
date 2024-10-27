@@ -1,4 +1,8 @@
-package com.lnkov.recipes
+package com.lnkov.recipes.data
+
+import com.lnkov.recipes.model.Category
+import com.lnkov.recipes.model.Ingredient
+import com.lnkov.recipes.model.Recipe
 
 object STUB {
     private val categories: List<Category> = listOf(
