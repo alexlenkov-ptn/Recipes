@@ -48,7 +48,7 @@ class RecipeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         vmRecipe.recipeUiState.observe(viewLifecycleOwner, Observer {
-            state -> Log.i("!!!", "${state.heartIconStatus}")
+            state -> Log.i("!!!", "state heartIconStatus ${state.heartIconStatus}")
         })
 
         arguments?.let {

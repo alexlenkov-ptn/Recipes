@@ -7,13 +7,13 @@ import androidx.lifecycle.ViewModel
 import com.lnkov.recipes.model.RecipeUiState
 
 class RecipeViewModel : ViewModel() {
+    private val _recipeUiState = MutableLiveData<RecipeUiState>()
 
     init {
         Log.i("!!!", "RecipeViewModel created")
+        _recipeUiState.value = RecipeUiState()
         updateHeartIconStatus(true)
     }
-
-    private val _recipeUiState = MutableLiveData<RecipeUiState>()
 
     val recipeUiState: LiveData<RecipeUiState>
         get() = _recipeUiState
