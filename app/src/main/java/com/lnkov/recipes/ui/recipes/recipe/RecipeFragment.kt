@@ -12,11 +12,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.lnkov.recipes.R
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.databinding.FragmentRecipeBinding
 import com.lnkov.recipes.model.Recipe
+import com.lnkov.recipes.model.RecipeUiState
 import com.lnkov.recipes.ui.IngredientsAdapter
 import com.lnkov.recipes.ui.MethodAdapter
 
@@ -31,7 +33,7 @@ class RecipeFragment : Fragment() {
         )
     }
 
-    private lateinit var viewModel: RecipeViewModel
+    private val vmRecipe : RecipeViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
