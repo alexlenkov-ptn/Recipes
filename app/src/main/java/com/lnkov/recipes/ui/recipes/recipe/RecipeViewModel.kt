@@ -11,7 +11,7 @@ class RecipeViewModel : ViewModel() {
         val recipe: Recipe? = null,
         val heartIconStatus: Boolean = false,
         val drawable: Drawable? = null,
-        val numberOfPortions: Int? = null,
+        val numberOfPortions: Int = 1,
     )
 
 }
