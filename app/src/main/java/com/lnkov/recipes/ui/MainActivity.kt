@@ -19,12 +19,8 @@ class MainActivity : AppCompatActivity() {
         get() = _binding
             ?: throw IllegalStateException("Binding for ActivityLearnWordBinding ust not be null")
 
-    private val vmRecipe: RecipeViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        
 
         _binding = ActivityMainBinding.inflate(layoutInflater)
 

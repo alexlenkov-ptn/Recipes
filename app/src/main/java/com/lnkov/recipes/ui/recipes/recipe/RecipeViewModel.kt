@@ -4,14 +4,22 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.lnkov.recipes.model.RecipeUiState
+import com.lnkov.recipes.model.Recipe
+import android.graphics.drawable.Drawable
+
 
 class RecipeViewModel : ViewModel() {
-    private val _recipeUiState = MutableLiveData<RecipeUiState>()
+    data class RecipeUiState(
+        val recipe: Recipe? = null,
+        val heartIconStatus: Boolean = false,
+        val drawable: Drawable? = null,
+        val numberOfPortions: Int = 1,
+    )
+
+    private val _recipeUiState = MutableLiveData<RecipeUiState>(RecipeUiState())
 
     init {
         Log.i("!!!", "RecipeViewModel created")
-        _recipeUiState.value = RecipeUiState()
         updateHeartIconStatus(true)
     }
 
@@ -26,7 +34,7 @@ class RecipeViewModel : ViewModel() {
         _recipeUiState.value = _recipeUiState.value?.copy(heartIconStatus = newIconStatus)
     }
 
-    fun updateNumberOfPortions(newNumberOfPortions: Int) {
+    private fun updateNumberOfPortions(newNumberOfPortions: Int) {
         _recipeUiState.value = _recipeUiState.value?.copy(numberOfPortions = newNumberOfPortions)
     }
 
