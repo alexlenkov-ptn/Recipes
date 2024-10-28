@@ -1,12 +1,15 @@
 package com.lnkov.recipes.ui
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import com.lnkov.recipes.databinding.ActivityMainBinding
 import androidx.fragment.app.replace
+import androidx.lifecycle.Observer
 import com.lnkov.recipes.R
 import com.lnkov.recipes.ui.recipes.favorites.FavoritesFragment
+import com.lnkov.recipes.ui.recipes.recipe.RecipeViewModel
 
 
 class MainActivity : AppCompatActivity() {
