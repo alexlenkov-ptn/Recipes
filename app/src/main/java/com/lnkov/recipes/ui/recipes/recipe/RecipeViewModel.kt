@@ -3,7 +3,6 @@ package com.lnkov.recipes.ui.recipes.recipe
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.drawable.Drawable
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -14,7 +13,6 @@ import android.graphics.drawable.Drawable
 
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.data.STUB
-import com.lnkov.recipes.model.Recipe
 import com.lnkov.recipes.model.RecipeUiState
 
 class RecipeViewModel : ViewModel() {
@@ -35,7 +33,6 @@ class RecipeViewModel : ViewModel() {
 
     init {
         Log.i("!!!", "RecipeViewModel created")
-        _recipeUiState.value = RecipeUiState()
         updateHeartIconStatus(true)
         val recipe = loadRecipe(0) // todo recipeId получить из bundle
 
@@ -60,8 +57,18 @@ class RecipeViewModel : ViewModel() {
         _recipeUiState.value = _recipeUiState.value?.copy(numberOfPortions = newNumberOfPortions)
     }
 
-    fun loadRecipe(recipeId: Int): Recipe? {
-        return STUB.getRecipeById(0, recipeId)
+    fun loadRecipe() {
+        val recipe = STUB.getRecipeById(0, recipeId)
+        val heartIconStatus = getFavorites(sharePrefs).contains(recipeId.toString())
+
+        _recipeUiState.value = _recipeUiState.value?.copy(
+            recipe = recipe,
+            heartIconStatus = heartIconStatus
+        )
+
+        _recipeUiState.value = RecipeUiState()
+
+        // TODO: пункт 4 доделать
     }
 
     fun getFavorites(sharePrefs: SharedPreferences?): MutableSet<String> {
