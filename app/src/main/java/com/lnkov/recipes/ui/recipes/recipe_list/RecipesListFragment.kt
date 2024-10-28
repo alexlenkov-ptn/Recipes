@@ -78,10 +78,8 @@ class RecipesListFragment : Fragment() {
     private fun openRecipeByRecipesId(categoryId: Int, recipeId: Int) {
         var bundle: Bundle? = null
 
-        val recipe = STUB.getRecipeById(categoryId, recipeId)
-
         bundle = bundleOf(
-            Constants.ARG_RECIPE to recipe
+            Constants.ARG_RECIPE_ID to recipeId
         )
 
         parentFragmentManager.commit {
