@@ -1,6 +1,7 @@
 package com.lnkov.recipes.ui.recipes.recipe
 
 import android.app.Application
+import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.util.Log
@@ -15,6 +16,12 @@ import com.lnkov.recipes.model.RecipeUiState
 class RecipeViewModel(application: Application) : AndroidViewModel(application) {
     private val _recipeUiState = MutableLiveData<RecipeUiState>()
 
+    private val sharePrefs by lazy {
+        application.getSharedPreferences(
+            Constants.FAVORITES_KEY,
+            Context.MODE_PRIVATE
+        )
+    }
 
     init {
         Log.i("!!!", "RecipeViewModel created")
@@ -56,6 +63,10 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
 
     fun loadRecipe(recipeId: Int): Recipe? {
         return STUB.getRecipeById(0, recipeId)
+    }
+
+    fun getFavorites(sharePrefs: SharedPreferences?): MutableSet<String> {
+        return HashSet(sharePrefs?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
     }
 
 }
