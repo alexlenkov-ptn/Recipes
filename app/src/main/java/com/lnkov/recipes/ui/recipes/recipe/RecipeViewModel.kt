@@ -1,19 +1,15 @@
 package com.lnkov.recipes.ui.recipes.recipe
 
-import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lnkov.recipes.model.Recipe
 import android.graphics.drawable.Drawable
-
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.data.STUB
-import com.lnkov.recipes.model.RecipeUiState
 
 class RecipeViewModel : ViewModel() {
     data class RecipeUiState(
