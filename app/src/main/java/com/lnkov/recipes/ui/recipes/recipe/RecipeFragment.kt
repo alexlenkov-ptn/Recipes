@@ -26,6 +26,7 @@ class RecipeFragment : Fragment() {
     private val binding by lazy { FragmentRecipeBinding.inflate(layoutInflater) }
     private lateinit var ingredientsListAdapter: IngredientsAdapter
     private lateinit var methodAdapter: MethodAdapter
+
     private val sharePrefs by lazy {
         context?.getSharedPreferences(
             Constants.FAVORITES_KEY,
@@ -45,10 +46,6 @@ class RecipeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        vmRecipe.recipeUiState.observe(viewLifecycleOwner, Observer {
-            state -> Log.i("!!!", "state heartIconStatus ${state.heartIconStatus}")
-        })
 
         arguments?.let {
             var recipe: Recipe? = null
@@ -111,9 +108,20 @@ class RecipeFragment : Fragment() {
                             saveFavorites(sharePrefs, favoritesSet)
                         }
                     }
+                    vmRecipe.onFavoritesClicked(heartIconStatus)
                 }
             }
         }
+
+        vmRecipe.recipeUiState.observe(viewLifecycleOwner, Observer { state ->
+            Log.i(
+                "!!!", "state heartIconStatus ${state.isFavorite}"
+            )
+            RecipeViewModel.RecipeUiState(
+                recipe = recipe,
+            )
+        })
+
     }
 
     private fun initRecycler(recipe: Recipe) {
@@ -141,12 +149,13 @@ class RecipeFragment : Fragment() {
                     @SuppressLint("SetTextI18n")
                     override fun onProgressChanged(
                         p0: SeekBar?,
-                        numberOfPortions: Int,
+                        portionsCount: Int,
                         p2: Boolean
                     ) {
-                        ingredientsListAdapter.updateIngredients(numberOfPortions)
-                        tvNumberOfPortions.text = numberOfPortions.toString()
+                        ingredientsListAdapter.updateIngredients(portionsCount)
+                        tvNumberOfPortions.text = portionsCount.toString()
                         rvRecipeIngredients.adapter = ingredientsListAdapter
+                        vmRecipe.updateNumberOfPortions(portionsCount)
                     }
 
                     override fun onStartTrackingTouch(p0: SeekBar?) {}
