@@ -101,12 +101,13 @@ class RecipeFragment : Fragment() {
             }
         }
 
-        vmRecipe.recipeUiState.observe(viewLifecycleOwner, Observer { state ->
-            Log.i(
-                "!!!", "state heartIconStatus ${state.isFavorite}"
-            )
+        vmRecipe.recipeUiState.observe(viewLifecycleOwner, Observer { recipeState : RecipeViewModel.RecipeUiState ->
+            Log.i("!!!", "state heartIconStatus ${recipeState.isFavorite}")
             RecipeViewModel.RecipeUiState(
-                recipe = recipe,
+                recipe = recipeState.recipe,
+                isFavorite = recipeState.isFavorite,
+                drawable = recipeState.drawable,
+                portionsCount = recipeState.portionsCount,
             )
         })
 
