@@ -98,6 +98,7 @@ class RecipeFragment : Fragment() {
                     }
                     vmRecipe.onFavoritesClicked(recipe.id)
                 }
+                vmRecipe.saveFavorite()
             }
         }
 

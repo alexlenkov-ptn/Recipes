@@ -16,6 +16,7 @@ import com.lnkov.recipes.data.STUB
 class RecipeViewModel(
     application: Application,
 ) : AndroidViewModel(application) {
+    private var isFavorite: Boolean = false
 
     private val sharedPreferences: SharedPreferences = application.getSharedPreferences(
         Constants.FAVORITES_KEY,
@@ -40,7 +41,11 @@ class RecipeViewModel(
         get() = _recipeUiState
 
     fun onFavoritesClicked(recipeId: Int) {
-        if (sharedPreferences.contains(recipeId.toString()))
+        if (sharedPreferences.contains(recipeId.toString())) isFavorite = true
+    }
+
+    fun saveFavorite() {
+        if (isFavorite)
             _recipeUiState.value = _recipeUiState.value?.copy(isFavorite = true)
         else
             _recipeUiState.value = _recipeUiState.value?.copy(isFavorite = false)
