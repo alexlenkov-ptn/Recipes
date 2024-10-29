@@ -26,6 +26,7 @@ class RecipeFragment : Fragment() {
     private val binding by lazy { FragmentRecipeBinding.inflate(layoutInflater) }
     private lateinit var ingredientsListAdapter: IngredientsAdapter
     private lateinit var methodAdapter: MethodAdapter
+    private val recipe = getRecipe(arguments)
 
     private val sharePrefs by lazy {
         context?.getSharedPreferences(
@@ -47,23 +48,10 @@ class RecipeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.let {
-            var recipe: Recipe? = null
-
-            recipe = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                it.getParcelable(Constants.ARG_RECIPE, Recipe::class.java)
-            } else {
-                it.getParcelable(Constants.ARG_RECIPE)
-            }
-
-            Log.d("!!!", "recipeDeprecatedMethod title: ${recipe?.title}")
-
-            if (recipe != null) {
-                initUI(recipe)
-                initRecycler(recipe)
-            }
+        if (recipe != null) {
+            initUI(recipe)
+            initRecycler(recipe)
         }
-
     }
 
     private fun initUI(recipe: Recipe) {
@@ -108,7 +96,7 @@ class RecipeFragment : Fragment() {
                             saveFavorites(sharePrefs, favoritesSet)
                         }
                     }
-                    vmRecipe.onFavoritesClicked(heartIconStatus)
+                    vmRecipe.onFavoritesClicked(recipe.id)
                 }
             }
         }
@@ -176,6 +164,21 @@ class RecipeFragment : Fragment() {
 
         fun getFavorites(sharePrefs: SharedPreferences?): MutableSet<String> {
             return HashSet(sharePrefs?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
+        }
+
+        fun getRecipe(arguments: Bundle?): Recipe? {
+            var recipe: Recipe? = null
+
+            arguments?.let {
+                Log.d("!!!", "recipeDeprecatedMethod title: ${recipe?.title}")
+
+                recipe = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    it.getParcelable(Constants.ARG_RECIPE, Recipe::class.java)
+                } else {
+                    it.getParcelable(Constants.ARG_RECIPE)
+                }
+            }
+            return recipe
         }
 
     }
