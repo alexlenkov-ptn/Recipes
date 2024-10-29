@@ -1,11 +1,13 @@
 package com.lnkov.recipes.ui.recipes.recipe
 
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.lnkov.recipes.model.Recipe
 import android.graphics.drawable.Drawable
+import com.lnkov.recipes.data.Constants
 
 
 class RecipeViewModel : ViewModel() {
@@ -21,21 +23,30 @@ class RecipeViewModel : ViewModel() {
     init {
         Log.i("!!!", "RecipeViewModel created")
         updateHeartIconStatus(true)
+//        loadRecipe(0)
     }
 
     val recipeUiState: LiveData<RecipeUiState>
         get() = _recipeUiState
 
-    fun updateRecipeUiState(state: RecipeUiState) {
+    private fun updateRecipeUiState(state: RecipeUiState) {
         _recipeUiState.value = state
     }
 
-    fun updateHeartIconStatus(newIconStatus: Boolean) {
+    private fun updateHeartIconStatus(newIconStatus: Boolean) {
         _recipeUiState.value = _recipeUiState.value?.copy(heartIconStatus = newIconStatus)
     }
 
     private fun updateNumberOfPortions(newNumberOfPortions: Int) {
         _recipeUiState.value = _recipeUiState.value?.copy(numberOfPortions = newNumberOfPortions)
+    }
+
+    private fun loadRecipe(recipeId: Int) {
+        // TODO: load from network
+    }
+
+    fun getFavorites(sharePrefs: SharedPreferences?): MutableSet<String> {
+        return HashSet(sharePrefs?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
     }
 
 }
