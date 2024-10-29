@@ -13,10 +13,10 @@ import com.lnkov.recipes.data.Constants
 
 
 class RecipeViewModel(
-    private val application: Application,
+    application: Application,
 ) : AndroidViewModel(application) {
 
-    private val sharedPreferences : SharedPreferences = application.getSharedPreferences(
+    private val sharedPreferences: SharedPreferences = application.getSharedPreferences(
         Constants.FAVORITES_KEY,
         Context.MODE_PRIVATE,
     )
