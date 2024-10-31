@@ -16,7 +16,6 @@ import com.lnkov.recipes.data.STUB
 class RecipeViewModel(
     application: Application,
 ) : AndroidViewModel(application) {
-    private var isFavorite: Boolean = false
 
     private val sharedPreferences: SharedPreferences = application.getSharedPreferences(
         Constants.FAVORITES_KEY,
@@ -34,21 +33,34 @@ class RecipeViewModel(
 
     init {
         Log.i("!!!", "RecipeViewModel created")
-        loadRecipe(0)
     }
 
     val recipeUiState: LiveData<RecipeUiState>
         get() = _recipeUiState
 
-    fun onFavoritesClicked(recipeId: Int) {
-        if (sharedPreferences.contains(recipeId.toString())) isFavorite = true
+    fun onFavoritesClicked(recipeId: Int) : Boolean = sharedPreferences.contains(recipeId.toString())
+
+    fun saveFavorite(boolean: Boolean) {
+        if (boolean) {
+            _recipeUiState.value = recipeUiState.value?.copy(isFavorite = false)
+        } else {
+            _recipeUiState.value = recipeUiState.value?.copy(isFavorite = true)
+        }
+        updateFavorites()
     }
 
-    fun saveFavorite() {
-        if (isFavorite)
-            _recipeUiState.value = _recipeUiState.value?.copy(isFavorite = true)
-        else
-            _recipeUiState.value = _recipeUiState.value?.copy(isFavorite = false)
+    fun updateFavorites() {
+        val favoriteSet : HashSet<String> =
+            HashSet(sharedPreferences?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
+        val recipeIdString = recipeUiState.value?.recipe?.id.toString()
+
+        if (recipeUiState.value?.isFavorite == true) {
+            favoriteSet.add(recipeIdString)
+        } else {
+            favoriteSet.remove(recipeIdString)
+        }
+
+        sharedPreferences.edit().putStringSet(Constants.FAVORITES_KEY, favoriteSet)
     }
 
     fun updateNumberOfPortions(newNumberOfPortions: Int) {
@@ -60,10 +72,10 @@ class RecipeViewModel(
     }
 
 
-    private fun loadRecipe(recipeId: Int) {
+    fun loadRecipe(recipeId: Int?) {
         // TODO: load from network
         _recipeUiState.value = recipeUiState.value?.copy(
-            recipe = STUB.getRecipeById(0, recipeId),
+            recipe = recipeId?.let { STUB.getRecipeById(0, it) },
             isFavorite = getFavorites().contains(recipeId.toString()),
             drawable = recipeUiState.value?.drawable,
             portionsCount = recipeUiState.value?.portionsCount ?: 1,

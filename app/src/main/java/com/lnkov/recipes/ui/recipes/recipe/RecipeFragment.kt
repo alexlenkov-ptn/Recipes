@@ -13,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.lnkov.recipes.R
 import com.lnkov.recipes.data.Constants
@@ -28,13 +27,6 @@ class RecipeFragment : Fragment() {
     private lateinit var methodAdapter: MethodAdapter
     private val recipe = getRecipe(arguments)
 
-    private val sharePrefs by lazy {
-        context?.getSharedPreferences(
-            Constants.FAVORITES_KEY,
-            Context.MODE_PRIVATE
-        )
-    }
-
     private val vmRecipe: RecipeViewModel by viewModels()
 
     override fun onCreateView(
@@ -42,6 +34,7 @@ class RecipeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        vmRecipe.loadRecipe(recipe?.id)
         return binding.root
     }
 
@@ -55,10 +48,6 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initUI(recipe: Recipe) {
-        var heartIconStatus: Boolean
-        val favoritesSet: MutableSet<String> = getFavorites(sharePrefs)
-        val recipeIdString = recipe.id.toString()
-
         val drawable: Drawable? = try {
             Drawable.createFromStream(
                 context?.assets?.open(recipe.imageUrl ?: ""),
@@ -75,42 +64,28 @@ class RecipeFragment : Fragment() {
             tvRecipe.text = recipe.title
 
             ibIcHeart.apply {
-                heartIconStatus = favoritesSet.contains(recipeIdString) == true
+                val heartIconStatus = vmRecipe.recipeUiState.value?.isFavorite
 
-                if (heartIconStatus) setImageResource(R.drawable.ic_heart_recipe)
+                if (heartIconStatus == true) setImageResource(R.drawable.ic_heart_recipe)
                 else setImageResource(R.drawable.ic_heart_empty_recipe)
 
                 setOnClickListener {
-                    heartIconStatus = !heartIconStatus
+                    val isFavorite = vmRecipe.onFavoritesClicked(recipe.id)
 
-                    when (heartIconStatus) {
-                        true -> {
-                            setImageResource(R.drawable.ic_heart_recipe)
-                            favoritesSet.add(recipeIdString)
-                            saveFavorites(sharePrefs, favoritesSet.toSet())
-                        }
-
-                        false -> {
-                            setImageResource(R.drawable.ic_heart_empty_recipe)
-                            favoritesSet.remove(recipeIdString)
-                            saveFavorites(sharePrefs, favoritesSet)
-                        }
+                    when (isFavorite) {
+                        true -> setImageResource(R.drawable.ic_heart_empty_recipe)
+                        false -> setImageResource(R.drawable.ic_heart_recipe)
                     }
-                    vmRecipe.onFavoritesClicked(recipe.id)
+                    vmRecipe.saveFavorite(isFavorite)
                 }
-                vmRecipe.saveFavorite()
             }
         }
 
-        vmRecipe.recipeUiState.observe(viewLifecycleOwner, Observer { recipeState : RecipeViewModel.RecipeUiState ->
+        vmRecipe.recipeUiState.observe(
+            viewLifecycleOwner)
+        { recipeState: RecipeViewModel.RecipeUiState ->
             Log.i("!!!", "state heartIconStatus ${recipeState.isFavorite}")
-            RecipeViewModel.RecipeUiState(
-                recipe = recipeState.recipe,
-                isFavorite = recipeState.isFavorite,
-                drawable = recipeState.drawable,
-                portionsCount = recipeState.portionsCount,
-            )
-        })
+        }
 
     }
 
@@ -147,7 +122,6 @@ class RecipeFragment : Fragment() {
                         rvRecipeIngredients.adapter = ingredientsListAdapter
                         vmRecipe.updateNumberOfPortions(portionsCount)
                     }
-
                     override fun onStartTrackingTouch(p0: SeekBar?) {}
                     override fun onStopTrackingTouch(p0: SeekBar?) {}
                 }
@@ -156,17 +130,6 @@ class RecipeFragment : Fragment() {
     }
 
     companion object {
-
-        fun saveFavorites(sharePrefs: SharedPreferences?, stringSet: Set<String>) {
-            with(sharePrefs?.edit()) {
-                this?.putStringSet(Constants.FAVORITES_KEY, stringSet)
-                this?.apply()
-            }
-        }
-
-        fun getFavorites(sharePrefs: SharedPreferences?): MutableSet<String> {
-            return HashSet(sharePrefs?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
-        }
 
         fun getRecipe(arguments: Bundle?): Recipe? {
             var recipe: Recipe? = null
