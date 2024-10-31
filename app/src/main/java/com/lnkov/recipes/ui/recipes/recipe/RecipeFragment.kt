@@ -82,7 +82,8 @@ class RecipeFragment : Fragment() {
         }
 
         vmRecipe.recipeUiState.observe(
-            viewLifecycleOwner)
+            viewLifecycleOwner
+        )
         { recipeState: RecipeViewModel.RecipeUiState ->
             Log.i("!!!", "state heartIconStatus ${recipeState.isFavorite}")
         }
@@ -122,6 +123,7 @@ class RecipeFragment : Fragment() {
                         rvRecipeIngredients.adapter = ingredientsListAdapter
                         vmRecipe.updateNumberOfPortions(portionsCount)
                     }
+
                     override fun onStartTrackingTouch(p0: SeekBar?) {}
                     override fun onStopTrackingTouch(p0: SeekBar?) {}
                 }
