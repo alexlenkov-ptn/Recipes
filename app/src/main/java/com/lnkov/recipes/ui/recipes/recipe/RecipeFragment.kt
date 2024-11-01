@@ -62,16 +62,7 @@ class RecipeFragment : Fragment() {
             ivBcgRecipe.contentDescription = "Image: ${recipe.imageUrl}"
             tvRecipe.text = recipe.title
 
-            ibIcHeart.apply {
-                var heartIconStatus = vmRecipe.recipeUiState.value?.isFavorite == true
-
-                if (heartIconStatus) setImageResource(R.drawable.ic_heart_recipe)
-                else setImageResource(R.drawable.ic_heart_empty_recipe)
-
-                setOnClickListener {
-                    vmRecipe.onFavoritesClicked()
-                }
-            }
+            ibIcHeart.setOnClickListener { vmRecipe.onFavoritesClicked() }
         }
 
         vmRecipe.recipeUiState.observe(
