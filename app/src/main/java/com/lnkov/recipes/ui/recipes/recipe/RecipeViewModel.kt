@@ -38,16 +38,7 @@ class RecipeViewModel(
     val recipeUiState: LiveData<RecipeUiState>
         get() = _recipeUiState
 
-    fun onFavoritesClicked(boolean: Boolean) {
-        if (boolean) {
-            _recipeUiState.value = recipeUiState.value?.copy(isFavorite = true)
-        } else {
-            _recipeUiState.value = recipeUiState.value?.copy(isFavorite = false)
-        }
-        saveFavorite()
-    }
-
-    private fun saveFavorite() {
+    fun onFavoritesClicked() {
         val favoriteSet: HashSet<String> =
             HashSet(sharedPreferences?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
 
@@ -55,8 +46,10 @@ class RecipeViewModel(
 
         if (favoriteSet.contains(recipeIdString)) {
             favoriteSet.remove(recipeIdString)
+            _recipeUiState.value = recipeUiState.value?.copy(isFavorite = false)
         } else {
             favoriteSet.add(recipeIdString)
+            _recipeUiState.value = recipeUiState.value?.copy(isFavorite = true)
         }
 
         sharedPreferences.edit().putStringSet(Constants.FAVORITES_KEY, favoriteSet).apply()

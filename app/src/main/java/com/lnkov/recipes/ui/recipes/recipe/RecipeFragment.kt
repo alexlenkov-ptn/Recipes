@@ -68,20 +68,8 @@ class RecipeFragment : Fragment() {
                 if (heartIconStatus) setImageResource(R.drawable.ic_heart_recipe)
                 else setImageResource(R.drawable.ic_heart_empty_recipe)
 
-
                 setOnClickListener {
-                    heartIconStatus = !heartIconStatus
-
-                    when (heartIconStatus) {
-                        true -> {
-                            setImageResource(R.drawable.ic_heart_recipe)
-                        }
-
-                        false -> {
-                            setImageResource(R.drawable.ic_heart_empty_recipe)
-                        }
-                    }
-                    vmRecipe.onFavoritesClicked(heartIconStatus)
+                    vmRecipe.onFavoritesClicked()
                 }
             }
         }
@@ -91,6 +79,8 @@ class RecipeFragment : Fragment() {
         )
         { recipeState: RecipeViewModel.RecipeUiState ->
             Log.i("!!!", "state heartIconStatus ${recipeState.isFavorite}")
+            if (recipeState.isFavorite) binding.ibIcHeart.setImageResource(R.drawable.ic_heart_recipe)
+            else binding.ibIcHeart.setImageResource(R.drawable.ic_heart_empty_recipe)
         }
 
     }
