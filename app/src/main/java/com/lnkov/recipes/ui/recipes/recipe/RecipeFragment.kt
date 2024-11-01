@@ -2,7 +2,6 @@ package com.lnkov.recipes.ui.recipes.recipe
 
 import android.annotation.SuppressLint
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -59,7 +58,7 @@ class RecipeFragment : Fragment() {
         }
 
         binding.apply {
-            ivBcgRecipe.setImageDrawable(drawable)
+//            ivBcgRecipe.setImageDrawable(drawable)
             ivBcgRecipe.contentDescription = "Image: ${recipe.imageUrl}"
             tvRecipe.text = recipe.title
 
@@ -71,8 +70,14 @@ class RecipeFragment : Fragment() {
         )
         { recipeState: RecipeViewModel.RecipeUiState ->
             Log.i("!!!", "state heartIconStatus ${recipeState.isFavorite}")
-            if (recipeState.isFavorite) binding.ibIcHeart.setImageResource(R.drawable.ic_heart_recipe)
-            else binding.ibIcHeart.setImageResource(R.drawable.ic_heart_empty_recipe)
+
+            binding.apply {
+                if (recipeState.isFavorite) ibIcHeart.setImageResource(R.drawable.ic_heart_recipe)
+                else ibIcHeart.setImageResource(R.drawable.ic_heart_empty_recipe)
+
+                ivBcgRecipe.setImageDrawable(recipeState.drawable)
+            }
+
         }
 
     }
