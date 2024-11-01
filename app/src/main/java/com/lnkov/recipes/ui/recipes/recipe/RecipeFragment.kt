@@ -31,11 +31,12 @@ class RecipeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        vmRecipe.loadRecipe(getRecipeId(arguments))
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        vmRecipe.loadRecipe(getRecipeId(arguments))
+
         super.onViewCreated(view, savedInstanceState)
         val recipe = vmRecipe.recipeUiState.value?.recipe
 
