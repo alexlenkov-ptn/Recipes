@@ -118,7 +118,7 @@ class RecipeFragment : Fragment() {
         }
     }
 
-    fun getRecipeId(arguments: Bundle?): Int? {
+    private fun getRecipeId(arguments: Bundle?): Int? {
         var recipeId: Int? = null
 
         arguments.let {
