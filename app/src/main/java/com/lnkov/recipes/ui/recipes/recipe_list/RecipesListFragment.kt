@@ -69,19 +69,17 @@ class RecipesListFragment : Fragment() {
         recipesListAdapter.setOnItemClickListener(
             object : RecipesListAdapter.OnItemClickListener {
                 override fun onItemClick(recipeId: Int) {
-                    openRecipeByRecipesId(categoryId, recipeId)
+                    openRecipeByRecipesId(recipeId)
                 }
             }
         )
     }
 
-    private fun openRecipeByRecipesId(categoryId: Int, recipeId: Int) {
+    private fun openRecipeByRecipesId(recipeId: Int) {
         var bundle: Bundle? = null
 
-        val recipe = STUB.getRecipeById(categoryId, recipeId)
-
         bundle = bundleOf(
-            Constants.ARG_RECIPE to recipe
+            Constants.ARG_RECIPE_ID to recipeId
         )
 
         parentFragmentManager.commit {

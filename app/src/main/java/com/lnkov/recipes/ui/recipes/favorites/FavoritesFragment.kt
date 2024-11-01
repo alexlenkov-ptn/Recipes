@@ -1,6 +1,7 @@
 package com.lnkov.recipes.ui.recipes.favorites
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -40,7 +41,7 @@ class FavoritesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        favoritesSet = RecipeFragment.getFavorites(sharePrefs)
+        favoritesSet = getFavorites(sharePrefs)
 
         if (favoritesSet.isEmpty()) {
             binding.rvRecipes.visibility = View.GONE
@@ -73,7 +74,7 @@ class FavoritesFragment : Fragment() {
         val recipe = STUB.getRecipeById(categoryId, recipeId)
 
         bundle = bundleOf(
-            Constants.ARG_RECIPE to recipe
+            Constants.ARG_RECIPE_ID to recipe?.id
         )
 
         parentFragmentManager.commit {
@@ -81,6 +82,10 @@ class FavoritesFragment : Fragment() {
             setReorderingAllowed(true)
             addToBackStack(null)
         }
+    }
+
+    private fun getFavorites(sharePrefs: SharedPreferences?): MutableSet<String> {
+        return HashSet<String>(sharePrefs?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
     }
 
 }

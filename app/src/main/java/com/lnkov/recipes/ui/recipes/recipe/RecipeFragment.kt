@@ -1,8 +1,6 @@
 package com.lnkov.recipes.ui.recipes.recipe
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
@@ -13,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.lnkov.recipes.R
 import com.lnkov.recipes.data.Constants
@@ -26,12 +23,6 @@ class RecipeFragment : Fragment() {
     private val binding by lazy { FragmentRecipeBinding.inflate(layoutInflater) }
     private lateinit var ingredientsListAdapter: IngredientsAdapter
     private lateinit var methodAdapter: MethodAdapter
-    private val sharePrefs by lazy {
-        context?.getSharedPreferences(
-            Constants.FAVORITES_KEY,
-            Context.MODE_PRIVATE
-        )
-    }
 
     private val vmRecipe: RecipeViewModel by viewModels()
 
@@ -44,35 +35,18 @@ class RecipeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        vmRecipe.loadRecipe(getRecipeId(arguments))
+
         super.onViewCreated(view, savedInstanceState)
+        val recipe = vmRecipe.recipeUiState.value?.recipe
 
-        vmRecipe.recipeUiState.observe(viewLifecycleOwner, Observer {
-            state -> Log.i("!!!", "state heartIconStatus ${state.heartIconStatus}")
-        })
-
-        arguments?.let {
-            var recipe: Recipe? = null
-
-            recipe = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                it.getParcelable(Constants.ARG_RECIPE, Recipe::class.java)
-            } else {
-                it.getParcelable(Constants.ARG_RECIPE)
-            }
-
-            Log.d("!!!", "recipeDeprecatedMethod title: ${recipe?.title}")
-
-            if (recipe != null) {
-                initUI(recipe)
-                initRecycler(recipe)
-            }
+        if (recipe != null) {
+            initUI(recipe)
+            initRecycler(recipe)
         }
-
     }
 
     private fun initUI(recipe: Recipe) {
-        var heartIconStatus: Boolean
-        val favoritesSet: MutableSet<String> = getFavorites(sharePrefs)
-        val recipeIdString = recipe.id.toString()
 
         val drawable: Drawable? = try {
             Drawable.createFromStream(
@@ -89,31 +63,18 @@ class RecipeFragment : Fragment() {
             ivBcgRecipe.contentDescription = "Image: ${recipe.imageUrl}"
             tvRecipe.text = recipe.title
 
-            ibIcHeart.apply {
-                heartIconStatus = favoritesSet.contains(recipeIdString) == true
-
-                if (heartIconStatus) setImageResource(R.drawable.ic_heart_recipe)
-                else setImageResource(R.drawable.ic_heart_empty_recipe)
-
-                setOnClickListener {
-                    heartIconStatus = !heartIconStatus
-
-                    when (heartIconStatus) {
-                        true -> {
-                            setImageResource(R.drawable.ic_heart_recipe)
-                            favoritesSet.add(recipeIdString)
-                            saveFavorites(sharePrefs, favoritesSet.toSet())
-                        }
-
-                        false -> {
-                            setImageResource(R.drawable.ic_heart_empty_recipe)
-                            favoritesSet.remove(recipeIdString)
-                            saveFavorites(sharePrefs, favoritesSet)
-                        }
-                    }
-                }
-            }
+            ibIcHeart.setOnClickListener { vmRecipe.onFavoritesClicked() }
         }
+
+        vmRecipe.recipeUiState.observe(
+            viewLifecycleOwner
+        )
+        { recipeState: RecipeViewModel.RecipeUiState ->
+            Log.i("!!!", "state heartIconStatus ${recipeState.isFavorite}")
+            if (recipeState.isFavorite) binding.ibIcHeart.setImageResource(R.drawable.ic_heart_recipe)
+            else binding.ibIcHeart.setImageResource(R.drawable.ic_heart_empty_recipe)
+        }
+
     }
 
     private fun initRecycler(recipe: Recipe) {
@@ -141,12 +102,13 @@ class RecipeFragment : Fragment() {
                     @SuppressLint("SetTextI18n")
                     override fun onProgressChanged(
                         p0: SeekBar?,
-                        numberOfPortions: Int,
+                        portionsCount: Int,
                         p2: Boolean
                     ) {
-                        ingredientsListAdapter.updateIngredients(numberOfPortions)
-                        tvNumberOfPortions.text = numberOfPortions.toString()
+                        ingredientsListAdapter.updateIngredients(portionsCount)
+                        tvNumberOfPortions.text = portionsCount.toString()
                         rvRecipeIngredients.adapter = ingredientsListAdapter
+                        vmRecipe.updateNumberOfPortions(portionsCount)
                     }
 
                     override fun onStartTrackingTouch(p0: SeekBar?) {}
@@ -156,18 +118,14 @@ class RecipeFragment : Fragment() {
         }
     }
 
-    companion object {
+    private fun getRecipeId(arguments: Bundle?): Int? {
+        var recipeId: Int? = null
 
-        fun saveFavorites(sharePrefs: SharedPreferences?, stringSet: Set<String>) {
-            with(sharePrefs?.edit()) {
-                this?.putStringSet(Constants.FAVORITES_KEY, stringSet)
-                this?.apply()
-            }
+        arguments.let {
+            recipeId = it?.getInt(Constants.ARG_RECIPE_ID)
+            Log.d("!!!", "recipe Id: $recipeId")
         }
 
-        fun getFavorites(sharePrefs: SharedPreferences?): MutableSet<String> {
-            return HashSet(sharePrefs?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
-        }
-
+        return recipeId
     }
 }

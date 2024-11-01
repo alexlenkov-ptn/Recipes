@@ -1,41 +1,76 @@
 package com.lnkov.recipes.ui.recipes.recipe
 
+import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.lnkov.recipes.model.Recipe
 import android.graphics.drawable.Drawable
+import androidx.lifecycle.AndroidViewModel
+import com.lnkov.recipes.data.Constants
+import com.lnkov.recipes.data.STUB
 
 
-class RecipeViewModel : ViewModel() {
+class RecipeViewModel(
+    application: Application,
+) : AndroidViewModel(application) {
+
+    private val sharedPreferences: SharedPreferences = application.getSharedPreferences(
+        Constants.FAVORITES_KEY,
+        Context.MODE_PRIVATE,
+    )
+
     data class RecipeUiState(
         val recipe: Recipe? = null,
-        val heartIconStatus: Boolean = false,
+        val isFavorite: Boolean = false,
         val drawable: Drawable? = null,
-        val numberOfPortions: Int = 1,
+        val portionsCount: Int = 1,
     )
 
     private val _recipeUiState = MutableLiveData<RecipeUiState>(RecipeUiState())
 
     init {
         Log.i("!!!", "RecipeViewModel created")
-        updateHeartIconStatus(true)
     }
 
     val recipeUiState: LiveData<RecipeUiState>
         get() = _recipeUiState
 
-    fun updateRecipeUiState(state: RecipeUiState) {
-        _recipeUiState.value = state
+    fun onFavoritesClicked() {
+        val favoriteSet: HashSet<String> =
+            HashSet(sharedPreferences?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
+
+        val recipeIdString = recipeUiState.value?.recipe?.id.toString()
+
+        if (favoriteSet.contains(recipeIdString)) {
+            favoriteSet.remove(recipeIdString)
+            _recipeUiState.value = recipeUiState.value?.copy(isFavorite = false)
+        } else {
+            favoriteSet.add(recipeIdString)
+            _recipeUiState.value = recipeUiState.value?.copy(isFavorite = true)
+        }
+
+        sharedPreferences.edit().putStringSet(Constants.FAVORITES_KEY, favoriteSet).apply()
     }
 
-    fun updateHeartIconStatus(newIconStatus: Boolean) {
-        _recipeUiState.value = _recipeUiState.value?.copy(heartIconStatus = newIconStatus)
+    fun updateNumberOfPortions(newNumberOfPortions: Int) {
+        _recipeUiState.value = _recipeUiState.value?.copy(portionsCount = newNumberOfPortions)
     }
 
-    private fun updateNumberOfPortions(newNumberOfPortions: Int) {
-        _recipeUiState.value = _recipeUiState.value?.copy(numberOfPortions = newNumberOfPortions)
+    private fun getFavorites(): Set<String> {
+        return HashSet(sharedPreferences?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
     }
 
+
+    fun loadRecipe(recipeId: Int?) {
+        // TODO: load from network
+        _recipeUiState.value = recipeUiState.value?.copy(
+            recipe = recipeId?.let { STUB.getRecipeById(0, it) },
+            isFavorite = getFavorites().contains(recipeId.toString()),
+            drawable = recipeUiState.value?.drawable,
+            portionsCount = recipeUiState.value?.portionsCount ?: 1,
+        )
+    }
 }
