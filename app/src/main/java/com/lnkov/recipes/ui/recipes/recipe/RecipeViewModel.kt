@@ -38,29 +38,28 @@ class RecipeViewModel(
     val recipeUiState: LiveData<RecipeUiState>
         get() = _recipeUiState
 
-    fun onFavoritesClicked(recipeId: Int): Boolean = sharedPreferences.contains(recipeId.toString())
-
-    fun saveFavorite(boolean: Boolean) {
+    fun onFavoritesClicked(boolean: Boolean) {
         if (boolean) {
-            _recipeUiState.value = recipeUiState.value?.copy(isFavorite = false)
-        } else {
             _recipeUiState.value = recipeUiState.value?.copy(isFavorite = true)
+        } else {
+            _recipeUiState.value = recipeUiState.value?.copy(isFavorite = false)
         }
-        updateFavorites()
+        saveFavorite()
     }
 
-    fun updateFavorites() {
+    private fun saveFavorite() {
         val favoriteSet: HashSet<String> =
             HashSet(sharedPreferences?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
+
         val recipeIdString = recipeUiState.value?.recipe?.id.toString()
 
-        if (recipeUiState.value?.isFavorite == true) {
-            favoriteSet.add(recipeIdString)
-        } else {
+        if (favoriteSet.contains(recipeIdString)) {
             favoriteSet.remove(recipeIdString)
+        } else {
+            favoriteSet.add(recipeIdString)
         }
 
-        sharedPreferences.edit().putStringSet(Constants.FAVORITES_KEY, favoriteSet)
+        sharedPreferences.edit().putStringSet(Constants.FAVORITES_KEY, favoriteSet).apply()
     }
 
     fun updateNumberOfPortions(newNumberOfPortions: Int) {

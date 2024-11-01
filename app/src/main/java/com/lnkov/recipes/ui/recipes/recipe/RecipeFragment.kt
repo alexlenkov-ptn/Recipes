@@ -1,8 +1,6 @@
 package com.lnkov.recipes.ui.recipes.recipe
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
@@ -25,7 +23,6 @@ class RecipeFragment : Fragment() {
     private val binding by lazy { FragmentRecipeBinding.inflate(layoutInflater) }
     private lateinit var ingredientsListAdapter: IngredientsAdapter
     private lateinit var methodAdapter: MethodAdapter
-    private val recipe = getRecipe(arguments)
 
     private val vmRecipe: RecipeViewModel by viewModels()
 
@@ -34,12 +31,13 @@ class RecipeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        vmRecipe.loadRecipe(recipe?.id)
+        vmRecipe.loadRecipe(getRecipeId(arguments))
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val recipe = vmRecipe.recipeUiState.value?.recipe
 
         if (recipe != null) {
             initUI(recipe)
@@ -48,6 +46,7 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initUI(recipe: Recipe) {
+
         val drawable: Drawable? = try {
             Drawable.createFromStream(
                 context?.assets?.open(recipe.imageUrl ?: ""),
@@ -64,19 +63,25 @@ class RecipeFragment : Fragment() {
             tvRecipe.text = recipe.title
 
             ibIcHeart.apply {
-                val heartIconStatus = vmRecipe.recipeUiState.value?.isFavorite
+                var heartIconStatus = vmRecipe.recipeUiState.value?.isFavorite == true
 
-                if (heartIconStatus == true) setImageResource(R.drawable.ic_heart_recipe)
+                if (heartIconStatus) setImageResource(R.drawable.ic_heart_recipe)
                 else setImageResource(R.drawable.ic_heart_empty_recipe)
 
-                setOnClickListener {
-                    val isFavorite = vmRecipe.onFavoritesClicked(recipe.id)
 
-                    when (isFavorite) {
-                        true -> setImageResource(R.drawable.ic_heart_empty_recipe)
-                        false -> setImageResource(R.drawable.ic_heart_recipe)
+                setOnClickListener {
+                    heartIconStatus = !heartIconStatus
+
+                    when (heartIconStatus) {
+                        true -> {
+                            setImageResource(R.drawable.ic_heart_recipe)
+                        }
+
+                        false -> {
+                            setImageResource(R.drawable.ic_heart_empty_recipe)
+                        }
                     }
-                    vmRecipe.saveFavorite(isFavorite)
+                    vmRecipe.onFavoritesClicked(heartIconStatus)
                 }
             }
         }
@@ -131,22 +136,14 @@ class RecipeFragment : Fragment() {
         }
     }
 
-    companion object {
+    fun getRecipeId(arguments: Bundle?): Int? {
+        var recipeId: Int? = null
 
-        fun getRecipe(arguments: Bundle?): Recipe? {
-            var recipe: Recipe? = null
-
-            arguments?.let {
-                Log.d("!!!", "recipeDeprecatedMethod title: ${recipe?.title}")
-
-                recipe = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    it.getParcelable(Constants.ARG_RECIPE, Recipe::class.java)
-                } else {
-                    it.getParcelable(Constants.ARG_RECIPE)
-                }
-            }
-            return recipe
+        arguments.let {
+            recipeId = it?.getInt(Constants.ARG_RECIPE_ID)
+            Log.d("!!!", "recipe Id: $recipeId")
         }
 
+        return recipeId
     }
 }

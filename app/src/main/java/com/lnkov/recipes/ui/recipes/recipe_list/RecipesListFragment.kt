@@ -69,13 +69,13 @@ class RecipesListFragment : Fragment() {
         recipesListAdapter.setOnItemClickListener(
             object : RecipesListAdapter.OnItemClickListener {
                 override fun onItemClick(recipeId: Int) {
-                    openRecipeByRecipesId(categoryId, recipeId)
+                    openRecipeByRecipesId(recipeId)
                 }
             }
         )
     }
 
-    private fun openRecipeByRecipesId(categoryId: Int, recipeId: Int) {
+    private fun openRecipeByRecipesId(recipeId: Int) {
         var bundle: Bundle? = null
 
         bundle = bundleOf(
