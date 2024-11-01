@@ -47,21 +47,9 @@ class RecipeFragment : Fragment() {
 
     private fun initUI(recipe: Recipe) {
 
-        val drawable: Drawable? = try {
-            Drawable.createFromStream(
-                context?.assets?.open(recipe.imageUrl ?: ""),
-                null
-            )
-        } catch (e: Exception) {
-            Log.d("!!!", "Image not found: ${recipe.imageUrl}")
-            null
-        }
-
         binding.apply {
-//            ivBcgRecipe.setImageDrawable(drawable)
             ivBcgRecipe.contentDescription = "Image: ${recipe.imageUrl}"
             tvRecipe.text = recipe.title
-
             ibIcHeart.setOnClickListener { vmRecipe.onFavoritesClicked() }
         }
 
