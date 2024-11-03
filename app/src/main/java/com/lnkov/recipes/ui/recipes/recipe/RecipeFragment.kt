@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.fragment.app.viewModels
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.lnkov.recipes.R
@@ -47,9 +48,9 @@ class RecipeFragment : Fragment() {
         val vmState = vmRecipeFragment.recipeUiState.value
 
         ingredientsListAdapter =
-            IngredientsAdapter(vmState?.recipe?.ingredients ?: emptyList())
+            IngredientsAdapter((vmState?.recipe?.ingredients ?: emptyList()).toMutableList())
         methodAdapter =
-            MethodAdapter(vmState?.recipe?.method ?: emptyList())
+            MethodAdapter((vmState?.recipe?.method ?: emptyList()).toMutableList())
 
         val decorator = MaterialDividerItemDecoration(
             requireContext(),
@@ -67,7 +68,6 @@ class RecipeFragment : Fragment() {
         { recipeState: RecipeViewModel.RecipeUiState ->
             Log.i("!!!", "state heartIconStatus ${recipeState.isFavorite}")
             Log.i("!!!", "state portionCount ${recipeState.portionsCount}")
-
 
             binding.apply {
                 if (recipeState.isFavorite) ibIcHeart.setImageResource(R.drawable.ic_heart_recipe)
@@ -91,24 +91,25 @@ class RecipeFragment : Fragment() {
             rvRecipeCookingMethod.adapter = methodAdapter
 
             sbCountsOfRecipes.setOnSeekBarChangeListener(
-                object : SeekBar.OnSeekBarChangeListener {
-                    @SuppressLint("SetTextI18n")
-                    override fun onProgressChanged(
-                        p0: SeekBar?,
-                        portionsCount: Int,
-                        p2: Boolean
-                    ) {
-                        Log.d("!!!", "portions: $portionsCount")
-                        vmRecipeFragment.updateNumberOfPortions(portionsCount)
-                    }
-
-                    override fun onStartTrackingTouch(p0: SeekBar?) {}
-                    override fun onStopTrackingTouch(p0: SeekBar?) {}
+                PortionSeekBarListener {
+                    progress ->
+                    vmRecipeFragment.updateNumberOfPortions(progress)
                 }
             )
         }
     }
 
+}
+
+class PortionSeekBarListener(
+    val onChangeIngredientListener : (Int) -> Unit
+) : OnSeekBarChangeListener {
+    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+        onChangeIngredientListener (progress)
+    }
+
+    override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+    override fun onStopTrackingTouch(seekBar: SeekBar?) {}
 }
 
 private fun getRecipeId(arguments: Bundle?): Int? {
