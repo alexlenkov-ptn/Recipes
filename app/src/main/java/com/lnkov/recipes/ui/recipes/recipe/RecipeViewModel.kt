@@ -55,8 +55,9 @@ class RecipeViewModel(
         sharedPreferences.edit().putStringSet(Constants.FAVORITES_KEY, favoriteSet).apply()
     }
 
-    fun updateNumberOfPortions(newNumberOfPortions: Int) {
-        _recipeUiState.value = _recipeUiState.value?.copy(portionsCount = newNumberOfPortions)
+    fun updateNumberOfPortions(count: Int) {
+        _recipeUiState.value = recipeUiState.value?.copy(portionsCount = count)
+        Log.d("!!!", "updateNumberOfPortions: ${recipeUiState.value?.portionsCount}")
     }
 
     private fun getFavorites(): Set<String> {
@@ -94,4 +95,5 @@ class RecipeViewModel(
             portionsCount = recipeUiState.value?.portionsCount ?: 1,
         )
     }
+
 }
