@@ -64,12 +64,33 @@ class RecipeViewModel(
     }
 
 
+    private fun getDrawable(recipe: Recipe?): Drawable? {
+
+        val drawableUrl = recipe?.imageUrl
+
+        val assetManager = getApplication<Application>().assets
+
+        return try {
+            Drawable.createFromStream(
+                assetManager.open(drawableUrl ?: ""),
+                null
+            )
+        } catch (e: Exception) {
+            Log.d("!!!", "Image not found: $drawableUrl")
+            null
+        }
+    }
+
+
     fun loadRecipe(recipeId: Int?) {
         // TODO: load from network
+
+        val recipe = recipeId?.let { STUB.getRecipeById(0, it) }
+
         _recipeUiState.value = recipeUiState.value?.copy(
-            recipe = recipeId?.let { STUB.getRecipeById(0, it) },
+            recipe = recipe,
             isFavorite = getFavorites().contains(recipeId.toString()),
-            drawable = recipeUiState.value?.drawable,
+            drawable = getDrawable(recipe),
             portionsCount = recipeUiState.value?.portionsCount ?: 1,
         )
     }
