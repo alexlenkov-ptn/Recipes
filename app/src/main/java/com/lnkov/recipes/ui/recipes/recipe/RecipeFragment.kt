@@ -91,8 +91,7 @@ class RecipeFragment : Fragment() {
             rvRecipeCookingMethod.adapter = methodAdapter
 
             sbCountsOfRecipes.setOnSeekBarChangeListener(
-                PortionSeekBarListener {
-                    progress ->
+                PortionSeekBarListener { progress ->
                     vmRecipeFragment.updateNumberOfPortions(progress)
                 }
             )
@@ -102,10 +101,10 @@ class RecipeFragment : Fragment() {
 }
 
 class PortionSeekBarListener(
-    val onChangeIngredientListener : (Int) -> Unit
+    val onChangeIngredientListener: (Int) -> Unit
 ) : OnSeekBarChangeListener {
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-        onChangeIngredientListener (progress)
+        onChangeIngredientListener(progress)
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar?) {}
