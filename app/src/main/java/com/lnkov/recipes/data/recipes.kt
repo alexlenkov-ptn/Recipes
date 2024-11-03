@@ -288,9 +288,5 @@ object STUB {
 
         return list
     }
-
-    fun getImageUrlById(categoryId: Int, recipesId: Int): String? {
-        return getRecipesByCategoryId(categoryId).find { it.id == recipesId }?.imageUrl
-    }
 }
 

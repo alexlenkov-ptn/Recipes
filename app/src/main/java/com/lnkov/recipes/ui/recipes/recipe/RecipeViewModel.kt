@@ -64,8 +64,10 @@ class RecipeViewModel(
     }
 
 
-    private fun getDrawable(recipeId: Int?): Drawable? {
-        val drawableUrl = recipeId?.let { STUB.getImageUrlById(0, it) }
+    private fun getDrawable(recipe: Recipe?): Drawable? {
+
+        val drawableUrl = recipe?.imageUrl
+
         val assetManager = getApplication<Application>().assets
 
         return try {
@@ -79,17 +81,16 @@ class RecipeViewModel(
         }
     }
 
-    fun setImageDrawable() {
-
-    }
-
 
     fun loadRecipe(recipeId: Int?) {
         // TODO: load from network
+
+        val recipe = recipeId?.let { STUB.getRecipeById(0, it) }
+
         _recipeUiState.value = recipeUiState.value?.copy(
-            recipe = recipeId?.let { STUB.getRecipeById(0, it) },
+            recipe = recipe,
             isFavorite = getFavorites().contains(recipeId.toString()),
-            drawable = getDrawable(recipeId),
+            drawable = getDrawable(recipe),
             portionsCount = recipeUiState.value?.portionsCount ?: 1,
         )
     }
