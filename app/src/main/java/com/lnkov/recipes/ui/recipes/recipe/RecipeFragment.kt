@@ -1,6 +1,5 @@
 package com.lnkov.recipes.ui.recipes.recipe
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -118,6 +117,5 @@ private fun getRecipeId(arguments: Bundle?): Int? {
         recipeId = it?.getInt(Constants.ARG_RECIPE_ID)
         Log.d("!!!", "recipe Id: $recipeId")
     }
-
     return recipeId
 }
