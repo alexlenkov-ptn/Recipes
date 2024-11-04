@@ -1,7 +1,6 @@
 package com.lnkov.recipes.ui.recipes.recipe
 
 import android.annotation.SuppressLint
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -23,7 +22,7 @@ class RecipeFragment : Fragment() {
     private lateinit var ingredientsListAdapter: IngredientsAdapter
     private lateinit var methodAdapter: MethodAdapter
 
-    private val vmRecipe: RecipeViewModel by viewModels()
+    private val vmRecipeFragment: RecipeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,45 +33,23 @@ class RecipeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        vmRecipe.loadRecipe(getRecipeId(arguments))
+        vmRecipeFragment.loadRecipe(getRecipeId(arguments))
 
         super.onViewCreated(view, savedInstanceState)
-        val recipe = vmRecipe.recipeUiState.value?.recipe
+        val recipe = vmRecipeFragment.recipeUiState.value?.recipe
 
         if (recipe != null) {
             initUI(recipe)
-            initRecycler(recipe)
         }
     }
 
     private fun initUI(recipe: Recipe) {
+        val vmState = vmRecipeFragment.recipeUiState.value
 
-        binding.apply {
-            ivBcgRecipe.contentDescription = "Image: ${recipe.imageUrl}"
-            tvRecipe.text = recipe.title
-            ibIcHeart.setOnClickListener { vmRecipe.onFavoritesClicked() }
-        }
-
-        vmRecipe.recipeUiState.observe(
-            viewLifecycleOwner
-        )
-        { recipeState: RecipeViewModel.RecipeUiState ->
-            Log.i("!!!", "state heartIconStatus ${recipeState.isFavorite}")
-
-            binding.apply {
-                if (recipeState.isFavorite) ibIcHeart.setImageResource(R.drawable.ic_heart_recipe)
-                else ibIcHeart.setImageResource(R.drawable.ic_heart_empty_recipe)
-
-                ivBcgRecipe.setImageDrawable(recipeState.drawable)
-            }
-
-        }
-
-    }
-
-    private fun initRecycler(recipe: Recipe) {
-        ingredientsListAdapter = IngredientsAdapter(recipe.ingredients)
-        methodAdapter = MethodAdapter(recipe.method)
+        ingredientsListAdapter =
+            IngredientsAdapter(vmState?.recipe?.ingredients ?: emptyList())
+        methodAdapter =
+            MethodAdapter(vmState?.recipe?.method ?: emptyList())
 
         val decorator = MaterialDividerItemDecoration(
             requireContext(),
@@ -84,7 +61,30 @@ class RecipeFragment : Fragment() {
             dividerColor = resources.getColor(R.color.gray)
         }
 
+        vmRecipeFragment.recipeUiState.observe(
+            viewLifecycleOwner
+        )
+        { recipeState: RecipeViewModel.RecipeUiState ->
+            Log.i("!!!", "state heartIconStatus ${recipeState.isFavorite}")
+            Log.i("!!!", "state portionCount ${recipeState.portionsCount}")
+
+
+            binding.apply {
+                if (recipeState.isFavorite) ibIcHeart.setImageResource(R.drawable.ic_heart_recipe)
+                else ibIcHeart.setImageResource(R.drawable.ic_heart_empty_recipe)
+                ivBcgRecipe.setImageDrawable(recipeState.drawable)
+
+                ingredientsListAdapter.updateIngredients(recipeState.portionsCount)
+                tvNumberOfPortions.text = recipeState.portionsCount.toString()
+                rvRecipeIngredients.adapter = ingredientsListAdapter
+            }
+        }
+
         binding.apply {
+            ivBcgRecipe.contentDescription = "Image: ${recipe.imageUrl}"
+            tvRecipe.text = recipe.title
+            ibIcHeart.setOnClickListener { vmRecipeFragment.onFavoritesClicked() }
+
             rvRecipeIngredients.addItemDecoration(decorator)
             rvRecipeCookingMethod.addItemDecoration(decorator)
             rvRecipeIngredients.adapter = ingredientsListAdapter
@@ -98,10 +98,8 @@ class RecipeFragment : Fragment() {
                         portionsCount: Int,
                         p2: Boolean
                     ) {
-                        ingredientsListAdapter.updateIngredients(portionsCount)
-                        tvNumberOfPortions.text = portionsCount.toString()
-                        rvRecipeIngredients.adapter = ingredientsListAdapter
-                        vmRecipe.updateNumberOfPortions(portionsCount)
+                        Log.d("!!!", "portions: $portionsCount")
+                        vmRecipeFragment.updateNumberOfPortions(portionsCount)
                     }
 
                     override fun onStartTrackingTouch(p0: SeekBar?) {}
@@ -111,14 +109,15 @@ class RecipeFragment : Fragment() {
         }
     }
 
-    private fun getRecipeId(arguments: Bundle?): Int? {
-        var recipeId: Int? = null
+}
 
-        arguments.let {
-            recipeId = it?.getInt(Constants.ARG_RECIPE_ID)
-            Log.d("!!!", "recipe Id: $recipeId")
-        }
+private fun getRecipeId(arguments: Bundle?): Int? {
+    var recipeId: Int? = null
 
-        return recipeId
+    arguments.let {
+        recipeId = it?.getInt(Constants.ARG_RECIPE_ID)
+        Log.d("!!!", "recipe Id: $recipeId")
     }
+
+    return recipeId
 }

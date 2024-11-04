@@ -1,6 +1,7 @@
 package com.lnkov.recipes.ui
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -25,6 +26,7 @@ class IngredientsAdapter(private val dataSet: List<Ingredient>) :
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val ingredient: Ingredient = dataSet[position]
+
         val ingredientQuantity =
             "${ingredient.quantity.toDouble() * quantity}".removeSuffix(".0")
 
@@ -38,8 +40,12 @@ class IngredientsAdapter(private val dataSet: List<Ingredient>) :
 
     override fun getItemCount() = dataSet.size
 
-    fun updateIngredients(progress: Int) {
-        quantity = progress.toDouble()
+    fun updateIngredients(progress: Int?) {
+        Log.d("!!!", "updateIngredients progress: $progress")
+
+        if (progress != null) quantity = progress.toDouble()
+
+        Log.d("!!!", "updateIngredients quantity: $quantity")
     }
 
 }
