@@ -22,7 +22,7 @@ class RecipeFragment : Fragment() {
     private lateinit var ingredientsListAdapter: IngredientsAdapter
     private lateinit var methodAdapter: MethodAdapter
 
-    private val videwModel: RecipeViewModel by viewModels()
+    private val viewModel: RecipeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,10 +33,10 @@ class RecipeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        videwModel.loadRecipe(getRecipeId(arguments))
+        viewModel.loadRecipe(getRecipeId(arguments))
 
         super.onViewCreated(view, savedInstanceState)
-        val recipe = videwModel.recipeUiState.value?.recipe
+        val recipe = viewModel.recipeUiState.value?.recipe
 
         if (recipe != null) {
             initUI(recipe)
@@ -44,7 +44,7 @@ class RecipeFragment : Fragment() {
     }
 
     private fun initUI(recipe: Recipe) {
-        val vmState = videwModel.recipeUiState.value
+        val vmState = viewModel.recipeUiState.value
 
         ingredientsListAdapter =
             IngredientsAdapter((vmState?.recipe?.ingredients ?: emptyList()).toMutableList())
@@ -61,7 +61,7 @@ class RecipeFragment : Fragment() {
             dividerColor = resources.getColor(R.color.gray)
         }
 
-        videwModel.recipeUiState.observe(
+        viewModel.recipeUiState.observe(
             viewLifecycleOwner
         )
         { recipeState: RecipeViewModel.RecipeUiState ->
@@ -82,7 +82,7 @@ class RecipeFragment : Fragment() {
         binding.apply {
             ivBcgRecipe.contentDescription = "Image: ${recipe.imageUrl}"
             tvRecipe.text = recipe.title
-            ibIcHeart.setOnClickListener { videwModel.onFavoritesClicked() }
+            ibIcHeart.setOnClickListener { viewModel.onFavoritesClicked() }
 
             rvRecipeIngredients.addItemDecoration(decorator)
             rvRecipeCookingMethod.addItemDecoration(decorator)
@@ -91,7 +91,7 @@ class RecipeFragment : Fragment() {
 
             sbCountsOfRecipes.setOnSeekBarChangeListener(
                 PortionSeekBarListener { progress ->
-                    videwModel.updateNumberOfPortions(progress)
+                    viewModel.updateNumberOfPortions(progress)
                 }
             )
         }
