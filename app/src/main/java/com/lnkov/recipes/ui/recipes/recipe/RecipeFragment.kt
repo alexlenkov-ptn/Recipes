@@ -13,7 +13,6 @@ import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.lnkov.recipes.R
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.databinding.FragmentRecipeBinding
-import com.lnkov.recipes.model.Recipe
 import com.lnkov.recipes.ui.IngredientsAdapter
 import com.lnkov.recipes.ui.MethodAdapter
 
@@ -34,22 +33,14 @@ class RecipeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.loadRecipe(getRecipeId(arguments))
-
         super.onViewCreated(view, savedInstanceState)
-        val recipe = viewModel.recipeUiState.value?.recipe
-
-        if (recipe != null) {
-            initUI(recipe)
-        }
+        initUI()
     }
 
-    private fun initUI(recipe: Recipe) {
-        val vmState = viewModel.recipeUiState.value
+    private fun initUI() {
+        ingredientsListAdapter = IngredientsAdapter(emptyList())
 
-        ingredientsListAdapter =
-            IngredientsAdapter((vmState?.recipe?.ingredients ?: emptyList()).toMutableList())
-        methodAdapter =
-            MethodAdapter((vmState?.recipe?.method ?: emptyList()).toMutableList())
+        methodAdapter = MethodAdapter(emptyList())
 
         val decorator = MaterialDividerItemDecoration(
             requireContext(),
@@ -73,29 +64,34 @@ class RecipeFragment : Fragment() {
                 else ibIcHeart.setImageResource(R.drawable.ic_heart_empty_recipe)
                 ivBcgRecipe.setImageDrawable(recipeState.drawable)
 
+                ingredientsListAdapter =
+                    IngredientsAdapter(recipeState.recipe?.ingredients ?: emptyList())
+
+                methodAdapter =
+                    MethodAdapter(recipeState.recipe?.method ?: emptyList())
+
                 ingredientsListAdapter.updateIngredients(recipeState.portionsCount)
                 tvNumberOfPortions.text = recipeState.portionsCount.toString()
                 rvRecipeIngredients.adapter = ingredientsListAdapter
+
+                ivBcgRecipe.contentDescription = "Image: ${recipeState.recipe?.imageUrl}"
+                tvRecipe.text = recipeState.recipe?.title
+                ibIcHeart.setOnClickListener { viewModel.onFavoritesClicked() }
+
+                rvRecipeIngredients.addItemDecoration(decorator)
+                rvRecipeCookingMethod.addItemDecoration(decorator)
+                rvRecipeIngredients.adapter = ingredientsListAdapter
+                rvRecipeCookingMethod.adapter = methodAdapter
+
+                sbCountsOfRecipes.setOnSeekBarChangeListener(
+                    PortionSeekBarListener { progress ->
+                        viewModel.updateNumberOfPortions(progress)
+                    }
+                )
             }
         }
-
-        binding.apply {
-            ivBcgRecipe.contentDescription = "Image: ${recipe.imageUrl}"
-            tvRecipe.text = recipe.title
-            ibIcHeart.setOnClickListener { viewModel.onFavoritesClicked() }
-
-            rvRecipeIngredients.addItemDecoration(decorator)
-            rvRecipeCookingMethod.addItemDecoration(decorator)
-            rvRecipeIngredients.adapter = ingredientsListAdapter
-            rvRecipeCookingMethod.adapter = methodAdapter
-
-            sbCountsOfRecipes.setOnSeekBarChangeListener(
-                PortionSeekBarListener { progress ->
-                    viewModel.updateNumberOfPortions(progress)
-                }
-            )
-        }
     }
+
     private fun getRecipeId(arguments: Bundle?): Int? {
         var recipeId: Int? = null
 

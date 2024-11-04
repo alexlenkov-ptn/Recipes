@@ -11,7 +11,7 @@ import com.lnkov.recipes.databinding.ItemRecipeIngredientsBinding
 import com.lnkov.recipes.model.Recipe
 
 
-class IngredientsAdapter(val dataSet: MutableList<Ingredient>) :
+class IngredientsAdapter(private val dataSet: List<Ingredient>) :
     RecyclerView.Adapter<IngredientsAdapter.ViewHolder>() {
     private var quantity: Double = 1.0
 

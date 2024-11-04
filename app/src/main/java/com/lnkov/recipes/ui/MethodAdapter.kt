@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.lnkov.recipes.databinding.ItemRecipeMethodBinding
 
 
-class MethodAdapter(val dataSet: MutableList<String>) :
+class MethodAdapter(private val dataSet: List<String>) :
     RecyclerView.Adapter<MethodAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: ItemRecipeMethodBinding) :
