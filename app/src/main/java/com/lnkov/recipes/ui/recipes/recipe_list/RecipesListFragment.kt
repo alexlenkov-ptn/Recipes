@@ -37,6 +37,8 @@ class RecipesListFragment : Fragment() {
             val categoryName = it.getString(Constants.ARG_CATEGORY_NAME).toString()
             val categoryImageUrl = it.getString(Constants.ARG_CATEGORY_IMAGE_URL).toString()
 
+            // todo: эти три переменные нужно получать в LD
+
             Log.d("!!!", "Id: $categoryId")
             Log.d("!!!", "Text: $categoryName")
             Log.d("!!!", "Image: $categoryImageUrl")
@@ -50,6 +52,8 @@ class RecipesListFragment : Fragment() {
                 Log.d("!!!", "Image not found: $categoryImageUrl")
                 null
             }
+
+            // todo: drawable нам нужно получать в LD
 
             binding.apply {
                 ivBcgRecipeList.setImageDrawable(drawable)
