@@ -1,6 +1,5 @@
 package com.lnkov.recipes.ui.recipes.recipe
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,12 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.fragment.app.viewModels
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.lnkov.recipes.R
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.databinding.FragmentRecipeBinding
-import com.lnkov.recipes.model.Recipe
 import com.lnkov.recipes.ui.IngredientsAdapter
 import com.lnkov.recipes.ui.MethodAdapter
 
@@ -22,7 +21,7 @@ class RecipeFragment : Fragment() {
     private lateinit var ingredientsListAdapter: IngredientsAdapter
     private lateinit var methodAdapter: MethodAdapter
 
-    private val vmRecipeFragment: RecipeViewModel by viewModels()
+    private val viewModel: RecipeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,23 +32,15 @@ class RecipeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        vmRecipeFragment.loadRecipe(getRecipeId(arguments))
-
+        viewModel.loadRecipe(getRecipeId(arguments))
         super.onViewCreated(view, savedInstanceState)
-        val recipe = vmRecipeFragment.recipeUiState.value?.recipe
-
-        if (recipe != null) {
-            initUI(recipe)
-        }
+        initUI()
     }
 
-    private fun initUI(recipe: Recipe) {
-        val vmState = vmRecipeFragment.recipeUiState.value
+    private fun initUI() {
+        ingredientsListAdapter = IngredientsAdapter(emptyList())
 
-        ingredientsListAdapter =
-            IngredientsAdapter(vmState?.recipe?.ingredients ?: emptyList())
-        methodAdapter =
-            MethodAdapter(vmState?.recipe?.method ?: emptyList())
+        methodAdapter = MethodAdapter(emptyList())
 
         val decorator = MaterialDividerItemDecoration(
             requireContext(),
@@ -61,63 +52,64 @@ class RecipeFragment : Fragment() {
             dividerColor = resources.getColor(R.color.gray)
         }
 
-        vmRecipeFragment.recipeUiState.observe(
+        viewModel.recipeUiState.observe(
             viewLifecycleOwner
         )
         { recipeState: RecipeViewModel.RecipeUiState ->
             Log.i("!!!", "state heartIconStatus ${recipeState.isFavorite}")
             Log.i("!!!", "state portionCount ${recipeState.portionsCount}")
 
-
             binding.apply {
                 if (recipeState.isFavorite) ibIcHeart.setImageResource(R.drawable.ic_heart_recipe)
                 else ibIcHeart.setImageResource(R.drawable.ic_heart_empty_recipe)
                 ivBcgRecipe.setImageDrawable(recipeState.drawable)
 
+                ingredientsListAdapter =
+                    IngredientsAdapter(recipeState.recipe?.ingredients ?: emptyList())
+
+                methodAdapter =
+                    MethodAdapter(recipeState.recipe?.method ?: emptyList())
+
                 ingredientsListAdapter.updateIngredients(recipeState.portionsCount)
                 tvNumberOfPortions.text = recipeState.portionsCount.toString()
                 rvRecipeIngredients.adapter = ingredientsListAdapter
+
+                ivBcgRecipe.contentDescription = "Image: ${recipeState.recipe?.imageUrl}"
+                tvRecipe.text = recipeState.recipe?.title
+                ibIcHeart.setOnClickListener { viewModel.onFavoritesClicked() }
+
+                rvRecipeIngredients.addItemDecoration(decorator)
+                rvRecipeCookingMethod.addItemDecoration(decorator)
+                rvRecipeIngredients.adapter = ingredientsListAdapter
+                rvRecipeCookingMethod.adapter = methodAdapter
+
+                sbCountsOfRecipes.setOnSeekBarChangeListener(
+                    PortionSeekBarListener { progress ->
+                        viewModel.updateNumberOfPortions(progress)
+                    }
+                )
             }
         }
-
-        binding.apply {
-            ivBcgRecipe.contentDescription = "Image: ${recipe.imageUrl}"
-            tvRecipe.text = recipe.title
-            ibIcHeart.setOnClickListener { vmRecipeFragment.onFavoritesClicked() }
-
-            rvRecipeIngredients.addItemDecoration(decorator)
-            rvRecipeCookingMethod.addItemDecoration(decorator)
-            rvRecipeIngredients.adapter = ingredientsListAdapter
-            rvRecipeCookingMethod.adapter = methodAdapter
-
-            sbCountsOfRecipes.setOnSeekBarChangeListener(
-                object : SeekBar.OnSeekBarChangeListener {
-                    @SuppressLint("SetTextI18n")
-                    override fun onProgressChanged(
-                        p0: SeekBar?,
-                        portionsCount: Int,
-                        p2: Boolean
-                    ) {
-                        Log.d("!!!", "portions: $portionsCount")
-                        vmRecipeFragment.updateNumberOfPortions(portionsCount)
-                    }
-
-                    override fun onStartTrackingTouch(p0: SeekBar?) {}
-                    override fun onStopTrackingTouch(p0: SeekBar?) {}
-                }
-            )
-        }
     }
 
+    private fun getRecipeId(arguments: Bundle?): Int? {
+        var recipeId: Int? = null
+
+        arguments.let {
+            recipeId = it?.getInt(Constants.ARG_RECIPE_ID)
+            Log.d("!!!", "recipe Id: $recipeId")
+        }
+        return recipeId
+    }
 }
 
-private fun getRecipeId(arguments: Bundle?): Int? {
-    var recipeId: Int? = null
-
-    arguments.let {
-        recipeId = it?.getInt(Constants.ARG_RECIPE_ID)
-        Log.d("!!!", "recipe Id: $recipeId")
+class PortionSeekBarListener(
+    val onChangeIngredientListener: (Int) -> Unit
+) : OnSeekBarChangeListener {
+    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+        onChangeIngredientListener(progress)
     }
 
-    return recipeId
+    override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+    override fun onStopTrackingTouch(seekBar: SeekBar?) {}
 }
