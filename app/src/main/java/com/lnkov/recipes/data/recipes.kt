@@ -270,7 +270,11 @@ object STUB {
         return categories
     }
 
-    fun getRecipesByCategoryId(id: Int): List<Recipe> {
+    fun getCategoryById(categoryId: Int): Category? {
+        return categories.find { it.id == categoryId }
+    }
+
+    fun getRecipesByCategoryId(id: Int?): List<Recipe> {
         val emptyList: List<Recipe> = listOf()
         return when (id) {
             0 -> burgerRecipes
