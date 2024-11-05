@@ -63,8 +63,6 @@ class RecipesListFragment : Fragment() {
 
             binding.apply {
                 ivBcgRecipeList.setImageDrawable(drawable)
-                ivBcgRecipeList.contentDescription = "Image: $categoryImageUrl"
-                tvBcgRecipeList.text = categoryName
             }
 
 //            initRecycler(categoryId)
@@ -83,6 +81,10 @@ class RecipesListFragment : Fragment() {
             Log.d("!!!", "recipe list state: ${recipesListState.category?.title}")
 
             binding.apply {
+
+                ivBcgRecipeList.contentDescription = "Image: ${recipesListState.category?.imageUrl}"
+                tvBcgRecipeList.text = recipesListState.category?.title
+
 
             }
 
