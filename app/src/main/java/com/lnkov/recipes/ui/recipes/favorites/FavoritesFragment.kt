@@ -10,6 +10,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.fragment.app.viewModels
 import com.lnkov.recipes.R
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.data.STUB
@@ -20,6 +21,8 @@ import com.lnkov.recipes.ui.recipes.recipe_list.RecipesListAdapter
 class FavoritesFragment : Fragment() {
     private val binding by lazy { FragmentFavoritesBinding.inflate(layoutInflater) }
     private lateinit var recipesListAdapter: RecipesListAdapter
+
+    private val viewModel : FavoritesViewModel by viewModels()
 
     private val sharePrefs by lazy {
         requireContext().getSharedPreferences(
@@ -50,6 +53,10 @@ class FavoritesFragment : Fragment() {
             binding.tvFavoritesRecyclerIsNull.visibility = View.GONE
             initRecycler()
         }
+
+    }
+
+    private fun initUi() {
 
     }
 
