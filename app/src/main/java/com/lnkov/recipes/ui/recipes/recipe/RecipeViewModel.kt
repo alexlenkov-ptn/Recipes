@@ -67,10 +67,9 @@ class RecipeViewModel(
 
     private fun getDrawable(recipe: Recipe?): Drawable? {
         val drawableUrl = recipe?.imageUrl
-        val assetManager = getApplication<Application>().assets
         return try {
             Drawable.createFromStream(
-                assetManager.open(drawableUrl ?: ""),
+                getApplication<Application>().assets.open(drawableUrl ?: ""),
                 null
             )
         } catch (e: Exception) {
