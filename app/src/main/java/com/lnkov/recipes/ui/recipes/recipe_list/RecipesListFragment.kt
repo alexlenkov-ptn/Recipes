@@ -1,6 +1,5 @@
 package com.lnkov.recipes.ui.recipes.recipe_list
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -35,76 +34,32 @@ class RecipesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.loadCategory(getCategoryId(arguments))
         super.onViewCreated(view, savedInstanceState)
-
-        arguments?.let {
-            val categoryId = it.getInt(Constants.ARG_CATEGORY_ID)
-            val categoryName = it.getString(Constants.ARG_CATEGORY_NAME).toString()
-            val categoryImageUrl = it.getString(Constants.ARG_CATEGORY_IMAGE_URL).toString()
-
-            // todo: эти три переменные нужно получать в LD
-            // todo нам нужно получать стейт из которого мы бы могли брать эти данные
-            // и инициализировать их во фрагменте
-
-            Log.d("!!!", "Id: $categoryId")
-            Log.d("!!!", "Text: $categoryName")
-            Log.d("!!!", "Image: $categoryImageUrl")
-
-            val drawable: Drawable? = try {
-                Drawable.createFromStream(
-                    context?.assets?.open(categoryImageUrl),
-                    null
-                )
-            } catch (e: Exception) {
-                Log.d("!!!", "Image not found: $categoryImageUrl")
-                null
-            }
-
-            // todo: drawable нам нужно получать в LD
-
-            binding.apply {
-                ivBcgRecipeList.setImageDrawable(drawable)
-            }
-
-//            initRecycler(categoryId)
-            initUi()
-        }
-
+        initUi()
     }
 
     private fun initUi() {
-        recipesListAdapter = RecipesListAdapter(emptyList())
 
-        viewModel.recipeListUiState.observe(
-            viewLifecycleOwner
-        )
+        viewModel.recipeListUiState.observe(viewLifecycleOwner)
         { recipesListState: RecipeListViewModel.RecipeListUiState ->
             Log.d("!!!", "recipe list state: ${recipesListState.category?.title}")
 
-            binding.apply {
+            recipesListAdapter = RecipesListAdapter(recipesListState.recipeList)
 
+            binding.apply {
                 ivBcgRecipeList.contentDescription = "Image: ${recipesListState.category?.imageUrl}"
                 tvBcgRecipeList.text = recipesListState.category?.title
-
-
+                ivBcgRecipeList.setImageDrawable(recipesListState.drawable)
+                rvRecipes.adapter = recipesListAdapter
             }
 
-            initRecycler(recipesListState.category?.id)
-        }
-    }
-
-    private fun initRecycler(categoryId: Int?) {
-        recipesListAdapter = RecipesListAdapter(
-            STUB.getRecipesByCategoryId(categoryId))
-
-        binding.rvRecipes.adapter = recipesListAdapter
-
-        recipesListAdapter.setOnItemClickListener(
-            object : RecipesListAdapter.OnItemClickListener {
-                override fun onItemClick(recipeId: Int) {
-                    openRecipeByRecipesId(recipeId)
+            recipesListAdapter.setOnItemClickListener(
+                object : RecipesListAdapter.OnItemClickListener {
+                    override fun onItemClick(recipeId: Int) {
+                        openRecipeByRecipesId(recipeId)
+                    }
                 }
-            }
-        )
+            )
+        }
     }
 
     private fun openRecipeByRecipesId(recipeId: Int) {
