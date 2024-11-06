@@ -64,11 +64,9 @@ class RecipeFragment : Fragment() {
                 else ibIcHeart.setImageResource(R.drawable.ic_heart_empty_recipe)
                 ivBcgRecipe.setImageDrawable(state.drawable)
 
-                ingredientsListAdapter =
-                    IngredientsAdapter(state.recipe?.ingredients ?: emptyList())
+                ingredientsListAdapter.updateData(state.recipe?.ingredients ?: emptyList())
 
-                methodAdapter =
-                    MethodAdapter(state.recipe?.method ?: emptyList())
+                methodAdapter.updateData(state.recipe?.method ?: emptyList())
 
                 ingredientsListAdapter.updateIngredients(state.portionsCount)
                 tvNumberOfPortions.text = state.portionsCount.toString()
@@ -76,10 +74,7 @@ class RecipeFragment : Fragment() {
 
                 ivBcgRecipe.contentDescription = "Image: ${state.recipe?.imageUrl}"
                 tvRecipe.text = state.recipe?.title
-                ibIcHeart.setOnClickListener { viewModel.onFavoritesClicked() }
 
-                rvRecipeIngredients.addItemDecoration(decorator)
-                rvRecipeCookingMethod.addItemDecoration(decorator)
                 rvRecipeIngredients.adapter = ingredientsListAdapter
                 rvRecipeCookingMethod.adapter = methodAdapter
 
@@ -89,6 +84,12 @@ class RecipeFragment : Fragment() {
                     }
                 )
             }
+        }
+
+        binding.apply {
+            ibIcHeart.setOnClickListener { viewModel.onFavoritesClicked() }
+            rvRecipeIngredients.addItemDecoration(decorator)
+            rvRecipeCookingMethod.addItemDecoration(decorator)
         }
     }
 
