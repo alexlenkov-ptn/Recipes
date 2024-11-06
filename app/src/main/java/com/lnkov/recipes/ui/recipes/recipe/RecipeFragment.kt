@@ -86,6 +86,7 @@ class RecipeFragment : Fragment() {
             }
         }
 
+
         binding.apply {
             ibIcHeart.setOnClickListener { viewModel.onFavoritesClicked() }
             rvRecipeIngredients.addItemDecoration(decorator)
