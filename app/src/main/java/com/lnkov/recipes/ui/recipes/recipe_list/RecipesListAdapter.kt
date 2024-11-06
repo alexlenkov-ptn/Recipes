@@ -12,10 +12,10 @@ import com.lnkov.recipes.databinding.ItemRecipeBinding
 class RecipesListAdapter(private var dataSet: List<Recipe?>) :
     RecyclerView.Adapter<RecipesListAdapter.ViewHolder>() {
 
-        fun updateData(dataSet: List<Recipe?>) {
-            this.dataSet = dataSet
-            notifyDataSetChanged()
-        }
+    fun updateData(dataSet: List<Recipe?>) {
+        this.dataSet = dataSet
+        notifyDataSetChanged()
+    }
 
     interface OnItemClickListener {
         fun onItemClick(recipeId: Int)
