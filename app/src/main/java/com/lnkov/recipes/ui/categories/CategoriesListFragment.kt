@@ -1,6 +1,7 @@
-package com.lnkov.recipes.ui
+package com.lnkov.recipes.ui.categories
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.fragment.app.viewModels
 import com.lnkov.recipes.R
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.data.STUB
@@ -18,6 +20,7 @@ class CategoriesListFragment : Fragment() {
     private val binding by lazy { FragmentListCategoriesBinding.inflate(layoutInflater) }
 
     private lateinit var categoriesListAdapter: CategoriesListAdapter
+    private val viewModel: CategoriesViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,23 +31,29 @@ class CategoriesListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.loadCategories()
         super.onViewCreated(view, savedInstanceState)
-        initRecycler()
+        initUi()
     }
 
-    private fun initRecycler() {
-        categoriesListAdapter = CategoriesListAdapter(STUB.getCategories())
+    private fun initUi() {
+        categoriesListAdapter = CategoriesListAdapter(emptyList()).apply {
+            setOnItemClickListener(
+                object : CategoriesListAdapter.OnItemClickListener {
+                    override fun onItemClick(categoryId: Int) {
+                        openRecipesByCategoryId(categoryId)
+                    }
+                })
+        }
 
+        viewModel.categoryUiState.observe(viewLifecycleOwner)
+        { categoriesState: CategoriesViewModel.CategoriesUiState ->
+            Log.d("!!!", "categories state: ${categoriesState.categories}")
 
-        categoriesListAdapter.setOnItemClickListener(
-            object : CategoriesListAdapter.OnItemClickListener {
-                override fun onItemClick(categoryId: Int) {
-                    openRecipesByCategoryId(categoryId)
-                }
-            })
+            categoriesListAdapter.updateData(categoriesState.categories)
 
-        binding.rvCategories.adapter = categoriesListAdapter
-
+            binding.rvCategories.adapter = categoriesListAdapter
+        }
     }
 
     private fun openRecipesByCategoryId(categoryId: Int) {

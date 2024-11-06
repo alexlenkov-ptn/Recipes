@@ -1,6 +1,5 @@
 package com.lnkov.recipes.ui.recipes.recipe_list
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +9,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.fragment.app.viewModels
 import com.lnkov.recipes.R
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.data.STUB
@@ -21,6 +21,8 @@ class RecipesListFragment : Fragment() {
 
     private lateinit var recipesListAdapter: RecipesListAdapter
 
+    private val viewModel: RecipeListViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,49 +32,36 @@ class RecipesListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.loadCategory(getCategoryId(arguments))
         super.onViewCreated(view, savedInstanceState)
-
-        arguments?.let {
-            val categoryId = it.getInt(Constants.ARG_CATEGORY_ID)
-            val categoryName = it.getString(Constants.ARG_CATEGORY_NAME).toString()
-            val categoryImageUrl = it.getString(Constants.ARG_CATEGORY_IMAGE_URL).toString()
-
-            Log.d("!!!", "Id: $categoryId")
-            Log.d("!!!", "Text: $categoryName")
-            Log.d("!!!", "Image: $categoryImageUrl")
-
-            val drawable: Drawable? = try {
-                Drawable.createFromStream(
-                    context?.assets?.open(categoryImageUrl),
-                    null
-                )
-            } catch (e: Exception) {
-                Log.d("!!!", "Image not found: $categoryImageUrl")
-                null
-            }
-
-            binding.apply {
-                ivBcgRecipeList.setImageDrawable(drawable)
-                ivBcgRecipeList.contentDescription = "Image: $categoryImageUrl"
-                tvBcgRecipeList.text = categoryName
-            }
-
-            initRecycler(categoryId)
-        }
-
+        initUi()
     }
 
-    private fun initRecycler(categoryId: Int) {
-        recipesListAdapter = RecipesListAdapter(STUB.getRecipesByCategoryId(categoryId))
-        binding.rvRecipes.adapter = recipesListAdapter
+    private fun initUi() {
 
-        recipesListAdapter.setOnItemClickListener(
-            object : RecipesListAdapter.OnItemClickListener {
-                override fun onItemClick(recipeId: Int) {
-                    openRecipeByRecipesId(recipeId)
+        recipesListAdapter = RecipesListAdapter(emptyList()).apply {
+            setOnItemClickListener(
+                object : RecipesListAdapter.OnItemClickListener {
+                    override fun onItemClick(recipeId: Int) {
+                        openRecipeByRecipesId(recipeId)
+                    }
                 }
+            )
+        }
+
+        viewModel.recipeListUiState.observe(viewLifecycleOwner)
+        { recipesListState: RecipeListViewModel.RecipeListUiState ->
+            Log.d("!!!", "recipe list state: ${recipesListState.category?.title}")
+
+            recipesListAdapter.updateData(recipesListState.recipeList)
+
+            binding.apply {
+                ivBcgRecipeList.contentDescription = "Image: ${recipesListState.category?.imageUrl}"
+                tvBcgRecipeList.text = recipesListState.category?.title
+                ivBcgRecipeList.setImageDrawable(recipesListState.drawable)
+                rvRecipes.adapter = recipesListAdapter
             }
-        )
+        }
     }
 
     private fun openRecipeByRecipesId(recipeId: Int) {
@@ -86,6 +75,12 @@ class RecipesListFragment : Fragment() {
             replace<RecipeFragment>(R.id.mainContainer, args = bundle)
             setReorderingAllowed(true)
             addToBackStack(null)
+        }
+    }
+
+    private fun getCategoryId(arguments: Bundle?): Int? {
+        return arguments.let {
+            it?.getInt(Constants.ARG_CATEGORY_ID)
         }
     }
 }

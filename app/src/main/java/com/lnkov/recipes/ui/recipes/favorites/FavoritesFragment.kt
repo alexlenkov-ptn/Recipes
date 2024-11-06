@@ -1,8 +1,8 @@
 package com.lnkov.recipes.ui.recipes.favorites
 
-import android.content.Context
-import android.content.SharedPreferences
+
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +10,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.fragment.app.viewModels
 import com.lnkov.recipes.R
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.data.STUB
@@ -21,14 +22,7 @@ class FavoritesFragment : Fragment() {
     private val binding by lazy { FragmentFavoritesBinding.inflate(layoutInflater) }
     private lateinit var recipesListAdapter: RecipesListAdapter
 
-    private val sharePrefs by lazy {
-        requireContext().getSharedPreferences(
-            Constants.FAVORITES_KEY,
-            Context.MODE_PRIVATE
-        )
-    }
-
-    private lateinit var favoritesSet: Set<String>
+    private val viewModel: FavoritesViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,32 +33,39 @@ class FavoritesFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.loadRecipes()
         super.onViewCreated(view, savedInstanceState)
-
-        favoritesSet = getFavorites(sharePrefs)
-
-        if (favoritesSet.isEmpty()) {
-            binding.rvRecipes.visibility = View.GONE
-            binding.tvFavoritesRecyclerIsNull.visibility = View.VISIBLE
-        } else {
-            binding.tvFavoritesRecyclerIsNull.visibility = View.GONE
-            initRecycler()
-        }
-
+        initUi()
     }
 
-    private fun initRecycler() {
-        recipesListAdapter =
-            RecipesListAdapter(STUB.getRecipeByIds(favoritesSet.map { it.toInt() }.toSet()))
-        binding.rvRecipes.adapter = recipesListAdapter
+    private fun initUi() {
 
-        recipesListAdapter.setOnItemClickListener(
-            object : RecipesListAdapter.OnItemClickListener {
-                override fun onItemClick(recipeId: Int) {
-                    openRecipeByRecipesId(0, recipeId)
+        recipesListAdapter = RecipesListAdapter(emptyList()).apply {
+            setOnItemClickListener(
+                object : RecipesListAdapter.OnItemClickListener {
+                    override fun onItemClick(recipeId: Int) {
+                        openRecipeByRecipesId(0, recipeId)
+                    }
+                }
+            )
+        }
+
+        viewModel.favoriteUiState.observe(
+            viewLifecycleOwner
+        ) { state: FavoritesViewModel.FavoritesUiState ->
+            Log.i("!!!", "state favoriteList ${state.favoriteList}")
+
+            binding.apply {
+                if (state.favoriteList.isEmpty()) {
+                    rvRecipes.visibility = View.GONE
+                    tvFavoritesRecyclerIsNull.visibility = View.VISIBLE
+                } else {
+                    tvFavoritesRecyclerIsNull.visibility = View.GONE
+                    recipesListAdapter.updateData(state.favoriteList)
+                    rvRecipes.adapter = recipesListAdapter
                 }
             }
-        )
+        }
 
     }
 
@@ -82,10 +83,6 @@ class FavoritesFragment : Fragment() {
             setReorderingAllowed(true)
             addToBackStack(null)
         }
-    }
-
-    private fun getFavorites(sharePrefs: SharedPreferences?): MutableSet<String> {
-        return HashSet<String>(sharePrefs?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
     }
 
 }
