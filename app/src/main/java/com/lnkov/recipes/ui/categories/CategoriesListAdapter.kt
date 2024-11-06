@@ -1,4 +1,4 @@
-package com.lnkov.recipes.ui
+package com.lnkov.recipes.ui.categories
 
 import android.graphics.drawable.Drawable
 import android.util.Log
@@ -10,11 +10,15 @@ import com.lnkov.recipes.R
 import com.lnkov.recipes.databinding.ItemCategoryBinding
 
 
-class CategoriesListAdapter(private val dataSet: List<Category>) :
+class CategoriesListAdapter(private var dataSet: List<Category>) :
     RecyclerView.Adapter<CategoriesListAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
         fun onItemClick(categoryId: Int)
+    }
+
+    fun updateData(dataSet: List<Category>) {
+        this.dataSet = dataSet
     }
 
     private var itemClickListener: OnItemClickListener? = null
