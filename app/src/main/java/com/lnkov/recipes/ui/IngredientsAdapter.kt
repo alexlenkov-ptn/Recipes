@@ -16,6 +16,10 @@ class IngredientsAdapter(var dataSet: List<Ingredient>) :
     private var quantity: Double = 1.0
 
 
+    fun updateData(dataSet: List<Ingredient>) {
+        this.dataSet = dataSet
+    }
+
     class ViewHolder(val binding: ItemRecipeIngredientsBinding) :
         RecyclerView.ViewHolder(binding.root)
 
