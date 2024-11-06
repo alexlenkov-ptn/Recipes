@@ -62,7 +62,6 @@ class RecipesListFragment : Fragment() {
                 rvRecipes.adapter = recipesListAdapter
             }
         }
-
     }
 
     private fun openRecipeByRecipesId(recipeId: Int) {
