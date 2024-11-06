@@ -40,7 +40,7 @@ class RecipesListFragment : Fragment() {
     private fun initUi() {
 
         recipesListAdapter = RecipesListAdapter(emptyList()).apply {
-            recipesListAdapter.setOnItemClickListener(
+            setOnItemClickListener(
                 object : RecipesListAdapter.OnItemClickListener {
                     override fun onItemClick(recipeId: Int) {
                         openRecipeByRecipesId(recipeId)
