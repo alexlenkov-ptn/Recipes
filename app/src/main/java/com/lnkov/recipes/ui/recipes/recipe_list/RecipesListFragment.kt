@@ -39,19 +39,7 @@ class RecipesListFragment : Fragment() {
 
     private fun initUi() {
 
-        viewModel.recipeListUiState.observe(viewLifecycleOwner)
-        { recipesListState: RecipeListViewModel.RecipeListUiState ->
-            Log.d("!!!", "recipe list state: ${recipesListState.category?.title}")
-
-            recipesListAdapter = RecipesListAdapter(recipesListState.recipeList)
-
-            binding.apply {
-                ivBcgRecipeList.contentDescription = "Image: ${recipesListState.category?.imageUrl}"
-                tvBcgRecipeList.text = recipesListState.category?.title
-                ivBcgRecipeList.setImageDrawable(recipesListState.drawable)
-                rvRecipes.adapter = recipesListAdapter
-            }
-
+        recipesListAdapter = RecipesListAdapter(emptyList()).apply {
             recipesListAdapter.setOnItemClickListener(
                 object : RecipesListAdapter.OnItemClickListener {
                     override fun onItemClick(recipeId: Int) {
@@ -60,6 +48,21 @@ class RecipesListFragment : Fragment() {
                 }
             )
         }
+
+        viewModel.recipeListUiState.observe(viewLifecycleOwner)
+        { recipesListState: RecipeListViewModel.RecipeListUiState ->
+            Log.d("!!!", "recipe list state: ${recipesListState.category?.title}")
+
+            recipesListAdapter.updateData(recipesListState.recipeList)
+
+            binding.apply {
+                ivBcgRecipeList.contentDescription = "Image: ${recipesListState.category?.imageUrl}"
+                tvBcgRecipeList.text = recipesListState.category?.title
+                ivBcgRecipeList.setImageDrawable(recipesListState.drawable)
+                rvRecipes.adapter = recipesListAdapter
+            }
+        }
+
     }
 
     private fun openRecipeByRecipesId(recipeId: Int) {
