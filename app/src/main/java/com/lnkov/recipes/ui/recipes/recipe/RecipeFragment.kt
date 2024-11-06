@@ -55,27 +55,27 @@ class RecipeFragment : Fragment() {
         viewModel.recipeUiState.observe(
             viewLifecycleOwner
         )
-        { recipeState: RecipeViewModel.RecipeUiState ->
-            Log.i("!!!", "state heartIconStatus ${recipeState.isFavorite}")
-            Log.i("!!!", "state portionCount ${recipeState.portionsCount}")
+        { state: RecipeViewModel.RecipeUiState ->
+            Log.i("!!!", "state heartIconStatus ${state.isFavorite}")
+            Log.i("!!!", "state portionCount ${state.portionsCount}")
 
             binding.apply {
-                if (recipeState.isFavorite) ibIcHeart.setImageResource(R.drawable.ic_heart_recipe)
+                if (state.isFavorite) ibIcHeart.setImageResource(R.drawable.ic_heart_recipe)
                 else ibIcHeart.setImageResource(R.drawable.ic_heart_empty_recipe)
-                ivBcgRecipe.setImageDrawable(recipeState.drawable)
+                ivBcgRecipe.setImageDrawable(state.drawable)
 
                 ingredientsListAdapter =
-                    IngredientsAdapter(recipeState.recipe?.ingredients ?: emptyList())
+                    IngredientsAdapter(state.recipe?.ingredients ?: emptyList())
 
                 methodAdapter =
-                    MethodAdapter(recipeState.recipe?.method ?: emptyList())
+                    MethodAdapter(state.recipe?.method ?: emptyList())
 
-                ingredientsListAdapter.updateIngredients(recipeState.portionsCount)
-                tvNumberOfPortions.text = recipeState.portionsCount.toString()
+                ingredientsListAdapter.updateIngredients(state.portionsCount)
+                tvNumberOfPortions.text = state.portionsCount.toString()
                 rvRecipeIngredients.adapter = ingredientsListAdapter
 
-                ivBcgRecipe.contentDescription = "Image: ${recipeState.recipe?.imageUrl}"
-                tvRecipe.text = recipeState.recipe?.title
+                ivBcgRecipe.contentDescription = "Image: ${state.recipe?.imageUrl}"
+                tvRecipe.text = state.recipe?.title
                 ibIcHeart.setOnClickListener { viewModel.onFavoritesClicked() }
 
                 rvRecipeIngredients.addItemDecoration(decorator)

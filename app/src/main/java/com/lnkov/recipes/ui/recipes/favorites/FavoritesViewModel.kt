@@ -9,7 +9,6 @@ import androidx.lifecycle.MutableLiveData
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.data.STUB
 import com.lnkov.recipes.model.Recipe
-import com.lnkov.recipes.ui.recipes.recipe.RecipeViewModel.RecipeUiState
 
 class FavoritesViewModel(
     application: Application
@@ -30,16 +29,16 @@ class FavoritesViewModel(
         get() = _favoriteUiState
 
     data class FavoritesUiState(
-        val recipeList: List<Recipe?> = emptyList()
+        val favoriteList: List<Recipe?> = emptyList()
     )
 
     private fun getFavoriteRecipes(): List<Recipe?> {
         return STUB.getRecipeByIds(favoritesSet.map { it.toInt() }.toSet())
     }
 
-    fun updateRecipeList() {
+    fun loadRecipes() {
         _favoriteUiState.value =
-            favoriteUiState.value?.copy(recipeList = getFavoriteRecipes())
+            favoriteUiState.value?.copy(favoriteList = getFavoriteRecipes())
     }
 
 }
