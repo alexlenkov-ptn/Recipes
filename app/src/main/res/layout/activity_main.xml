@@ -9,14 +9,16 @@
     tools:context=".ui.MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/mainContainer"
-        android:name="com.lnkov.recipes.ui.categories.CategoriesListFragment"
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@+id/LinearLayoutButtonCategoryAndFavorites"
         app:layout_constraintEnd_toEndOf="@+id/recipesListFragment"
         app:layout_constraintStart_toStartOf="@+id/recipesListFragment"
-        app:layout_constraintTop_toTopOf="@+id/recipesListFragment">
+        app:layout_constraintTop_toTopOf="@+id/recipesListFragment"
+        app:navGraph="@navigation/nav_graph">
 
     </androidx.fragment.app.FragmentContainerView>
 
