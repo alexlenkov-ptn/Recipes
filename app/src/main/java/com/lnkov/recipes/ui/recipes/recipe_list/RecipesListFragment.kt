@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.lnkov.recipes.R
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.data.STUB
@@ -71,11 +72,7 @@ class RecipesListFragment : Fragment() {
             Constants.ARG_RECIPE_ID to recipeId
         )
 
-        parentFragmentManager.commit {
-            replace<RecipeFragment>(R.id.mainContainer, args = bundle)
-            setReorderingAllowed(true)
-            addToBackStack(null)
-        }
+        findNavController().navigate(R.id.recipeFragment, bundle)
     }
 
     private fun getCategoryId(arguments: Bundle?): Int? {
