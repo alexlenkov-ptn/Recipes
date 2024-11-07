@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.buttonCategory.setOnClickListener {
-            findNavController(R.id.nav_host_fragment).navigate(R.id.recipesListFragment)
+            findNavController(R.id.nav_host_fragment).navigate(R.id.categoriesListFragment)
         }
 
         binding.buttonFavorites.setOnClickListener {
