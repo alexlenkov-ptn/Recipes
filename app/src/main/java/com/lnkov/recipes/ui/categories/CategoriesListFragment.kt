@@ -68,7 +68,7 @@ class CategoriesListFragment : Fragment() {
             )
         }
 
-        findNavController().navigate(R.id.clMain, bundle)
+        findNavController().navigate(R.id.RecipesListFragment, bundle)
     }
 
 }
