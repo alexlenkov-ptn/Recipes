@@ -70,6 +70,12 @@ class FavoritesFragment : Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        Log.d("FavoriteFragment", "onResume")
+        viewModel.loadRecipes()
+    }
+
     private fun openRecipeByRecipesId(categoryId: Int, recipeId: Int) {
         var bundle: Bundle? = null
 

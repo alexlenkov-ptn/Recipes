@@ -94,6 +94,11 @@ class RecipeFragment : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        Log.d("RecipeFragment", "onDestroy")
+        super.onDestroy()
+    }
+
     private fun getRecipeId(arguments: Bundle?): Int? {
         var recipeId: Int? = null
 
