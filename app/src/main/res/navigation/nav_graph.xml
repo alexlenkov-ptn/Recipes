@@ -9,22 +9,39 @@
         android:id="@+id/categoriesListFragment"
         android:name="com.lnkov.recipes.ui.categories.CategoriesListFragment"
         android:label="CategoriesListFragment"
-        tools:layout="@layout/fragment_list_categories"/>
+        tools:layout="@layout/fragment_list_categories" >
+        <action
+            android:id="@+id/action_categoriesListFragment_to_RecipesListFragment"
+            app:destination="@id/RecipesListFragment"
+            app:launchSingleTop="true"/>
+    </fragment>
 
     <fragment
-        android:id="@+id/clMain"
+        android:id="@+id/RecipesListFragment"
         android:name="com.lnkov.recipes.ui.recipes.recipe_list.RecipesListFragment"
         android:label="fragment_recipes_list"
-        tools:layout="@layout/fragment_recipes_list" />
+        tools:layout="@layout/fragment_recipes_list" >
+        <action
+            android:id="@+id/action_RecipesListFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment"
+            app:launchSingleTop="true"/>
+    </fragment>
+
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.lnkov.recipes.ui.recipes.favorites.FavoritesFragment"
         android:label="FavoritesFragment"
-        tools:layout="@layout/fragment_favorites"/>
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_favoritesFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment"
+            app:launchSingleTop="true"/>
+    </fragment>
+
     <fragment
         android:id="@+id/recipeFragment"
         android:name="com.lnkov.recipes.ui.recipes.recipe.RecipeFragment"
         android:label="fragment_recipe"
-        tools:layout="@layout/fragment_recipe" />
-
+        tools:layout="@layout/fragment_recipe"
+        />
 </navigation>
