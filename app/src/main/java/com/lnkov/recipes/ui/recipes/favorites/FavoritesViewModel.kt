@@ -19,8 +19,9 @@ class FavoritesViewModel(
         Context.MODE_PRIVATE,
     )
 
-    private val favoritesSet =
-        HashSet<String>(sharedPreferences?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
+    private fun getFavoriteSet(): HashSet<String> {
+        return HashSet<String>(sharedPreferences?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
+    }
 
     private val _favoriteUiState =
         MutableLiveData<FavoritesUiState>(FavoritesUiState())
@@ -33,7 +34,7 @@ class FavoritesViewModel(
     )
 
     private fun getFavoriteRecipes(): List<Recipe?> {
-        return STUB.getRecipeByIds(favoritesSet.map { it.toInt() }.toSet())
+        return STUB.getRecipeByIds(getFavoriteSet().map { it.toInt() }.toSet())
     }
 
     fun loadRecipes() {
