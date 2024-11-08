@@ -37,6 +37,7 @@ class FavoritesFragment : Fragment() {
         viewModel.loadRecipes()
         super.onViewCreated(view, savedInstanceState)
         initUi()
+        Log.d("FavoriteFragment", "onViewCreated")
     }
 
     private fun initUi() {
@@ -68,12 +69,6 @@ class FavoritesFragment : Fragment() {
             }
         }
 
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("FavoriteFragment", "onResume")
-        viewModel.loadRecipes()
     }
 
     private fun openRecipeByRecipesId(categoryId: Int, recipeId: Int) {
