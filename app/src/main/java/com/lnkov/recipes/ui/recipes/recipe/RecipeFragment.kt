@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.lnkov.recipes.R
 import com.lnkov.recipes.data.Constants
@@ -22,6 +23,7 @@ class RecipeFragment : Fragment() {
     private lateinit var methodAdapter: MethodAdapter
 
     private val viewModel: RecipeViewModel by viewModels()
+    private val args: RecipeFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +34,7 @@ class RecipeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.loadRecipe(getRecipeId(arguments))
+        viewModel.loadRecipe(args.recipeId)
         super.onViewCreated(view, savedInstanceState)
         initUI()
     }
@@ -92,21 +94,6 @@ class RecipeFragment : Fragment() {
             rvRecipeIngredients.addItemDecoration(decorator)
             rvRecipeCookingMethod.addItemDecoration(decorator)
         }
-    }
-
-    override fun onDestroy() {
-        Log.d("RecipeFragment", "onDestroy")
-        super.onDestroy()
-    }
-
-    private fun getRecipeId(arguments: Bundle?): Int? {
-        var recipeId: Int? = null
-
-        arguments.let {
-            recipeId = it?.getInt(Constants.ARG_RECIPE_ID)
-            Log.d("!!!", "recipe Id: $recipeId")
-        }
-        return recipeId
     }
 }
 
