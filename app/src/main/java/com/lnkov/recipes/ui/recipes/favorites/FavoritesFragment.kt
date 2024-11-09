@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.lnkov.recipes.R
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.data.STUB
@@ -36,6 +37,7 @@ class FavoritesFragment : Fragment() {
         viewModel.loadRecipes()
         super.onViewCreated(view, savedInstanceState)
         initUi()
+        Log.d("FavoriteFragment", "onViewCreated")
     }
 
     private fun initUi() {
@@ -77,12 +79,7 @@ class FavoritesFragment : Fragment() {
         bundle = bundleOf(
             Constants.ARG_RECIPE_ID to recipe?.id
         )
-
-        parentFragmentManager.commit {
-            replace<RecipeFragment>(R.id.mainContainer, args = bundle)
-            setReorderingAllowed(true)
-            addToBackStack(null)
-        }
+        findNavController().navigate(R.id.recipeFragment, bundle)
     }
 
 }

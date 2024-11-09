@@ -10,6 +10,10 @@ import com.lnkov.recipes.databinding.ItemRecipeMethodBinding
 class MethodAdapter(var dataSet: List<String>) :
     RecyclerView.Adapter<MethodAdapter.ViewHolder>() {
 
+    fun updateData(dataSet: List<String>) {
+        this.dataSet = dataSet
+    }
+
     class ViewHolder(val binding: ItemRecipeMethodBinding) :
         RecyclerView.ViewHolder(binding.root)
 
