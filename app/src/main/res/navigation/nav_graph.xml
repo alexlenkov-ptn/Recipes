@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_list_categories">
         <action
             android:id="@+id/action_categoriesListFragment_to_RecipesListFragment"
-            app:destination="@id/RecipesListFragment" />
+            app:destination="@id/RecipesListFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
 
     <fragment
@@ -23,6 +25,8 @@
         <action
             android:id="@+id/action_RecipesListFragment_to_recipeFragment"
             app:destination="@id/recipeFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
             app:launchSingleTop="true" />
         <argument
             android:name="category"
@@ -36,10 +40,14 @@
         tools:layout="@layout/fragment_favorites">
         <action
             android:id="@+id/action_favoritesFragment_to_recipeFragment"
-            app:destination="@id/recipeFragment" />
+            app:destination="@id/recipeFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_favoritesFragment_to_categoriesListFragment"
-            app:destination="@id/categoriesListFragment" />
+            app:destination="@id/categoriesListFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
 
     <fragment
