@@ -24,6 +24,9 @@
             android:id="@+id/action_RecipesListFragment_to_recipeFragment"
             app:destination="@id/recipeFragment"
             app:launchSingleTop="true" />
+        <argument
+            android:name="category"
+            app:argType="com.lnkov.recipes.model.Category" />
     </fragment>
 
     <fragment

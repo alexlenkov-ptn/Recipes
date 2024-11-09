@@ -13,6 +13,7 @@ import com.lnkov.recipes.R
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.data.STUB
 import com.lnkov.recipes.databinding.FragmentListCategoriesBinding
+import com.lnkov.recipes.model.Category
 
 class CategoriesListFragment : Fragment() {
     private val binding by lazy { FragmentListCategoriesBinding.inflate(layoutInflater) }
@@ -55,20 +56,22 @@ class CategoriesListFragment : Fragment() {
     }
 
     private fun openRecipesByCategoryId(categoryId: Int) {
-        var bundle: Bundle? = null
+        val category = STUB.getCategoryById(categoryId)
 
-        val category = STUB.getCategories().find {
-            it.id == categoryId
-        }
-        category?.let {
-            bundle = bundleOf(
-                Constants.ARG_CATEGORY_ID to category.id,
-                Constants.ARG_CATEGORY_NAME to category.title,
-                Constants.ARG_CATEGORY_IMAGE_URL to category.imageUrl
-            )
+        // todo: нужно тут вытащить категорию и передать в лист рецептов
+
+        try {
+            val action =
+                category?.let {
+                    CategoriesListFragmentDirections.actionCategoriesListFragmentToRecipesListFragment(
+                        it
+                    )
+                }
+            action?.let { findNavController().navigate(it) }
+        } catch (e: IllegalStateException) {
+
         }
 
-        findNavController().navigate(R.id.RecipesListFragment, bundle)
     }
 
 }

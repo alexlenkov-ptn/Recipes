@@ -1,5 +1,6 @@
 package com.lnkov.recipes.data
 
+import androidx.compose.animation.core.rememberTransition
 import com.lnkov.recipes.model.Category
 import com.lnkov.recipes.model.Ingredient
 import com.lnkov.recipes.model.Recipe
@@ -273,7 +274,7 @@ object STUB {
     fun getCategoryById(categoryId: Int): Category? {
         return categories.find { it.id == categoryId }
     }
-
+    
     fun getRecipesByCategoryId(id: Int?): List<Recipe> {
         val emptyList: List<Recipe> = listOf()
         return when (id) {
@@ -289,7 +290,6 @@ object STUB {
         val list = set.map {
             getRecipeById(0, it)
         }
-
         return list
     }
 }
