@@ -5,22 +5,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.lnkov.recipes.R
+import androidx.navigation.fragment.navArgs
 import com.lnkov.recipes.data.Constants
-import com.lnkov.recipes.data.STUB
 import com.lnkov.recipes.databinding.FragmentRecipesListBinding
-import com.lnkov.recipes.ui.recipes.recipe.RecipeFragment
 
 class RecipesListFragment : Fragment() {
     private val binding by lazy { FragmentRecipesListBinding.inflate(layoutInflater) }
 
     private lateinit var recipesListAdapter: RecipesListAdapter
+
+    private val args: RecipesListFragmentArgs by navArgs()
 
     private val viewModel: RecipeListViewModel by viewModels()
 
@@ -33,7 +30,7 @@ class RecipesListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.loadCategory(getCategoryId(arguments))
+        viewModel.loadCategory(args.category.id)
         super.onViewCreated(view, savedInstanceState)
         initUi()
     }
@@ -57,7 +54,8 @@ class RecipesListFragment : Fragment() {
             recipesListAdapter.updateData(recipesListState.recipeList)
 
             binding.apply {
-                ivBcgRecipeList.contentDescription = "Image: ${recipesListState.category?.imageUrl}"
+                ivBcgRecipeList.contentDescription =
+                    "Image: ${recipesListState.category?.description}"
                 tvBcgRecipeList.text = recipesListState.category?.title
                 ivBcgRecipeList.setImageDrawable(recipesListState.drawable)
                 rvRecipes.adapter = recipesListAdapter
@@ -71,11 +69,5 @@ class RecipesListFragment : Fragment() {
             RecipesListFragmentDirections.actionRecipesListFragmentToRecipeFragment(recipeId)
 
         findNavController().navigate(action)
-    }
-
-    private fun getCategoryId(arguments: Bundle?): Int? {
-        return arguments.let {
-            it?.getInt(Constants.ARG_CATEGORY_ID)
-        }
     }
 }

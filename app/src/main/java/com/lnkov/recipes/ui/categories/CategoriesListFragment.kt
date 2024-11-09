@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -58,20 +59,21 @@ class CategoriesListFragment : Fragment() {
     private fun openRecipesByCategoryId(categoryId: Int) {
         val category = STUB.getCategoryById(categoryId)
 
-        // todo: нужно тут вытащить категорию и передать в лист рецептов
 
-        try {
-            val action =
-                category?.let {
-                    CategoriesListFragmentDirections.actionCategoriesListFragmentToRecipesListFragment(
-                        it
-                    )
-                }
-            action?.let { findNavController().navigate(it) }
-        } catch (e: IllegalStateException) {
-
+        if (category == null) {
+            Log.e("CategoriesListFragment", "Nav error")
+            Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT).show()
+            throw IllegalStateException("Категория с ID: $categoryId не найдена")
         }
 
+        Log.d("CategoriesListFragment", "$category")
+
+
+        val action =
+            CategoriesListFragmentDirections.
+            actionCategoriesListFragmentToRecipesListFragment(category)
+
+        findNavController().navigate(action)
     }
 
 }
