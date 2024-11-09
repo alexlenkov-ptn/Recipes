@@ -41,12 +41,11 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun initUi() {
-
         recipesListAdapter = RecipesListAdapter(emptyList()).apply {
             setOnItemClickListener(
                 object : RecipesListAdapter.OnItemClickListener {
                     override fun onItemClick(recipeId: Int) {
-                        openRecipeByRecipesId(0, recipeId)
+                        openRecipeByRecipesId(recipeId)
                     }
                 }
             )
@@ -71,15 +70,11 @@ class FavoritesFragment : Fragment() {
 
     }
 
-    private fun openRecipeByRecipesId(categoryId: Int, recipeId: Int) {
-        var bundle: Bundle? = null
+    private fun openRecipeByRecipesId(recipeId: Int) {
 
-        val recipe = STUB.getRecipeById(categoryId, recipeId)
+        val action = FavoritesFragmentDirections.actionFavoritesFragmentToRecipeFragment(recipeId)
 
-        bundle = bundleOf(
-            Constants.ARG_RECIPE_ID to recipe?.id
-        )
-        findNavController().navigate(R.id.recipeFragment, bundle)
+        findNavController().navigate(action)
     }
 
 }
