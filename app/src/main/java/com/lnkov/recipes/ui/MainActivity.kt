@@ -2,6 +2,7 @@ package com.lnkov.recipes.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.fadeIn
 import androidx.navigation.NavOptions
 import com.lnkov.recipes.databinding.ActivityMainBinding
 import androidx.navigation.findNavController
@@ -18,10 +19,18 @@ class MainActivity : AppCompatActivity() {
 
     private val navOption = NavOptions.Builder()
         .setLaunchSingleTop(true)
+        .setEnterAnim(
+            enterAnim = android.R.anim.fade_in
+        )
+        .setExitAnim(
+            exitAnim = android.R.anim.fade_out
+        )
         .build()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
         _binding = ActivityMainBinding.inflate(layoutInflater)
 
