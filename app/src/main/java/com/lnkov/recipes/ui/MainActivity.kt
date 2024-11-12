@@ -2,7 +2,6 @@ package com.lnkov.recipes.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavOptions
 import com.lnkov.recipes.databinding.ActivityMainBinding
 import androidx.navigation.findNavController
 import androidx.navigation.navOptions
