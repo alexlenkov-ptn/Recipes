@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavOptions
 import com.lnkov.recipes.databinding.ActivityMainBinding
 import androidx.navigation.findNavController
+import androidx.navigation.navOptions
 import com.lnkov.recipes.R
 
 
@@ -16,16 +17,13 @@ class MainActivity : AppCompatActivity() {
             ?: throw IllegalStateException("Binding for ActivityLearnWordBinding ust not be null")
 
 
-    private val navOption = NavOptions.Builder()
-        .setLaunchSingleTop(true)
-        .setEnterAnim(
-            enterAnim = android.R.anim.fade_in
-        )
-        .setExitAnim(
-            exitAnim = android.R.anim.fade_out
-        )
-        .build()
-
+    private val navOption = navOptions {
+        launchSingleTop = true
+        anim {
+            enter = android.R.anim.fade_in
+            exit = android.R.anim.fade_out
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
