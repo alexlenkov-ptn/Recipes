@@ -5,14 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.lnkov.recipes.R
-import com.lnkov.recipes.data.Constants
-import com.lnkov.recipes.data.STUB
 import com.lnkov.recipes.databinding.FragmentListCategoriesBinding
+import com.lnkov.recipes.model.Category
 
 class CategoriesListFragment : Fragment() {
     private val binding by lazy { FragmentListCategoriesBinding.inflate(layoutInflater) }
@@ -35,14 +33,7 @@ class CategoriesListFragment : Fragment() {
     }
 
     private fun initUi() {
-        categoriesListAdapter = CategoriesListAdapter(emptyList()).apply {
-            setOnItemClickListener(
-                object : CategoriesListAdapter.OnItemClickListener {
-                    override fun onItemClick(categoryId: Int) {
-                        openRecipesByCategoryId(categoryId)
-                    }
-                })
-        }
+        categoriesListAdapter = CategoriesListAdapter(emptyList())
 
         viewModel.categoryUiState.observe(viewLifecycleOwner)
         { categoriesState: CategoriesViewModel.CategoriesUiState ->
@@ -51,24 +42,35 @@ class CategoriesListFragment : Fragment() {
             categoriesListAdapter.updateData(categoriesState.categories)
 
             binding.rvCategories.adapter = categoriesListAdapter
+
+            categoriesListAdapter.apply {
+                setOnItemClickListener(
+                    object : CategoriesListAdapter.OnItemClickListener {
+                        override fun onItemClick(categoryId: Int) {
+                            categoriesState.categories.find { it.id == categoryId }
+                                ?.let { transferCategoryToNext(it) }
+                            Log.d("CategoriesListFragment", "create listener")
+                        }
+                    })
+            }
         }
     }
 
-    private fun openRecipesByCategoryId(categoryId: Int) {
-        var bundle: Bundle? = null
-
-        val category = STUB.getCategories().find {
-            it.id == categoryId
+    private fun transferCategoryToNext(category: Category) {
+        if (category == null) {
+            Log.e("CategoriesListFragment", "Nav error")
+            Toast.makeText(context, "Ошибка", Toast.LENGTH_SHORT).show()
+            throw IllegalStateException("Категория с ID: ${category.id} не найдена")
         }
-        category?.let {
-            bundle = bundleOf(
-                Constants.ARG_CATEGORY_ID to category.id,
-                Constants.ARG_CATEGORY_NAME to category.title,
-                Constants.ARG_CATEGORY_IMAGE_URL to category.imageUrl
+
+        Log.d("CategoriesListFragment", "$category")
+
+        val action =
+            CategoriesListFragmentDirections.actionCategoriesListFragmentToRecipesListFragment(
+                category
             )
-        }
 
-        findNavController().navigate(R.id.action_categoriesListFragment_to_RecipesListFragment, bundle)
+        findNavController().navigate(action)
     }
 
 }
