@@ -1,22 +1,14 @@
 package com.lnkov.recipes.ui.recipes.favorites
 
-
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.lnkov.recipes.R
-import com.lnkov.recipes.data.Constants
-import com.lnkov.recipes.data.STUB
 import com.lnkov.recipes.databinding.FragmentFavoritesBinding
-import com.lnkov.recipes.ui.recipes.recipe.RecipeFragment
 import com.lnkov.recipes.ui.recipes.recipe_list.RecipesListAdapter
 
 class FavoritesFragment : Fragment() {

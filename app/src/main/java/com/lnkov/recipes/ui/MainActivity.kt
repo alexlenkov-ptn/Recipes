@@ -2,7 +2,6 @@ package com.lnkov.recipes.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.fadeIn
 import androidx.navigation.NavOptions
 import com.lnkov.recipes.databinding.ActivityMainBinding
 import androidx.navigation.findNavController
