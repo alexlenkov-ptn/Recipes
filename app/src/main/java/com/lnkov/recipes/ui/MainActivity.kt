@@ -7,6 +7,7 @@ import com.lnkov.recipes.databinding.ActivityMainBinding
 import androidx.navigation.findNavController
 import androidx.navigation.navOptions
 import com.lnkov.recipes.R
+import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.model.Category
 import kotlinx.serialization.json.Json
 import java.net.HttpURLConnection
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                 "Метод onCreate() выполняется на потоке: ${Thread.currentThread().name}"
             )
 
-            val url = URL("https://recipes.androidsprint.ru/api/category")
+            val url = URL(Constants.URL_CATEGORIES)
             val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
             connection.connect()
             string = connection.inputStream.bufferedReader().readText()
