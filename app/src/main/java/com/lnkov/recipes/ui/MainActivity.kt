@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         get() = _binding
             ?: throw IllegalStateException("Binding for ActivityLearnWordBinding ust not be null")
 
-    var categories : List<Category> = listOf()
+    var categories: List<Category> = listOf()
 
     private val navOption = navOptions {
         launchSingleTop = true
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             )
 
             val url = URL("https://recipes.androidsprint.ru/api/category")
-            val connection : HttpURLConnection = url.openConnection() as HttpURLConnection
+            val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
             connection.connect()
             string = connection.inputStream.bufferedReader().readText()
         }
