@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
                 "MainActivity", "Выполняю запрос на потоке: ${Thread.currentThread().name}"
             )
             Log.d(
-                localClassName,
+                "MainActivity",
                 "Метод onCreate() выполняется на потоке: ${Thread.currentThread().name}"
             )
 
