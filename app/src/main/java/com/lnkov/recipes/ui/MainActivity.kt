@@ -48,13 +48,11 @@ class MainActivity : AppCompatActivity() {
             val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
             connection.connect()
             string = connection.inputStream.bufferedReader().readText()
-        }
-        thread.start()
-        thread.join()
 
-        categories = Json.decodeFromString(string.toString())
+            categories = Json.decodeFromString(string.toString())
+            Log.d("MainActivity", "Categories from Web: $categories")
 
-        Log.d("MainActivity", "Categories from Web: $categories")
+        }.start()
 
         _binding = ActivityMainBinding.inflate(layoutInflater)
 
