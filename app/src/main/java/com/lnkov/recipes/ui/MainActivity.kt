@@ -51,7 +51,6 @@ class MainActivity : AppCompatActivity() {
 
             categories = Json.decodeFromString(string.toString())
             Log.d("MainActivity", "Categories from Web: $categories")
-
         }.start()
 
         _binding = ActivityMainBinding.inflate(layoutInflater)
