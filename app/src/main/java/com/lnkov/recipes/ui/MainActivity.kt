@@ -9,9 +9,12 @@ import androidx.navigation.navOptions
 import com.lnkov.recipes.R
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.model.Category
+import com.lnkov.recipes.model.Recipe
 import kotlinx.serialization.json.Json
 import java.net.HttpURLConnection
 import java.net.URL
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,7 +24,10 @@ class MainActivity : AppCompatActivity() {
         get() = _binding
             ?: throw IllegalStateException("Binding for ActivityLearnWordBinding ust not be null")
 
-    var categories: List<Category> = listOf()
+    private var categories: List<Category> = listOf()
+    private var categoriesIdList: List<Int> = listOf()
+
+    private val threadPool: ExecutorService = Executors.newFixedThreadPool(Constants.THREAD_POOLS)
 
     private val navOption = navOptions {
         launchSingleTop = true
@@ -34,7 +40,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var string: String? = null
         val thread = Thread {
             Log.d(
                 "MainActivity", "Выполняю запрос на потоке: ${Thread.currentThread().name}"
@@ -44,17 +49,21 @@ class MainActivity : AppCompatActivity() {
                 "Метод onCreate() выполняется на потоке: ${Thread.currentThread().name}"
             )
 
-            val url = URL(Constants.URL_CATEGORIES)
-            val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
-            connection.connect()
-            string = connection.inputStream.bufferedReader().readText()
-
-            categories = Json.decodeFromString(string.toString())
+            categories = loadCategories()
             Log.d("MainActivity", "Categories from Web: $categories")
+
+            categoriesIdList = categories.map { it.id }
+            Log.d("MainActivity", "categoriesIdList: $categoriesIdList")
+
+            threadPool.execute() {
+                categoriesIdList.forEach {
+                    Log.d("MainActivity", "Recipe: ${loadRecipesList(it)}")
+                }
+            }
         }.start()
 
-        _binding = ActivityMainBinding.inflate(layoutInflater)
 
+        _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.buttonCategory.setOnClickListener {
@@ -68,6 +77,24 @@ class MainActivity : AppCompatActivity() {
                 R.id.favoritesFragment, null, navOption
             )
         }
+    }
 
+    private fun loadCategories(): List<Category> {
+        val url = URL(Constants.URL_CATEGORIES)
+        val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
+        connection.connect()
+        val string = connection.inputStream.bufferedReader().readText()
+
+        return Json.decodeFromString(string)
+    }
+
+    private fun loadRecipesList(categoryId: Int): List<Recipe> {
+        val url = URL("https://recipes.androidsprint.ru/api/category/$categoryId/recipes")
+        val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
+        connection.connect()
+        val string = connection.inputStream.bufferedReader().readText()
+        val recipesList: List<Recipe> = Json.decodeFromString(string)
+
+        return recipesList
     }
 }
