@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         get() = _binding
             ?: throw IllegalStateException("Binding for ActivityLearnWordBinding ust not be null")
 
-    private var categories: List<Category> = listOf()
+    var categories: List<Category> = listOf()
 
     private val navOption = navOptions {
         launchSingleTop = true
