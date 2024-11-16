@@ -10,7 +10,11 @@ import com.lnkov.recipes.R
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.model.Category
 import com.lnkov.recipes.model.Recipe
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.logging.HttpLoggingInterceptor
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.concurrent.ExecutorService
@@ -26,8 +30,17 @@ class MainActivity : AppCompatActivity() {
 
     private var categories: List<Category> = listOf()
     private var categoriesIdList: List<Int> = listOf()
-
     private val threadPool: ExecutorService = Executors.newFixedThreadPool(Constants.THREAD_POOLS)
+
+    private val logging: HttpLoggingInterceptor = HttpLoggingInterceptor() { message ->
+        Log.d("MainActivity", message)
+    }.apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
+
+    private val client = OkHttpClient.Builder()
+        .addInterceptor(logging)
+        .build()
 
     private val navOption = navOptions {
         launchSingleTop = true
@@ -36,7 +49,6 @@ class MainActivity : AppCompatActivity() {
             exit = android.R.anim.fade_out
         }
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,21 +93,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadCategories(): List<Category> {
-        val url = URL(Constants.URL_CATEGORIES)
-        val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
-        connection.connect()
-        val string = connection.inputStream.bufferedReader().readText()
+        val request = Request.Builder()
+            .url(Constants.URL_CATEGORIES)
+            .build()
 
-        return Json.decodeFromString(string)
+        val string = client.newCall(request).execute().use { response ->
+            response.body?.string()
+        }
+
+        return if (string != null) Json.decodeFromString(string)
+        else listOf()
     }
 
     private fun loadRecipesList(categoryId: Int): List<Recipe> {
-        val url = URL("https://recipes.androidsprint.ru/api/category/$categoryId/recipes")
-        val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
-        connection.connect()
-        val string = connection.inputStream.bufferedReader().readText()
-        val recipesList: List<Recipe> = Json.decodeFromString(string)
+        val request = Request.Builder()
+            .url("https://recipes.androidsprint.ru/api/category/$categoryId/recipes")
+            .build()
 
-        return recipesList
+        val string = client.newCall(request).execute().use { response ->
+            response.body?.string()
+        }
+
+        return if (string != null) Json.decodeFromString(string)
+        else listOf()
     }
 }

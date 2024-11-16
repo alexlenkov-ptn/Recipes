@@ -66,4 +66,8 @@ dependencies {
     androidTestImplementation(libs.androidx.navigation.dynamic.features.testing)
     // Serialization
     implementation(libs.kotlinx.serialization.json)
+
+    implementation(libs.okhttp)
+
+    implementation(libs.logging.interceptor)
 }
