@@ -68,8 +68,8 @@ class MainActivity : AppCompatActivity() {
             categoriesIdList = categories.map { it.id }
             Log.d("MainActivity", "categoriesIdList: $categoriesIdList")
 
-            threadPool.execute() {
-                categoriesIdList.forEach {
+            categoriesIdList.forEach {
+                threadPool.execute() {
                     Log.d("MainActivity", "Recipe: ${loadRecipesList(it)}")
                 }
             }
@@ -79,13 +79,15 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.buttonCategory.setOnClickListener {
+        binding.buttonCategory.setOnClickListener
+        {
             findNavController(R.id.nav_host_fragment).navigate(
                 R.id.categoriesListFragment, null, navOption
             )
         }
 
-        binding.buttonFavorites.setOnClickListener {
+        binding.buttonFavorites.setOnClickListener
+        {
             findNavController(R.id.nav_host_fragment).navigate(
                 R.id.favoritesFragment, null, navOption
             )
