@@ -23,6 +23,4 @@ class CategoriesViewModel(application: Application) :
         _categoryUiState.value = categoryUiState.value?.copy(categories = STUB.getCategories())
     }
 
-//    fun getCategory(categoryId: Int) : Category? = STUB.getCategoryById(categoryId)
-
 }
