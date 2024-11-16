@@ -1,8 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("kotlin-parcelize")
     alias(libs.plugins.navigation.safeargs.kotlin)
+    alias(libs.plugins.kotlin.serialization)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -63,4 +64,6 @@ dependencies {
     implementation(libs.androidx.navigation.dynamic.features.fragment)
     // Testing Navigation
     androidTestImplementation(libs.androidx.navigation.dynamic.features.testing)
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
 }
