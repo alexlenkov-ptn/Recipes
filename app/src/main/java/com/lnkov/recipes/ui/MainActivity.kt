@@ -56,9 +56,15 @@ class MainActivity : AppCompatActivity() {
             categoriesIdList = categories.map { it.id }
             Log.d("MainActivity", "categoriesIdList: $categoriesIdList")
 
-            threadPool.execute() {
-                categoriesIdList.forEach {
+            categoriesIdList.forEach {
+
+                threadPool.execute() {
                     Log.d("MainActivity", "Recipe: ${loadRecipesList(it)}")
+                    Log.d(
+                        "MainActivity",
+                        "forEach выполняется на потоке: ${Thread.currentThread().name}"
+                    )
+
                 }
             }
         }.start()
