@@ -20,14 +20,12 @@ class RecipeRepository {
         .build()
     private val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
 
-
     fun loadCategories(): List<Category>? {
         try {
-            val categoriesCall: Call<List<Category>> = service.getCategories()
-            val categoriesResponse: Response<List<Category>> =
-                categoriesCall.execute()
+            val call: Call<List<Category>> = service.getCategories()
+            val response: Response<List<Category>> = call.execute()
 
-            return categoriesResponse.body()
+            return response.body()
         } catch (e: Exception) {
             Log.d("RecipeRepository", "Error: $e")
 
@@ -37,10 +35,10 @@ class RecipeRepository {
 
     fun loadRecipesById(categoryId: Int): List<Recipe>? {
         try {
-            val recipesCall: Call<List<Recipe>> = service.getRecipesById(categoryId)
-            val recipesResponse: Response<List<Recipe>> = recipesCall.execute()
+            val call: Call<List<Recipe>> = service.getRecipesById(categoryId)
+            val response: Response<List<Recipe>> = call.execute()
 
-            return recipesResponse.body()
+            return response.body()
         } catch (e: Exception) {
             Log.d("RecipeRepository", "Error: $e")
 
@@ -50,10 +48,10 @@ class RecipeRepository {
 
     fun loadCategoryById(categoryId: Int): Category? {
         try {
-            val categoryCall: Call<Category> = service.getCategoryById(categoryId)
-            val categoryResponse: Response<Category> = categoryCall.execute()
+            val call: Call<Category> = service.getCategoryById(categoryId)
+            val response: Response<Category> = call.execute()
 
-            return categoryResponse.body()
+            return response.body()
         } catch (e: Exception) {
             Log.d("RecipeRepository", "Error: $e")
 
@@ -63,10 +61,10 @@ class RecipeRepository {
 
     fun loadRecipeById(recipeId: Int): Recipe? {
         try {
-            val recipeCall: Call<Recipe> = service.getRecipeById(recipeId)
-            val recipeResponse: Response<Recipe> = recipeCall.execute()
+            val call: Call<Recipe> = service.getRecipeById(recipeId)
+            val response: Response<Recipe> = call.execute()
 
-            return recipeResponse.body()
+            return response.body()
         } catch (e: Exception) {
             Log.d("RecipeRepository", "Error: $e")
 
@@ -74,12 +72,13 @@ class RecipeRepository {
         }
     }
 
-    fun loadRecipeById(recipeIds: String): List<Recipe>? {
+    fun loadRecipesByIds(recipeIds: String): List<Recipe>? {
         try {
-            val recipesCall: Call<List<Recipe>> = service.getRecipesByIds(recipeIds)
-            val recipesResponse: Response<List<Recipe>> = recipesCall.execute()
+            val call: Call<List<Recipe>> = service.getRecipesByIds(recipeIds)
+            val response: Response<List<Recipe>> = call.execute()
+            Log.d("RecipeRepository", "${response.body()}")
 
-            return recipesResponse.body()
+            return response.body()
         } catch (e: Exception) {
             Log.d("RecipeRepository", "Error: $e")
 

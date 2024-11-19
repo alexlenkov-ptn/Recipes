@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.divider.MaterialDividerItemDecoration
@@ -33,8 +34,8 @@ class RecipeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.loadRecipe(args.recipeId)
         super.onViewCreated(view, savedInstanceState)
+        viewModel.loadRecipe(args.recipeId)
         initUI()
     }
 
@@ -57,36 +58,41 @@ class RecipeFragment : Fragment() {
             viewLifecycleOwner
         )
         { state: RecipeViewModel.RecipeUiState ->
-            Log.i("!!!", "state heartIconStatus ${state.isFavorite}")
-            Log.i("!!!", "state portionCount ${state.portionsCount}")
+            Log.i("RecipeFragment", "state heartIconStatus ${state.isFavorite}")
+            Log.i("RecipeFragment", "state portionCount ${state.portionsCount}")
 
-            binding.apply {
-                if (state.isFavorite) ibIcHeart.setImageResource(R.drawable.ic_heart_recipe)
-                else ibIcHeart.setImageResource(R.drawable.ic_heart_empty_recipe)
-                ivBcgRecipe.setImageDrawable(state.drawable)
+            if (state.isLoaded == false) {
+                Toast.makeText(context, R.string.toast_error_message, Toast.LENGTH_LONG).show()
+            } else {
+                binding.apply {
+                    if (state.isFavorite) ibIcHeart.setImageResource(R.drawable.ic_heart_recipe)
+                    else ibIcHeart.setImageResource(R.drawable.ic_heart_empty_recipe)
+                    ivBcgRecipe.setImageDrawable(state.drawable)
 
-                ingredientsListAdapter.updateData(state.recipe?.ingredients ?: emptyList())
+                    ingredientsListAdapter.updateData(state.recipe?.ingredients ?: emptyList())
 
-                methodAdapter.updateData(state.recipe?.method ?: emptyList())
+                    methodAdapter.updateData(state.recipe?.method ?: emptyList())
 
-                ingredientsListAdapter.updateIngredients(state.portionsCount)
-                tvNumberOfPortions.text = state.portionsCount.toString()
-                rvRecipeIngredients.adapter = ingredientsListAdapter
+                    ingredientsListAdapter.updateIngredients(state.portionsCount)
+                    tvNumberOfPortions.text = state.portionsCount.toString()
+                    rvRecipeIngredients.adapter = ingredientsListAdapter
 
-                ivBcgRecipe.contentDescription = "Image: ${state.recipe?.imageUrl}"
-                tvRecipe.text = state.recipe?.title
+                    ivBcgRecipe.contentDescription = "Image: ${state.recipe?.imageUrl}"
+                    tvRecipe.text = state.recipe?.title
 
-                rvRecipeIngredients.adapter = ingredientsListAdapter
-                rvRecipeCookingMethod.adapter = methodAdapter
+                    rvRecipeIngredients.adapter = ingredientsListAdapter
+                    rvRecipeCookingMethod.adapter = methodAdapter
 
-                sbCountsOfRecipes.setOnSeekBarChangeListener(
-                    PortionSeekBarListener { progress ->
-                        viewModel.updateNumberOfPortions(progress)
-                    }
-                )
+                    sbCountsOfRecipes.setOnSeekBarChangeListener(
+                        PortionSeekBarListener { progress ->
+                            viewModel.updateNumberOfPortions(progress)
+                        }
+                    )
+                }
             }
-        }
 
+
+        }
 
         binding.apply {
             ibIcHeart.setOnClickListener { viewModel.onFavoritesClicked() }

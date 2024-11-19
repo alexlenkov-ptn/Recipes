@@ -5,10 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.lnkov.recipes.R
 import com.lnkov.recipes.databinding.FragmentRecipesListBinding
 
 class RecipesListFragment : Fragment() {
@@ -18,7 +20,7 @@ class RecipesListFragment : Fragment() {
 
     private val args: RecipesListFragmentArgs by navArgs()
 
-    private val viewModel: RecipeListViewModel by viewModels()
+    private val viewModel: RecipesListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,10 +49,14 @@ class RecipesListFragment : Fragment() {
         }
 
         viewModel.recipeListUiState.observe(viewLifecycleOwner)
-        { recipesListState: RecipeListViewModel.RecipeListUiState ->
+        { recipesListState: RecipesListViewModel.RecipeListUiState ->
             Log.d("!!!", "recipe list state: ${recipesListState.category?.title}")
 
-            recipesListAdapter.updateData(recipesListState.recipeList)
+            if (recipesListState.recipeList == null) {
+                Toast.makeText(context, R.string.toast_error_message, Toast.LENGTH_LONG).show()
+            } else {
+                recipesListAdapter.updateData(recipesListState.recipeList)
+            }
 
             binding.apply {
                 ivBcgRecipeList.contentDescription =
