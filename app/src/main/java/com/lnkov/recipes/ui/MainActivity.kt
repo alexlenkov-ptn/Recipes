@@ -5,15 +5,21 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.navOptions
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.lnkov.recipes.R
+import com.lnkov.recipes.RecipeApiService
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.databinding.ActivityMainBinding
 import com.lnkov.recipes.model.Category
 import com.lnkov.recipes.model.Recipe
 import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
+import retrofit2.Response
+import retrofit2.Retrofit
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -104,28 +110,38 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadCategories(): List<Category> {
-        val request = Request.Builder()
-            .url(Constants.URL_CATEGORIES)
+        val contentType = "application/json".toMediaType()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(Json.asConverterFactory(contentType))
             .build()
 
-        val string = client.newCall(request).execute().use { response ->
-            response.body?.string()
-        }
+        val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
 
-        return if (string != null) Json.decodeFromString(string)
-        else listOf()
+        val categoriesCall: Call<List<Category>> = service.getCategories()
+
+        val categoriesResponse: Response<List<Category>> =
+            categoriesCall.execute()
+
+        return categoriesResponse.body() ?: listOf()
     }
 
     private fun loadRecipesList(categoryId: Int): List<Recipe> {
-        val request = Request.Builder()
-            .url("https://recipes.androidsprint.ru/api/category/$categoryId/recipes")
+        val contentType = "application/json".toMediaType()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(Json.asConverterFactory(contentType))
             .build()
 
-        val string = client.newCall(request).execute().use { response ->
-            response.body?.string()
-        }
+        val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
 
-        return if (string != null) Json.decodeFromString(string)
-        else listOf()
+        val recipesCall: Call<List<Recipe>> = service.getRecipesById(categoryId)
+
+        val recipesResponse: Response<List<Recipe>> = recipesCall.execute()
+
+        return recipesResponse.body() ?: listOf()
+
     }
 }

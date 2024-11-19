@@ -7,5 +7,6 @@ object Constants {
     const val ARG_RECIPE_ID = "ARG_RECIPE_ID"
     const val FAVORITES_KEY = "favorites_key"
     const val URL_CATEGORIES = "https://recipes.androidsprint.ru/api/category"
+    const val BASE_URL = "https://recipes.androidsprint.ru/api/"
     const val THREAD_POOLS = 10
 }
