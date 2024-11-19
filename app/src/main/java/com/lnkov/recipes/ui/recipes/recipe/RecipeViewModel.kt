@@ -8,14 +8,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.lnkov.recipes.model.Recipe
 import android.graphics.drawable.Drawable
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import com.lnkov.recipes.MyApplication
-import com.lnkov.recipes.R
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.data.RecipeRepository
-import com.lnkov.recipes.data.STUB
-import kotlin.concurrent.thread
 
 
 class RecipeViewModel(
