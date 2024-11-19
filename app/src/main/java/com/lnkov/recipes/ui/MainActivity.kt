@@ -10,13 +10,10 @@ import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.databinding.ActivityMainBinding
 import com.lnkov.recipes.model.Category
 import com.lnkov.recipes.model.Recipe
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
-import java.net.HttpURLConnection
-import java.net.URL
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -64,22 +61,29 @@ class MainActivity : AppCompatActivity() {
                 "Метод onCreate() выполняется на потоке: ${Thread.currentThread().name}"
             )
 
-            categories = loadCategories()
-            Log.d("MainActivity", "Categories from Web: $categories")
+            try {
+                categories = loadCategories()
+                categoriesIdList = categories.map { it.id }
 
-            categoriesIdList = categories.map { it.id }
-            Log.d("MainActivity", "categoriesIdList: $categoriesIdList")
+                Log.d("MainActivity", "Categories from Web: $categories")
+                Log.d("MainActivity", "categoriesIdList: $categoriesIdList")
 
-            categoriesIdList.forEach {
+                categoriesIdList.forEach {
 
-                threadPool.execute() {
-                    Log.d("MainActivity", "Recipe: ${loadRecipesList(it)}")
+                    threadPool.execute() {
+                        Log.d("MainActivity", "Recipe: ${loadRecipesList(it)}")
 
-                    Log.d(
-                        "MainActivity",
-                        "forEach выполняется на потоке: ${Thread.currentThread().name}"
-                    )
+                        Log.d(
+                            "MainActivity",
+                            "forEach выполняется на потоке: ${Thread.currentThread().name}"
+                        )
+                    }
                 }
+            } catch (e: Exception) {
+                Log.d(
+                    "MainActivity",
+                    "Exception: $e. Thread: ${Thread.currentThread().name}"
+                )
             }
         }.start()
 
