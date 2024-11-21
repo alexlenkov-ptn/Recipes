@@ -83,7 +83,6 @@ class RecipeFragment : Fragment() {
                     tvRecipe.text = state.recipe?.title
 
                     Log.d("RecipeFragment", "$state")
-
                 }
             }
         }
