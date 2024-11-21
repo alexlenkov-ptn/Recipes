@@ -77,7 +77,6 @@ class RecipeFragment : Fragment() {
 
                     ingredientsListAdapter.updateIngredients(state.portionsCount)
                     tvNumberOfPortions.text = state.portionsCount.toString()
-                    rvRecipeIngredients.adapter = ingredientsListAdapter
 
                     ivBcgRecipe.contentDescription = "Image: ${state.recipe?.imageUrl}"
                     tvRecipe.text = state.recipe?.title
@@ -88,6 +87,9 @@ class RecipeFragment : Fragment() {
         }
 
         binding.apply {
+            rvRecipeIngredients.adapter = ingredientsListAdapter
+            rvRecipeCookingMethod.adapter = methodAdapter
+
             sbCountsOfRecipes.setOnSeekBarChangeListener(
                 PortionSeekBarListener { progress ->
                     viewModel.updateNumberOfPortions(progress)
