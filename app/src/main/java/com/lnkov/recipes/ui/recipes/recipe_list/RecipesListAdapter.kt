@@ -43,7 +43,6 @@ class RecipesListAdapter(private var dataSet: List<Recipe?>) :
         binding.apply {
             tvTitleCardRecipe.text = recipe?.title
 
-
             Glide.with(viewHolder.itemView.context)
                 .load("${Constants.BASE_IMAGE_URL}${recipe?.imageUrl}")
                 .placeholder(R.drawable.img_placeholder)
@@ -51,19 +50,12 @@ class RecipesListAdapter(private var dataSet: List<Recipe?>) :
                 .into(ivCardRecipe)
 
             ivCardRecipe.contentDescription =
-                root.context.getString(
-                    R.string.text_content_description_card_recipe,
-                    recipe?.title
-                )
+                root.context.getString(R.string.text_content_description_card_recipe, recipe?.title)
 
             cvRecipe.setOnClickListener() {
-                if (recipe != null) {
-                    itemClickListener?.onItemClick(recipe.id)
-                }
+                if (recipe != null) itemClickListener?.onItemClick(recipe.id)
             }
         }
-
-
     }
 
     override fun getItemCount() = dataSet.size
