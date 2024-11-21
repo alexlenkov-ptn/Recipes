@@ -1,11 +1,11 @@
 package com.lnkov.recipes.ui.recipes.recipe_list
 
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.lnkov.recipes.R
+import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.model.Recipe
 import com.lnkov.recipes.databinding.ItemRecipeBinding
 
@@ -40,28 +40,30 @@ class RecipesListAdapter(private var dataSet: List<Recipe?>) :
         val recipe: Recipe? = dataSet[position]
         val binding = viewHolder.binding
 
-        val drawable = try {
-            Drawable.createFromStream(
-                viewHolder.itemView.context.assets.open(recipe?.imageUrl.toString()),
-                null
-            )
-        } catch (e: Exception) {
-            Log.d("!!!", "Image not found: ${recipe?.imageUrl}")
-            null
-        }
+        binding.apply {
+            tvTitleCardRecipe.text = recipe?.title
 
-        binding.tvTitleCardRecipe.text = recipe?.title
-        binding.ivCardRecipe.setImageDrawable(drawable)
-        binding.ivCardRecipe.contentDescription =
-            binding.root.context.getString(
-                R.string.text_content_description_card_recipe,
-                recipe?.title
-            )
-        binding.cvRecipe.setOnClickListener() {
-            if (recipe != null) {
-                itemClickListener?.onItemClick(recipe.id)
+
+            Glide.with(viewHolder.itemView.context)
+                .load("${Constants.BASE_IMAGE_URL}${recipe?.imageUrl}")
+                .placeholder(R.drawable.img_placeholder)
+                .error(R.drawable.img_error)
+                .into(ivCardRecipe)
+
+            ivCardRecipe.contentDescription =
+                root.context.getString(
+                    R.string.text_content_description_card_recipe,
+                    recipe?.title
+                )
+
+            cvRecipe.setOnClickListener() {
+                if (recipe != null) {
+                    itemClickListener?.onItemClick(recipe.id)
+                }
             }
         }
+
+
     }
 
     override fun getItemCount() = dataSet.size

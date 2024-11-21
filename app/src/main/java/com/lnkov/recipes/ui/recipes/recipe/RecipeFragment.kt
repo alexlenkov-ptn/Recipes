@@ -11,6 +11,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.lnkov.recipes.R
 import com.lnkov.recipes.databinding.FragmentRecipeBinding
@@ -42,7 +43,6 @@ class RecipeFragment : Fragment() {
 
     private fun initUI() {
         ingredientsListAdapter = IngredientsAdapter(emptyList())
-
         methodAdapter = MethodAdapter(emptyList())
 
         val decorator = MaterialDividerItemDecoration(
@@ -69,15 +69,20 @@ class RecipeFragment : Fragment() {
                 if (state.isLoaded == false) {
                     Toast.makeText(context, R.string.toast_error_message, Toast.LENGTH_LONG).show()
                 } else {
-                    ivBcgRecipe.setImageDrawable(state.drawable)
+                    Glide.with(requireContext())
+                        .load(state.drawableUrl)
+                        .placeholder(R.drawable.img_placeholder)
+                        .error(R.drawable.img_error)
+                        .into(ivBcgRecipe)
 
                     ingredientsListAdapter.updateData(state.recipe?.ingredients ?: emptyList())
+
+                    Log.d("RecipeFragment", "${state.recipe?.ingredients}")
 
                     methodAdapter.updateData(state.recipe?.method ?: emptyList())
 
                     ingredientsListAdapter.updateIngredients(state.portionsCount)
                     tvNumberOfPortions.text = state.portionsCount.toString()
-                    rvRecipeIngredients.adapter = ingredientsListAdapter
 
                     ivBcgRecipe.contentDescription = "Image: ${state.recipe?.imageUrl}"
                     tvRecipe.text = state.recipe?.title
@@ -88,6 +93,9 @@ class RecipeFragment : Fragment() {
         }
 
         binding.apply {
+            rvRecipeIngredients.adapter = ingredientsListAdapter
+            rvRecipeCookingMethod.adapter = methodAdapter
+
             sbCountsOfRecipes.setOnSeekBarChangeListener(
                 PortionSeekBarListener { progress ->
                     viewModel.updateNumberOfPortions(progress)
