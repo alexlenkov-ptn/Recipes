@@ -50,12 +50,17 @@ class RecipesListFragment : Fragment() {
 
         viewModel.recipeListUiState.observe(viewLifecycleOwner)
         { recipesListState: RecipesListViewModel.RecipeListUiState ->
-            Log.d("!!!", "recipe list state: ${recipesListState.category?.title}")
+            Log.d("RecipesListFragment",
+                "category: ${recipesListState.category}")
+
 
             if (recipesListState.recipeList == null) {
                 Toast.makeText(context, R.string.toast_error_message, Toast.LENGTH_LONG).show()
             } else {
                 recipesListAdapter.updateData(recipesListState.recipeList)
+                Log.d("RecipesListFragment",
+                    "recipe list: ${recipesListState.recipeList}")
+
             }
 
             binding.apply {

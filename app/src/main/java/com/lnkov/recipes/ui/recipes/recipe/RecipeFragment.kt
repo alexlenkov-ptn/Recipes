@@ -69,7 +69,6 @@ class RecipeFragment : Fragment() {
                 if (state.isLoaded == false) {
                     Toast.makeText(context, R.string.toast_error_message, Toast.LENGTH_LONG).show()
                 } else {
-
                     ivBcgRecipe.setImageDrawable(state.drawable)
 
                     ingredientsListAdapter.updateData(state.recipe?.ingredients ?: emptyList())
@@ -83,15 +82,6 @@ class RecipeFragment : Fragment() {
                     ivBcgRecipe.contentDescription = "Image: ${state.recipe?.imageUrl}"
                     tvRecipe.text = state.recipe?.title
 
-                    rvRecipeIngredients.adapter = ingredientsListAdapter
-                    rvRecipeCookingMethod.adapter = methodAdapter
-
-                    sbCountsOfRecipes.setOnSeekBarChangeListener(
-                        PortionSeekBarListener { progress ->
-                            viewModel.updateNumberOfPortions(progress)
-                        }
-                    )
-
                     Log.d("RecipeFragment", "$state")
 
                 }
@@ -99,10 +89,17 @@ class RecipeFragment : Fragment() {
         }
 
         binding.apply {
-            Log.d("RecipeFragment", "args.recipeId.toString(): ${args.recipeId.toString()}")
+            sbCountsOfRecipes.setOnSeekBarChangeListener(
+                PortionSeekBarListener { progress ->
+                    viewModel.updateNumberOfPortions(progress)
+                }
+            )
+
             ibIcHeart.setOnClickListener { viewModel.onFavoritesClicked(args.recipeId.toString()) }
             rvRecipeIngredients.addItemDecoration(decorator)
             rvRecipeCookingMethod.addItemDecoration(decorator)
+
+            Log.d("RecipeFragment", "args.recipeId.toString(): ${args.recipeId}")
         }
     }
 }

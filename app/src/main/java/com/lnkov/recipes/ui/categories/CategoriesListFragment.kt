@@ -38,7 +38,7 @@ class CategoriesListFragment : Fragment() {
 
         viewModel.categoryUiState.observe(viewLifecycleOwner)
         { categoriesState: CategoriesViewModel.CategoriesUiState ->
-            Log.d("!!!", "categories state: ${categoriesState.categories}")
+            Log.d("CategoriesListFragment", "categories state: ${categoriesState.categories}")
 
             if (categoriesState.categories == null) {
                 Toast.makeText(context, R.string.toast_error_message, Toast.LENGTH_LONG).show()
