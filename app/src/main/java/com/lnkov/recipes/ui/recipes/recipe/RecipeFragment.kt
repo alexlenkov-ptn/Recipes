@@ -14,8 +14,6 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.lnkov.recipes.R
 import com.lnkov.recipes.databinding.FragmentRecipeBinding
-import com.lnkov.recipes.ui.IngredientsAdapter
-import com.lnkov.recipes.ui.MethodAdapter
 
 class RecipeFragment : Fragment() {
     private val binding by lazy { FragmentRecipeBinding.inflate(layoutInflater) }

@@ -1,4 +1,4 @@
-package com.lnkov.recipes.ui
+package com.lnkov.recipes.ui.recipes.recipe
 
 import android.annotation.SuppressLint
 import android.util.Log
