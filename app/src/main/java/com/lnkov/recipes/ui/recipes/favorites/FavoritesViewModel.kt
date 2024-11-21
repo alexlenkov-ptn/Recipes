@@ -43,11 +43,10 @@ class FavoritesViewModel(
     fun loadRecipes() {
         threadPool.execute {
             val favoriteList = recipeRepository.loadRecipesByIds(getRecipesIds())
-            var isLoaded: Boolean = false
+            var isLoaded: Boolean? = null
 
-            if (favoriteList != null) {
-                isLoaded = true
-            }
+            if (favoriteList != null) isLoaded = true
+            else isLoaded = false
 
             _favoriteUiState.postValue(
                 favoriteUiState.value?.copy(

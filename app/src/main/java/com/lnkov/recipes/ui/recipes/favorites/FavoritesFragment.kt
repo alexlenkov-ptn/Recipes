@@ -54,7 +54,7 @@ class FavoritesFragment : Fragment() {
                 Toast.makeText(context, R.string.toast_error_message, Toast.LENGTH_LONG).show()
             } else {
                 binding.apply {
-                    if (state.favoriteList?.isEmpty() == true && state.isLoaded == true) {
+                    if (state.favoriteList?.isEmpty() == true) {
                         rvRecipes.visibility = View.GONE
                         tvFavoritesRecyclerIsNull.visibility = View.VISIBLE
 

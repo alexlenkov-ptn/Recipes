@@ -73,12 +73,15 @@ class RecipeRepository {
     }
 
     fun loadRecipesByIds(recipeIds: String): List<Recipe>? {
+        Log.d("RecipeRepository", "recipeIds: $recipeIds")
+
         try {
             val call: Call<List<Recipe>> = service.getRecipesByIds(recipeIds)
             val response: Response<List<Recipe>> = call.execute()
-            Log.d("RecipeRepository", "${response.body()}")
+            Log.d("RecipeRepository", "loadRecipesByIds: ${response.body()}")
 
-            return response.body()
+            return if (response.body() == null) emptyList()
+            else response.body()
         } catch (e: Exception) {
             Log.d("RecipeRepository", "Error: $e")
 

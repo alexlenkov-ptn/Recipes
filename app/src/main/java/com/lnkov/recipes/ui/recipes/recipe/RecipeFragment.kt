@@ -36,6 +36,7 @@ class RecipeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.loadRecipe(args.recipeId)
+        Log.d("RecipeFragment", "recipeId: ${args.recipeId}")
         initUI()
     }
 
@@ -61,12 +62,14 @@ class RecipeFragment : Fragment() {
             Log.i("RecipeFragment", "state heartIconStatus ${state.isFavorite}")
             Log.i("RecipeFragment", "state portionCount ${state.portionsCount}")
 
-            if (state.isLoaded == false) {
-                Toast.makeText(context, R.string.toast_error_message, Toast.LENGTH_LONG).show()
-            } else {
-                binding.apply {
-                    if (state.isFavorite) ibIcHeart.setImageResource(R.drawable.ic_heart_recipe)
-                    else ibIcHeart.setImageResource(R.drawable.ic_heart_empty_recipe)
+            binding.apply {
+                if (state.isFavorite) ibIcHeart.setImageResource(R.drawable.ic_heart_recipe)
+                else ibIcHeart.setImageResource(R.drawable.ic_heart_empty_recipe)
+
+                if (state.isLoaded == false) {
+                    Toast.makeText(context, R.string.toast_error_message, Toast.LENGTH_LONG).show()
+                } else {
+
                     ivBcgRecipe.setImageDrawable(state.drawable)
 
                     ingredientsListAdapter.updateData(state.recipe?.ingredients ?: emptyList())
@@ -88,14 +91,16 @@ class RecipeFragment : Fragment() {
                             viewModel.updateNumberOfPortions(progress)
                         }
                     )
+
+                    Log.d("RecipeFragment", "$state")
+
                 }
             }
-
-
         }
 
         binding.apply {
-            ibIcHeart.setOnClickListener { viewModel.onFavoritesClicked() }
+            Log.d("RecipeFragment", "args.recipeId.toString(): ${args.recipeId.toString()}")
+            ibIcHeart.setOnClickListener { viewModel.onFavoritesClicked(args.recipeId.toString()) }
             rvRecipeIngredients.addItemDecoration(decorator)
             rvRecipeCookingMethod.addItemDecoration(decorator)
         }

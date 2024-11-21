@@ -43,11 +43,9 @@ class RecipeViewModel(
 
     private val threadPool = (application as MyApplication).threadPool
 
-    fun onFavoritesClicked() {
+    fun onFavoritesClicked(recipeIdString: String) {
         val favoriteSet: HashSet<String> =
             HashSet(sharedPreferences?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
-
-        val recipeIdString = recipeUiState.value?.recipe?.id.toString()
 
         Log.d("RecipeViewModel", "$recipeIdString")
 
