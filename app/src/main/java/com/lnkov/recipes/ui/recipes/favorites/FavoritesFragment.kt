@@ -5,9 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.lnkov.recipes.R
 import com.lnkov.recipes.databinding.FragmentFavoritesBinding
 import com.lnkov.recipes.ui.recipes.recipe_list.RecipesListAdapter
 
@@ -46,16 +48,25 @@ class FavoritesFragment : Fragment() {
         viewModel.favoriteUiState.observe(
             viewLifecycleOwner
         ) { state: FavoritesViewModel.FavoritesUiState ->
-            Log.i("!!!", "state favoriteList ${state.favoriteList}")
+            Log.i("FavoritesFragment", "state favoriteList ${state.favoriteList}")
 
-            binding.apply {
-                if (state.favoriteList.isEmpty()) {
-                    rvRecipes.visibility = View.GONE
-                    tvFavoritesRecyclerIsNull.visibility = View.VISIBLE
-                } else {
-                    tvFavoritesRecyclerIsNull.visibility = View.GONE
-                    recipesListAdapter.updateData(state.favoriteList)
-                    rvRecipes.adapter = recipesListAdapter
+            if (state.isLoaded == false) {
+                Toast.makeText(context, R.string.toast_error_message, Toast.LENGTH_LONG).show()
+            } else {
+                binding.apply {
+                    if (state.favoriteList?.isEmpty() == true) {
+                        rvRecipes.visibility = View.GONE
+                        tvFavoritesRecyclerIsNull.visibility = View.VISIBLE
+
+                        Log.d("FavoritesFragment", "state.favoriteList is Empty")
+                    } else {
+                        tvFavoritesRecyclerIsNull.visibility = View.GONE
+                        rvRecipes.visibility = View.VISIBLE
+                        recipesListAdapter.updateData(state.favoriteList ?: emptyList())
+                        rvRecipes.adapter = recipesListAdapter
+
+                        Log.d("FavoritesFragment", "state.favoriteList is NOT Empty")
+                    }
                 }
             }
         }

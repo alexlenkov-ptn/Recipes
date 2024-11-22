@@ -13,4 +13,6 @@
     <string name="_1" translatable="false">1</string>
     <string name="tv_favorites_recycler_is_null">Вы еще не добавили ни одного рецепта в избранное</string>
 
+    <string name="toast_error_message">Ошибка получения данных</string>
+
 </resources>

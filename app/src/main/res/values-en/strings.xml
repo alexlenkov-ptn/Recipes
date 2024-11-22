@@ -9,4 +9,5 @@
     <string name="text_content_description_card_category">The name of the category %1$s</string>
     <string name="text_content_description_card_recipe">The name of the recipe %1$s</string>
     <string name="tv_favorites_recycler_is_null">You haven\'t added any recipes to your favorites yet</string>
+    <string name="toast_error_message">Data acquisition error</string>
 </resources>

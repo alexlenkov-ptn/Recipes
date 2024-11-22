@@ -1,4 +1,4 @@
-package com.lnkov.recipes.ui
+package com.lnkov.recipes.ui.recipes.recipe
 
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +11,7 @@ class MethodAdapter(var dataSet: List<String>) :
 
     fun updateData(dataSet: List<String>) {
         this.dataSet = dataSet
+        notifyDataSetChanged()
     }
 
     class ViewHolder(val binding: ItemRecipeMethodBinding) :

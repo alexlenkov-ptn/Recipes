@@ -9,13 +9,17 @@ import androidx.lifecycle.MutableLiveData
 import com.lnkov.recipes.model.Recipe
 import android.graphics.drawable.Drawable
 import androidx.lifecycle.AndroidViewModel
+import com.lnkov.recipes.MyApplication
 import com.lnkov.recipes.data.Constants
-import com.lnkov.recipes.data.STUB
+import com.lnkov.recipes.data.RecipeRepository
 
 
 class RecipeViewModel(
     application: Application,
 ) : AndroidViewModel(application) {
+    init {
+        Log.i("RecipeViewModel", "RecipeViewModel created")
+    }
 
     private val sharedPreferences: SharedPreferences = application.getSharedPreferences(
         Constants.FAVORITES_KEY,
@@ -27,22 +31,23 @@ class RecipeViewModel(
         val isFavorite: Boolean = false,
         val drawable: Drawable? = null,
         val portionsCount: Int = 1,
+        val isLoaded : Boolean? = null
     )
 
     private val _recipeUiState = MutableLiveData<RecipeUiState>(RecipeUiState())
 
-    init {
-        Log.i("!!!", "RecipeViewModel created")
-    }
-
     val recipeUiState: LiveData<RecipeUiState>
         get() = _recipeUiState
 
-    fun onFavoritesClicked() {
+    private val recipeRepository = RecipeRepository()
+
+    private val threadPool = (application as MyApplication).threadPool
+
+    fun onFavoritesClicked(recipeIdString: String) {
         val favoriteSet: HashSet<String> =
             HashSet(sharedPreferences?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
 
-        val recipeIdString = recipeUiState.value?.recipe?.id.toString()
+        Log.d("RecipeViewModel", "$recipeIdString")
 
         if (favoriteSet.contains(recipeIdString)) {
             favoriteSet.remove(recipeIdString)
@@ -53,6 +58,7 @@ class RecipeViewModel(
         }
 
         sharedPreferences.edit().putStringSet(Constants.FAVORITES_KEY, favoriteSet).apply()
+
     }
 
     fun updateNumberOfPortions(count: Int) {
@@ -63,7 +69,6 @@ class RecipeViewModel(
     private fun getFavorites(): Set<String> {
         return HashSet(sharedPreferences?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
     }
-
 
     private fun getDrawable(recipe: Recipe?): Drawable? {
         val drawableUrl = recipe?.imageUrl
@@ -80,16 +85,23 @@ class RecipeViewModel(
 
 
     fun loadRecipe(recipeId: Int?) {
-        // TODO: load from network
+        threadPool.execute {
+            val recipe = recipeId?.let { recipeRepository.loadRecipeById(recipeId) }
+            var isLoaded = false
 
-        val recipe = recipeId?.let { STUB.getRecipeById(0, it) }
+            if (recipe != null) {
+                isLoaded = true
+            }
 
-        _recipeUiState.value = recipeUiState.value?.copy(
-            recipe = recipe,
-            isFavorite = getFavorites().contains(recipeId.toString()),
-            drawable = getDrawable(recipe),
-            portionsCount = recipeUiState.value?.portionsCount ?: 1,
-        )
+            _recipeUiState.postValue(recipeUiState.value?.copy(
+                recipe = recipe,
+                isFavorite = getFavorites().contains(recipeId.toString()),
+                drawable = getDrawable(recipe),
+                portionsCount = recipeUiState.value?.portionsCount ?: 1,
+                isLoaded = isLoaded
+            ))
+
+        }
     }
 
 }

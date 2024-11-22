@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.lnkov.recipes.R
 import com.lnkov.recipes.databinding.FragmentListCategoriesBinding
 import com.lnkov.recipes.model.Category
 
@@ -37,9 +38,13 @@ class CategoriesListFragment : Fragment() {
 
         viewModel.categoryUiState.observe(viewLifecycleOwner)
         { categoriesState: CategoriesViewModel.CategoriesUiState ->
-            Log.d("!!!", "categories state: ${categoriesState.categories}")
+            Log.d("CategoriesListFragment", "categories state: ${categoriesState.categories}")
 
-            categoriesListAdapter.updateData(categoriesState.categories)
+            if (categoriesState.categories == null) {
+                Toast.makeText(context, R.string.toast_error_message, Toast.LENGTH_LONG).show()
+            } else {
+                categoriesListAdapter.updateData(categoriesState.categories)
+            }
 
             binding.rvCategories.adapter = categoriesListAdapter
 
@@ -47,7 +52,7 @@ class CategoriesListFragment : Fragment() {
                 setOnItemClickListener(
                     object : CategoriesListAdapter.OnItemClickListener {
                         override fun onItemClick(categoryId: Int) {
-                            categoriesState.categories.find { it.id == categoryId }
+                            categoriesState.categories?.find { it.id == categoryId }
                                 ?.let { transferCategoryToNext(it) }
                             Log.d("CategoriesListFragment", "create listener")
                         }

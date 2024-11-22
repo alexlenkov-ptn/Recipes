@@ -1,4 +1,4 @@
-package com.lnkov.recipes.ui
+package com.lnkov.recipes.ui.recipes.recipe
 
 import android.annotation.SuppressLint
 import android.util.Log
@@ -16,6 +16,7 @@ class IngredientsAdapter(var dataSet: List<Ingredient>) :
 
     fun updateData(dataSet: List<Ingredient>) {
         this.dataSet = dataSet
+        notifyDataSetChanged()
     }
 
     class ViewHolder(val binding: ItemRecipeIngredientsBinding) :
@@ -31,9 +32,13 @@ class IngredientsAdapter(var dataSet: List<Ingredient>) :
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val ingredient: Ingredient = dataSet[position]
+        var ingredientQuantity = ""
 
-        val ingredientQuantity =
+        ingredientQuantity = try {
             "${ingredient.quantity.toDouble() * quantity}".removeSuffix(".0")
+        } catch (e: NumberFormatException) {
+            ingredient.quantity
+        }
 
         viewHolder.binding.apply {
             tvIngredientDescription.text = ingredient.description

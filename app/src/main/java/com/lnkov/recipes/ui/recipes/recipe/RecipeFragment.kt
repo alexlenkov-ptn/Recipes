@@ -8,13 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.lnkov.recipes.R
 import com.lnkov.recipes.databinding.FragmentRecipeBinding
-import com.lnkov.recipes.ui.IngredientsAdapter
-import com.lnkov.recipes.ui.MethodAdapter
 
 class RecipeFragment : Fragment() {
     private val binding by lazy { FragmentRecipeBinding.inflate(layoutInflater) }
@@ -33,8 +32,9 @@ class RecipeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.loadRecipe(args.recipeId)
         super.onViewCreated(view, savedInstanceState)
+        viewModel.loadRecipe(args.recipeId)
+        Log.d("RecipeFragment", "recipeId: ${args.recipeId}")
         initUI()
     }
 
@@ -57,41 +57,48 @@ class RecipeFragment : Fragment() {
             viewLifecycleOwner
         )
         { state: RecipeViewModel.RecipeUiState ->
-            Log.i("!!!", "state heartIconStatus ${state.isFavorite}")
-            Log.i("!!!", "state portionCount ${state.portionsCount}")
+            Log.i("RecipeFragment", "state heartIconStatus ${state.isFavorite}")
+            Log.i("RecipeFragment", "state portionCount ${state.portionsCount}")
 
             binding.apply {
                 if (state.isFavorite) ibIcHeart.setImageResource(R.drawable.ic_heart_recipe)
                 else ibIcHeart.setImageResource(R.drawable.ic_heart_empty_recipe)
-                ivBcgRecipe.setImageDrawable(state.drawable)
 
-                ingredientsListAdapter.updateData(state.recipe?.ingredients ?: emptyList())
+                if (state.isLoaded == false) {
+                    Toast.makeText(context, R.string.toast_error_message, Toast.LENGTH_LONG).show()
+                } else {
+                    ivBcgRecipe.setImageDrawable(state.drawable)
 
-                methodAdapter.updateData(state.recipe?.method ?: emptyList())
+                    ingredientsListAdapter.updateData(state.recipe?.ingredients ?: emptyList())
 
-                ingredientsListAdapter.updateIngredients(state.portionsCount)
-                tvNumberOfPortions.text = state.portionsCount.toString()
-                rvRecipeIngredients.adapter = ingredientsListAdapter
+                    methodAdapter.updateData(state.recipe?.method ?: emptyList())
 
-                ivBcgRecipe.contentDescription = "Image: ${state.recipe?.imageUrl}"
-                tvRecipe.text = state.recipe?.title
+                    ingredientsListAdapter.updateIngredients(state.portionsCount)
+                    tvNumberOfPortions.text = state.portionsCount.toString()
 
-                rvRecipeIngredients.adapter = ingredientsListAdapter
-                rvRecipeCookingMethod.adapter = methodAdapter
+                    ivBcgRecipe.contentDescription = "Image: ${state.recipe?.imageUrl}"
+                    tvRecipe.text = state.recipe?.title
 
-                sbCountsOfRecipes.setOnSeekBarChangeListener(
-                    PortionSeekBarListener { progress ->
-                        viewModel.updateNumberOfPortions(progress)
-                    }
-                )
+                    Log.d("RecipeFragment", "$state")
+                }
             }
         }
 
-
         binding.apply {
-            ibIcHeart.setOnClickListener { viewModel.onFavoritesClicked() }
+            rvRecipeIngredients.adapter = ingredientsListAdapter
+            rvRecipeCookingMethod.adapter = methodAdapter
+
+            sbCountsOfRecipes.setOnSeekBarChangeListener(
+                PortionSeekBarListener { progress ->
+                    viewModel.updateNumberOfPortions(progress)
+                }
+            )
+
+            ibIcHeart.setOnClickListener { viewModel.onFavoritesClicked(args.recipeId.toString()) }
             rvRecipeIngredients.addItemDecoration(decorator)
             rvRecipeCookingMethod.addItemDecoration(decorator)
+
+            Log.d("RecipeFragment", "args.recipeId.toString(): ${args.recipeId}")
         }
     }
 }
