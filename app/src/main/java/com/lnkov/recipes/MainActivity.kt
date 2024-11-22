@@ -9,7 +9,6 @@ import com.lnkov.recipes.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-
     private var _binding: ActivityMainBinding? = null
     private val binding
         get() = _binding
@@ -22,7 +21,6 @@ class MainActivity : AppCompatActivity() {
             exit = android.R.anim.fade_out
         }
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
