@@ -5,6 +5,8 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import com.lnkov.recipes.RecipeApiService
 import com.lnkov.recipes.model.Category
 import com.lnkov.recipes.model.Recipe
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Call
@@ -20,74 +22,93 @@ class RecipeRepository {
         .build()
     private val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
 
-    fun loadCategories(): List<Category>? {
-        try {
-            val call: Call<List<Category>> = service.getCategories()
-            val response: Response<List<Category>> = call.execute()
+    suspend fun loadCategories(): List<Category>? {
 
-            return response.body()
-        } catch (e: Exception) {
-            Log.d("RecipeRepository", "Error: $e")
+        return withContext(Dispatchers.IO) {
 
-            return null
+            try {
+                val call: Call<List<Category>> = service.getCategories()
+                val response: Response<List<Category>> = call.execute()
+
+                response.body()
+            } catch (e: Exception) {
+                Log.d("RecipeRepository", "Error: $e")
+
+                null
+            }
         }
     }
 
-    fun loadRecipesById(categoryId: Int): List<Recipe>? {
-        try {
-            val call: Call<List<Recipe>> = service.getRecipesById(categoryId)
-            val response: Response<List<Recipe>> = call.execute()
+    suspend fun loadRecipesById(categoryId: Int): List<Recipe>? {
 
-            return response.body()
-        } catch (e: Exception) {
-            Log.d("RecipeRepository", "Error: $e")
+        return withContext(Dispatchers.IO) {
 
-            return null
+            try {
+                val call: Call<List<Recipe>> = service.getRecipesById(categoryId)
+                val response: Response<List<Recipe>> = call.execute()
+
+                response.body()
+            } catch (e: Exception) {
+                Log.d("RecipeRepository", "Error: $e")
+
+                null
+            }
         }
     }
 
-    fun loadCategoryById(categoryId: Int): Category? {
-        try {
-            val call: Call<Category> = service.getCategoryById(categoryId)
-            val response: Response<Category> = call.execute()
+    suspend fun loadCategoryById(categoryId: Int): Category? {
 
-            return response.body()
-        } catch (e: Exception) {
-            Log.d("RecipeRepository", "Error: $e")
 
-            return null
+        return withContext(Dispatchers.IO) {
+
+            try {
+                val call: Call<Category> = service.getCategoryById(categoryId)
+                val response: Response<Category> = call.execute()
+
+                response.body()
+            } catch (e: Exception) {
+                Log.d("RecipeRepository", "Error: $e")
+
+                null
+            }
         }
     }
 
-    fun loadRecipeById(recipeId: Int): Recipe? {
-        try {
-            val call: Call<Recipe> = service.getRecipeById(recipeId)
-            val response: Response<Recipe> = call.execute()
+    suspend fun loadRecipeById(recipeId: Int): Recipe? {
 
-            return response.body()
-        } catch (e: Exception) {
-            Log.d("RecipeRepository", "Error: $e")
+        return withContext(Dispatchers.IO) {
 
-            return null
+            try {
+                val call: Call<Recipe> = service.getRecipeById(recipeId)
+                val response: Response<Recipe> = call.execute()
+
+                response.body()
+            } catch (e: Exception) {
+                Log.d("RecipeRepository", "Error: $e")
+
+                null
+            }
         }
     }
 
-    fun loadRecipesByIds(recipeIds: String): List<Recipe>? {
+    suspend fun loadRecipesByIds(recipeIds: String): List<Recipe>? {
         Log.d("RecipeRepository", "recipeIds: $recipeIds")
 
-        try {
-            val call: Call<List<Recipe>> = service.getRecipesByIds(recipeIds)
-            val response: Response<List<Recipe>> = call.execute()
-            Log.d("RecipeRepository", "loadRecipesByIds: ${response.body()}")
 
-            return if (response.body() == null) emptyList()
-            else response.body()
-        } catch (e: Exception) {
-            Log.d("RecipeRepository", "Error: $e")
+        return withContext(Dispatchers.IO) {
 
-            return null
+            try {
+                val call: Call<List<Recipe>> = service.getRecipesByIds(recipeIds)
+                val response: Response<List<Recipe>> = call.execute()
+                Log.d("RecipeRepository", "loadRecipesByIds: ${response.body()}")
+
+                if (response.body() == null) emptyList()
+                else response.body()
+            } catch (e: Exception) {
+                Log.d("RecipeRepository", "Error: $e")
+
+                null
+            }
         }
     }
-
-
 }

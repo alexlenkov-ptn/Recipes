@@ -9,9 +9,11 @@ import androidx.lifecycle.MutableLiveData
 import com.lnkov.recipes.model.Recipe
 import android.graphics.drawable.Drawable
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import com.lnkov.recipes.MyApplication
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.data.RecipeRepository
+import kotlinx.coroutines.launch
 
 
 class RecipeViewModel(
@@ -31,7 +33,7 @@ class RecipeViewModel(
         val isFavorite: Boolean = false,
         val drawableUrl: String = "",
         val portionsCount: Int = 1,
-        val isLoaded : Boolean? = null
+        val isLoaded: Boolean? = null
     )
 
     private val _recipeUiState = MutableLiveData<RecipeUiState>(RecipeUiState())
@@ -85,7 +87,8 @@ class RecipeViewModel(
 
 
     fun loadRecipe(recipeId: Int?) {
-        threadPool.execute {
+
+        viewModelScope.launch {
             val recipe = recipeId?.let { recipeRepository.loadRecipeById(recipeId) }
             var isLoaded = false
 
@@ -93,13 +96,15 @@ class RecipeViewModel(
                 isLoaded = true
             }
 
-            _recipeUiState.postValue(recipeUiState.value?.copy(
-                recipe = recipe,
-                isFavorite = getFavorites().contains(recipeId.toString()),
-                drawableUrl = "${Constants.BASE_IMAGE_URL}${recipe?.imageUrl}",
-                portionsCount = recipeUiState.value?.portionsCount ?: 1,
-                isLoaded = isLoaded
-            ))
+            _recipeUiState.postValue(
+                recipeUiState.value?.copy(
+                    recipe = recipe,
+                    isFavorite = getFavorites().contains(recipeId.toString()),
+                    drawableUrl = "${Constants.BASE_IMAGE_URL}${recipe?.imageUrl}",
+                    portionsCount = recipeUiState.value?.portionsCount ?: 1,
+                    isLoaded = isLoaded
+                )
+            )
 
         }
     }
