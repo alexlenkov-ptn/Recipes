@@ -74,4 +74,6 @@ dependencies {
     implementation(libs.retrofit)
 
     implementation(libs.retrofit2.kotlinx.serialization.converter)
+
+    implementation(libs.glide)
 }

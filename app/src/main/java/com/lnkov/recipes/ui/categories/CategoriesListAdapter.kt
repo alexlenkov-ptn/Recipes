@@ -5,8 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.lnkov.recipes.model.Category
 import com.lnkov.recipes.R
+import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.databinding.ItemCategoryBinding
 
 
@@ -40,29 +42,25 @@ class CategoriesListAdapter(private var dataSet: List<Category>) :
         val category: Category = dataSet[position]
         val binding = viewHolder.binding
 
-        binding.tvTitleCardCategory.text = category.title
-        binding.tvDescriptionCardCategory.text = category.description
+        viewHolder.binding.apply {
+            tvTitleCardCategory.text = category.title
+            tvDescriptionCardCategory.text = category.description
 
-        val drawable = try {
-            Drawable.createFromStream(
-                viewHolder.itemView.context.assets.open(category.imageUrl),
-                null
-            )
-        } catch (e: Exception) {
-            Log.d("!!!", "Image not found: ${category.imageUrl}")
-            null
-        }
+            Glide.with(viewHolder.itemView.context)
+                .load("${Constants.BASE_IMAGE_URL}${category.imageUrl}")
+                .placeholder(R.drawable.img_placeholder)
+                .error(R.drawable.img_error)
+                .into(ivCardCategory)
 
-        binding.ivCardCategory.setImageDrawable(drawable)
+            ivCardCategory.contentDescription =
+                binding.root.context.getString(
+                    R.string.text_content_description_card_category,
+                    category.title
+                )
 
-        binding.ivCardCategory.contentDescription =
-            binding.root.context.getString(
-                R.string.text_content_description_card_category,
-                category.title
-            )
-
-        binding.cvCategory.setOnClickListener() {
-            itemClickListener?.onItemClick(category.id)
+            cvCategory.setOnClickListener() {
+                itemClickListener?.onItemClick(category.id)
+            }
         }
     }
 

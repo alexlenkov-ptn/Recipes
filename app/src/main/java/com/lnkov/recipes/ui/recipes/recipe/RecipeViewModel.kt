@@ -29,7 +29,7 @@ class RecipeViewModel(
     data class RecipeUiState(
         val recipe: Recipe? = null,
         val isFavorite: Boolean = false,
-        val drawable: Drawable? = null,
+        val drawableUrl: String = "",
         val portionsCount: Int = 1,
         val isLoaded : Boolean? = null
     )
@@ -96,7 +96,7 @@ class RecipeViewModel(
             _recipeUiState.postValue(recipeUiState.value?.copy(
                 recipe = recipe,
                 isFavorite = getFavorites().contains(recipeId.toString()),
-                drawable = getDrawable(recipe),
+                drawableUrl = "${Constants.BASE_IMAGE_URL}${recipe?.imageUrl}",
                 portionsCount = recipeUiState.value?.portionsCount ?: 1,
                 isLoaded = isLoaded
             ))

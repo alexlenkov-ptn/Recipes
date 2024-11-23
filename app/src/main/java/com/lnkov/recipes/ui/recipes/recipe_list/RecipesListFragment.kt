@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.lnkov.recipes.R
 import com.lnkov.recipes.databinding.FragmentRecipesListBinding
 
@@ -50,24 +51,35 @@ class RecipesListFragment : Fragment() {
 
         viewModel.recipeListUiState.observe(viewLifecycleOwner)
         { recipesListState: RecipesListViewModel.RecipeListUiState ->
-            Log.d("RecipesListFragment",
-                "category: ${recipesListState.category}")
+            Log.d(
+                "RecipesListFragment",
+                "category: ${recipesListState.category}"
+            )
 
 
             if (recipesListState.recipeList == null) {
                 Toast.makeText(context, R.string.toast_error_message, Toast.LENGTH_LONG).show()
             } else {
                 recipesListAdapter.updateData(recipesListState.recipeList)
-                Log.d("RecipesListFragment",
-                    "recipe list: ${recipesListState.recipeList}")
+                Log.d(
+                    "RecipesListFragment",
+                    "recipe list: ${recipesListState.recipeList}"
+                )
 
             }
 
             binding.apply {
                 ivBcgRecipeList.contentDescription =
                     "Image: ${recipesListState.category?.description}"
+
                 tvBcgRecipeList.text = recipesListState.category?.title
-                ivBcgRecipeList.setImageDrawable(recipesListState.drawable)
+
+                Glide.with(requireContext())
+                    .load(recipesListState.drawableUrl)
+                    .placeholder(R.drawable.img_placeholder)
+                    .error(R.drawable.img_error)
+                    .into(ivBcgRecipeList)
+
                 rvRecipes.adapter = recipesListAdapter
             }
         }
