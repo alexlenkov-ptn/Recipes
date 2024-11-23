@@ -10,7 +10,6 @@ import com.lnkov.recipes.model.Recipe
 import android.graphics.drawable.Drawable
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.lnkov.recipes.MyApplication
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.data.RecipeRepository
 import kotlinx.coroutines.launch
@@ -42,8 +41,6 @@ class RecipeViewModel(
         get() = _recipeUiState
 
     private val recipeRepository = RecipeRepository()
-
-    private val threadPool = (application as MyApplication).threadPool
 
     fun onFavoritesClicked(recipeIdString: String) {
         val favoriteSet: HashSet<String> =

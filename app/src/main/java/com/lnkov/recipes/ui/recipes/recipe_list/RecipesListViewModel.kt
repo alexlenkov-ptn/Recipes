@@ -6,7 +6,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.lnkov.recipes.MyApplication
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.data.RecipeRepository
 import com.lnkov.recipes.model.Category
@@ -33,8 +32,6 @@ class RecipesListViewModel(
     )
 
     private val recipeRepository = RecipeRepository()
-
-    private val threadPool = (application as MyApplication).threadPool
 
     fun loadCategory(categoryId: Int?) {
 
