@@ -98,7 +98,6 @@ class RecipeViewModel(
                     recipe = recipe,
                     isFavorite = getFavorites().contains(recipeId.toString()),
                     drawableUrl = "${Constants.BASE_IMAGE_URL}${recipe?.imageUrl}",
-                    portionsCount = recipeUiState.value?.portionsCount ?: 1,
                     isLoaded = isLoaded
                 )
             )

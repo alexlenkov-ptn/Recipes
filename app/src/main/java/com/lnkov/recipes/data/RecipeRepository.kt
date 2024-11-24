@@ -22,93 +22,80 @@ class RecipeRepository {
         .build()
     private val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
 
-    suspend fun loadCategories(): List<Category>? {
+    suspend fun loadCategories(): List<Category>? = withContext(Dispatchers.IO) {
 
-        return withContext(Dispatchers.IO) {
+        try {
+            val call: Call<List<Category>> = service.getCategories()
+            val response: Response<List<Category>> = call.execute()
 
-            try {
-                val call: Call<List<Category>> = service.getCategories()
-                val response: Response<List<Category>> = call.execute()
+            response.body()
+        } catch (e: Exception) {
+            Log.d("RecipeRepository", "Error: $e")
 
-                response.body()
-            } catch (e: Exception) {
-                Log.d("RecipeRepository", "Error: $e")
-
-                null
-            }
+            null
         }
     }
 
-    suspend fun loadRecipesById(categoryId: Int): List<Recipe>? {
+    suspend fun loadRecipesById(categoryId: Int): List<Recipe>? = withContext(Dispatchers.IO) {
 
-        return withContext(Dispatchers.IO) {
+        try {
+            val call: Call<List<Recipe>> = service.getRecipesById(categoryId)
+            val response: Response<List<Recipe>> = call.execute()
 
-            try {
-                val call: Call<List<Recipe>> = service.getRecipesById(categoryId)
-                val response: Response<List<Recipe>> = call.execute()
+            response.body()
+        } catch (e: Exception) {
+            Log.d("RecipeRepository", "Error: $e")
 
-                response.body()
-            } catch (e: Exception) {
-                Log.d("RecipeRepository", "Error: $e")
-
-                null
-            }
+            null
         }
     }
 
-    suspend fun loadCategoryById(categoryId: Int): Category? {
+    suspend fun loadCategoryById(categoryId: Int): Category? = withContext(Dispatchers.IO) {
 
+        try {
+            val call: Call<Category> = service.getCategoryById(categoryId)
+            val response: Response<Category> = call.execute()
 
-        return withContext(Dispatchers.IO) {
+            response.body()
+        } catch (e: Exception) {
+            Log.d("RecipeRepository", "Error: $e")
 
-            try {
-                val call: Call<Category> = service.getCategoryById(categoryId)
-                val response: Response<Category> = call.execute()
+            null
+        }
 
-                response.body()
-            } catch (e: Exception) {
-                Log.d("RecipeRepository", "Error: $e")
+    }
 
-                null
-            }
+    suspend fun loadRecipeById(recipeId: Int): Recipe? = withContext(Dispatchers.IO) {
+
+        try {
+            val call: Call<Recipe> = service.getRecipeById(recipeId)
+            val response: Response<Recipe> = call.execute()
+
+            response.body()
+        } catch (e: Exception) {
+            Log.d("RecipeRepository", "Error: $e")
+
+            null
+
         }
     }
 
-    suspend fun loadRecipeById(recipeId: Int): Recipe? {
+    suspend fun loadRecipesByIds(recipeIds: String): List<Recipe>? = withContext(Dispatchers.IO) {
 
-        return withContext(Dispatchers.IO) {
-
-            try {
-                val call: Call<Recipe> = service.getRecipeById(recipeId)
-                val response: Response<Recipe> = call.execute()
-
-                response.body()
-            } catch (e: Exception) {
-                Log.d("RecipeRepository", "Error: $e")
-
-                null
-            }
-        }
-    }
-
-    suspend fun loadRecipesByIds(recipeIds: String): List<Recipe>? {
         Log.d("RecipeRepository", "recipeIds: $recipeIds")
 
 
-        return withContext(Dispatchers.IO) {
+        try {
+            val call: Call<List<Recipe>> = service.getRecipesByIds(recipeIds)
+            val response: Response<List<Recipe>> = call.execute()
+            Log.d("RecipeRepository", "loadRecipesByIds: ${response.body()}")
 
-            try {
-                val call: Call<List<Recipe>> = service.getRecipesByIds(recipeIds)
-                val response: Response<List<Recipe>> = call.execute()
-                Log.d("RecipeRepository", "loadRecipesByIds: ${response.body()}")
+            if (response.body() == null) emptyList()
+            else response.body()
+        } catch (e: Exception) {
+            Log.d("RecipeRepository", "Error: $e")
 
-                if (response.body() == null) emptyList()
-                else response.body()
-            } catch (e: Exception) {
-                Log.d("RecipeRepository", "Error: $e")
-
-                null
-            }
+            null
         }
     }
 }
