@@ -1,5 +1,6 @@
 package com.lnkov.recipes.data
 
+import android.content.Context
 import android.util.Log
 import androidx.room.Room
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -14,7 +15,7 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 
-class RecipeRepository {
+class RecipeRepository(context : Context) {
 
     private val contentType = "application/json".toMediaType()
     private val retrofit = Retrofit.Builder()
@@ -25,7 +26,7 @@ class RecipeRepository {
     private val dispatcher = Dispatchers.IO
 
     private val db = Room.databaseBuilder(
-        context = TODO(),
+        context = context,
         klass = AppDatabase::class.java,
         name = "database"
     )

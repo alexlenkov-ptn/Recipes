@@ -32,7 +32,7 @@ class RecipesListViewModel(
         val recipeList: List<Recipe>? = emptyList(),
     )
 
-    private val recipeRepository = RecipeRepository()
+    private val recipeRepository = RecipeRepository(application)
 
     fun loadCategory(categoryId: Int?) {
 
