@@ -15,7 +15,7 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 
-class RecipeRepository(context : Context) {
+class RecipeRepository(context: Context) {
 
     private val contentType = "application/json".toMediaType()
     private val retrofit = Retrofit.Builder()
@@ -29,7 +29,7 @@ class RecipeRepository(context : Context) {
         context = context,
         klass = AppDatabase::class.java,
         name = "database"
-    )
+    ).build()
 
     suspend fun loadCategories(): List<Category>? = withContext(dispatcher) {
 
@@ -43,6 +43,14 @@ class RecipeRepository(context : Context) {
 
             null
         }
+    }
+
+    suspend fun getCategoriesFromCache(): List<Category> = withContext(dispatcher) {
+        db.categoryDao().getAll()
+    }
+
+    suspend fun loadCategoriesToCache(categories: List<Category>) = withContext(dispatcher) {
+        db.categoryDao().addCategory(categories)
     }
 
     suspend fun loadRecipesById(categoryId: Int): List<Recipe>? = withContext(dispatcher) {
@@ -92,7 +100,6 @@ class RecipeRepository(context : Context) {
     suspend fun loadRecipesByIds(recipeIds: String): List<Recipe>? = withContext(dispatcher) {
 
         Log.d("RecipeRepository", "recipeIds: $recipeIds")
-
 
         try {
             val call: Call<List<Recipe>> = service.getRecipesByIds(recipeIds)
