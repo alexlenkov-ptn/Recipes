@@ -40,7 +40,7 @@ class RecipeViewModel(
     val recipeUiState: LiveData<RecipeUiState>
         get() = _recipeUiState
 
-    private val recipeRepository = RecipeRepository()
+    private val recipeRepository = RecipeRepository(application)
 
     fun onFavoritesClicked(recipeIdString: String) {
         val favoriteSet: HashSet<String> =

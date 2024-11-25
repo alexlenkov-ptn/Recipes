@@ -22,7 +22,7 @@ class FavoritesViewModel(
         Context.MODE_PRIVATE,
     )
 
-    private val recipeRepository = RecipeRepository()
+    private val recipeRepository = RecipeRepository(application)
 
 
     private fun getFavoriteSet(): HashSet<String> {
