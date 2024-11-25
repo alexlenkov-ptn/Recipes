@@ -11,6 +11,7 @@ import com.lnkov.recipes.data.RecipeRepository
 import com.lnkov.recipes.model.Category
 import com.lnkov.recipes.model.Recipe
 import kotlinx.coroutines.launch
+import okio.IOException
 
 class RecipesListViewModel(
     application: Application
@@ -47,6 +48,7 @@ class RecipesListViewModel(
                     recipeList = recipeList
                 )
             )
+
         }
     }
 }
