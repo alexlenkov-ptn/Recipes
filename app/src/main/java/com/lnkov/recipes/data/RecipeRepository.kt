@@ -21,8 +21,9 @@ class RecipeRepository {
         .addConverterFactory(Json.asConverterFactory(contentType))
         .build()
     private val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
+    private val dispatcher = Dispatchers.IO
 
-    suspend fun loadCategories(): List<Category>? = withContext(Dispatchers.IO) {
+    suspend fun loadCategories(): List<Category>? = withContext(dispatcher) {
 
         try {
             val call: Call<List<Category>> = service.getCategories()
@@ -36,7 +37,7 @@ class RecipeRepository {
         }
     }
 
-    suspend fun loadRecipesById(categoryId: Int): List<Recipe>? = withContext(Dispatchers.IO) {
+    suspend fun loadRecipesById(categoryId: Int): List<Recipe>? = withContext(dispatcher) {
 
         try {
             val call: Call<List<Recipe>> = service.getRecipesById(categoryId)
@@ -50,7 +51,7 @@ class RecipeRepository {
         }
     }
 
-    suspend fun loadCategoryById(categoryId: Int): Category? = withContext(Dispatchers.IO) {
+    suspend fun loadCategoryById(categoryId: Int): Category? = withContext(dispatcher) {
 
         try {
             val call: Call<Category> = service.getCategoryById(categoryId)
@@ -65,7 +66,7 @@ class RecipeRepository {
 
     }
 
-    suspend fun loadRecipeById(recipeId: Int): Recipe? = withContext(Dispatchers.IO) {
+    suspend fun loadRecipeById(recipeId: Int): Recipe? = withContext(dispatcher) {
 
         try {
             val call: Call<Recipe> = service.getRecipeById(recipeId)
@@ -80,7 +81,7 @@ class RecipeRepository {
         }
     }
 
-    suspend fun loadRecipesByIds(recipeIds: String): List<Recipe>? = withContext(Dispatchers.IO) {
+    suspend fun loadRecipesByIds(recipeIds: String): List<Recipe>? = withContext(dispatcher) {
 
         Log.d("RecipeRepository", "recipeIds: $recipeIds")
 

@@ -95,7 +95,7 @@ class RecipeViewModel(
 
             _recipeUiState.postValue(
                 recipeUiState.value?.copy(
-                    recipe = recipe,
+//                    recipe = recipe,
                     isFavorite = getFavorites().contains(recipeId.toString()),
                     drawableUrl = "${Constants.BASE_IMAGE_URL}${recipe?.imageUrl}",
                     isLoaded = isLoaded
