@@ -5,11 +5,12 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.lnkov.recipes.MyApplication
+import androidx.lifecycle.viewModelScope
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.data.RecipeRepository
 import com.lnkov.recipes.model.Category
 import com.lnkov.recipes.model.Recipe
+import kotlinx.coroutines.launch
 
 class RecipesListViewModel(
     application: Application
@@ -32,11 +33,10 @@ class RecipesListViewModel(
 
     private val recipeRepository = RecipeRepository()
 
-    private val threadPool = (application as MyApplication).threadPool
-
     fun loadCategory(categoryId: Int?) {
 
-        threadPool.execute {
+        viewModelScope.launch {
+
             val category = categoryId?.let { recipeRepository.loadCategoryById(it) }
             val recipeList = categoryId?.let { recipeRepository.loadRecipesById(it) }
 

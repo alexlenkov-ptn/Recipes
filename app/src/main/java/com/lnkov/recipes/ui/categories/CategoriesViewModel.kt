@@ -5,9 +5,10 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.lnkov.recipes.MyApplication
+import androidx.lifecycle.viewModelScope
 import com.lnkov.recipes.data.RecipeRepository
 import com.lnkov.recipes.model.Category
+import kotlinx.coroutines.launch
 
 class CategoriesViewModel(application: Application) :
     AndroidViewModel(application) {
@@ -15,8 +16,6 @@ class CategoriesViewModel(application: Application) :
     init {
         Log.i("CategoriesViewModel", "CategoriesViewModel created")
     }
-
-    private val threadPool = (application as MyApplication).threadPool
 
     private val recipeRepository = RecipeRepository()
 
@@ -30,10 +29,9 @@ class CategoriesViewModel(application: Application) :
         get() = _categoryUiState
 
     fun loadCategories() {
-
         Log.d("CategoriesViewModel", "fun loadCategories()")
 
-        threadPool.execute() {
+        viewModelScope.launch {
             val categories = recipeRepository.loadCategories()
 
             _categoryUiState.postValue(
@@ -41,8 +39,8 @@ class CategoriesViewModel(application: Application) :
             )
 
             Log.d("CategoriesViewModel", "$categories")
-            Log.d("CategoriesViewModel", "Выполнение потока: ${Thread.currentThread().name}")
         }
+
     }
 
 }

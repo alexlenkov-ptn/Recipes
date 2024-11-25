@@ -5,6 +5,8 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import com.lnkov.recipes.RecipeApiService
 import com.lnkov.recipes.model.Category
 import com.lnkov.recipes.model.Recipe
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Call
@@ -19,75 +21,82 @@ class RecipeRepository {
         .addConverterFactory(Json.asConverterFactory(contentType))
         .build()
     private val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
+    private val dispatcher = Dispatchers.IO
 
-    fun loadCategories(): List<Category>? {
+    suspend fun loadCategories(): List<Category>? = withContext(dispatcher) {
+
         try {
             val call: Call<List<Category>> = service.getCategories()
             val response: Response<List<Category>> = call.execute()
 
-            return response.body()
+            response.body()
         } catch (e: Exception) {
             Log.d("RecipeRepository", "Error: $e")
 
-            return null
+            null
         }
     }
 
-    fun loadRecipesById(categoryId: Int): List<Recipe>? {
+    suspend fun loadRecipesById(categoryId: Int): List<Recipe>? = withContext(dispatcher) {
+
         try {
             val call: Call<List<Recipe>> = service.getRecipesById(categoryId)
             val response: Response<List<Recipe>> = call.execute()
 
-            return response.body()
+            response.body()
         } catch (e: Exception) {
             Log.d("RecipeRepository", "Error: $e")
 
-            return null
+            null
         }
     }
 
-    fun loadCategoryById(categoryId: Int): Category? {
+    suspend fun loadCategoryById(categoryId: Int): Category? = withContext(dispatcher) {
+
         try {
             val call: Call<Category> = service.getCategoryById(categoryId)
             val response: Response<Category> = call.execute()
 
-            return response.body()
+            response.body()
         } catch (e: Exception) {
             Log.d("RecipeRepository", "Error: $e")
 
-            return null
+            null
         }
+
     }
 
-    fun loadRecipeById(recipeId: Int): Recipe? {
+    suspend fun loadRecipeById(recipeId: Int): Recipe? = withContext(dispatcher) {
+
         try {
             val call: Call<Recipe> = service.getRecipeById(recipeId)
             val response: Response<Recipe> = call.execute()
 
-            return response.body()
+            response.body()
         } catch (e: Exception) {
             Log.d("RecipeRepository", "Error: $e")
 
-            return null
+            null
+
         }
     }
 
-    fun loadRecipesByIds(recipeIds: String): List<Recipe>? {
+    suspend fun loadRecipesByIds(recipeIds: String): List<Recipe>? = withContext(dispatcher) {
+
         Log.d("RecipeRepository", "recipeIds: $recipeIds")
+
 
         try {
             val call: Call<List<Recipe>> = service.getRecipesByIds(recipeIds)
             val response: Response<List<Recipe>> = call.execute()
             Log.d("RecipeRepository", "loadRecipesByIds: ${response.body()}")
 
-            return if (response.body() == null) emptyList()
+            if (response.body() == null) emptyList()
             else response.body()
         } catch (e: Exception) {
             Log.d("RecipeRepository", "Error: $e")
 
-            return null
+            null
         }
     }
-
-
 }
