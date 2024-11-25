@@ -17,7 +17,7 @@ class CategoriesViewModel(application: Application) :
         Log.i("CategoriesViewModel", "CategoriesViewModel created")
     }
 
-    private val recipeRepository = RecipeRepository()
+    private val recipeRepository = RecipeRepository(application)
 
     data class CategoriesUiState(
         val categories: List<Category>? = emptyList(),

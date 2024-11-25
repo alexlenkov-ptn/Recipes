@@ -1,6 +1,7 @@
 package com.lnkov.recipes.data
 
 import android.util.Log
+import androidx.room.Room
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.lnkov.recipes.RecipeApiService
 import com.lnkov.recipes.model.Category
@@ -22,6 +23,12 @@ class RecipeRepository {
         .build()
     private val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
     private val dispatcher = Dispatchers.IO
+
+    private val db = Room.databaseBuilder(
+        context = TODO(),
+        klass = AppDatabase::class.java,
+        name = "database"
+    )
 
     suspend fun loadCategories(): List<Category>? = withContext(dispatcher) {
 
