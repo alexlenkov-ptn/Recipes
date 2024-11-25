@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.navigation.safeargs.kotlin)
     alias(libs.plugins.kotlin.serialization)
     id("kotlin-parcelize")
+    id("com.google.devtools.ksp") version "2.0.21-1.0.25"
 }
 
 android {
@@ -76,4 +77,14 @@ dependencies {
     implementation(libs.retrofit2.kotlinx.serialization.converter)
 
     implementation(libs.glide)
+
+    implementation(libs.androidx.room.runtime)
+    // If this project only uses Java source, use the Java annotationProcessor
+    // No additional plugins are necessary
+    annotationProcessor(libs.androidx.room.compiler)
+
+    // If this project uses any Kotlin source, use Kotlin Symbol Processing (KSP)
+    // See Add the KSP plugin to your project
+    ksp(libs.androidx.room.compiler)
+
 }
