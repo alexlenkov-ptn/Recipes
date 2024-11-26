@@ -17,7 +17,7 @@ class CategoriesViewModel(application: Application) :
         Log.i("CategoriesViewModel", "CategoriesViewModel created")
     }
 
-    private val recipeRepository = RecipeRepository()
+    private val recipeRepository = RecipeRepository(application)
 
     data class CategoriesUiState(
         val categories: List<Category>? = emptyList(),
@@ -32,13 +32,20 @@ class CategoriesViewModel(application: Application) :
         Log.d("CategoriesViewModel", "fun loadCategories()")
 
         viewModelScope.launch {
-            val categories = recipeRepository.loadCategories()
+            recipeRepository.apply {
+                var categories: List<Category> = getCategoriesFromCache()
 
-            _categoryUiState.postValue(
-                categoryUiState.value?.copy(categories = categories)
-            )
+                if (categories.isEmpty()) {
+                    categories = loadCategories() ?: emptyList()
+                    loadCategoriesToCache(categories)
+                }
 
-            Log.d("CategoriesViewModel", "$categories")
+                _categoryUiState.postValue(
+                    categoryUiState.value?.copy(categories = categories)
+                )
+
+                Log.d("CategoriesViewModel", "$categories")
+            }
         }
 
     }
