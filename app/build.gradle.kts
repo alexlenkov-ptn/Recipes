@@ -83,8 +83,5 @@ dependencies {
     // No additional plugins are necessary
     annotationProcessor(libs.androidx.room.compiler)
 
-    // If this project uses any Kotlin source, use Kotlin Symbol Processing (KSP)
-    // See Add the KSP plugin to your project
     ksp(libs.androidx.room.compiler)
-
 }
