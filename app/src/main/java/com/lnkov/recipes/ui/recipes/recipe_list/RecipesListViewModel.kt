@@ -11,7 +11,6 @@ import com.lnkov.recipes.data.RecipeRepository
 import com.lnkov.recipes.model.Category
 import com.lnkov.recipes.model.Recipe
 import kotlinx.coroutines.launch
-import okio.IOException
 
 class RecipesListViewModel(
     application: Application
@@ -38,17 +37,26 @@ class RecipesListViewModel(
 
         viewModelScope.launch {
 
-            val category = categoryId?.let { recipeRepository.loadCategoryById(it) }
-            val recipeList = categoryId?.let { recipeRepository.loadRecipesById(it) }
+            recipeRepository.apply {
+                val category : Category? = categoryId?.let { getCategoryById(it) }
+                var recipeList : List<Recipe>? = categoryId?.let { getRecipesFromCache() }
 
-            _recipeListUiState.postValue(
-                recipeListUiState.value?.copy(
-                    category = category,
-                    drawableUrl = "${Constants.BASE_IMAGE_URL}${category?.imageUrl}",
-                    recipeList = recipeList
+//                category = categoryId?.let { loadCategoryById(it) }
+
+                if (recipeList == null) {
+                    recipeList = categoryId?.let { loadRecipesById(it) }
+
+                    loadRecipesToCache(recipeList)
+                }
+
+                _recipeListUiState.postValue(
+                    recipeListUiState.value?.copy(
+                        category = category,
+                        drawableUrl = "${Constants.BASE_IMAGE_URL}${category?.imageUrl}",
+                        recipeList = recipeList
+                    )
                 )
-            )
-
+            }
         }
     }
 }

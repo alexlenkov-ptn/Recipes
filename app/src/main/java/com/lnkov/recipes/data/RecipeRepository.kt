@@ -53,6 +53,18 @@ class RecipeRepository(context: Context) {
         db.categoryDao().addCategory(categories)
     }
 
+    suspend fun getCategoryById(categoryId : Int) : Category = withContext(dispatcher) {
+        db.categoryDao().getCategoryById(categoryId)
+    }
+
+    suspend fun getRecipesFromCache() : List<Recipe> = withContext(dispatcher) {
+        db.recipeDao().getAll()
+    }
+
+    suspend fun loadRecipesToCache(recipes: List<Recipe>?) = withContext(dispatcher) {
+        recipes?.let { db.recipeDao().addRecipes(it) }
+    }
+
     suspend fun loadRecipesById(categoryId: Int): List<Recipe>? = withContext(dispatcher) {
 
         try {
