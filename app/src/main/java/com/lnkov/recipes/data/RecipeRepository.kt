@@ -28,7 +28,7 @@ class RecipeRepository(context: Context) {
     private val db = Room.databaseBuilder(
         context = context,
         klass = AppDatabase::class.java,
-        name = "database"
+        name = Constants.DATABASE_NAME
     ).build()
 
     suspend fun loadCategories(): List<Category>? = withContext(dispatcher) {
