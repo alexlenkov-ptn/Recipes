@@ -17,13 +17,14 @@ class Converters {
         return Json.decodeFromString(str)
     }
 
-//    @TypeConverter
-//    fun fromListString(strList : List<String>): String {
-//        return strList.joinToString(separator = ",")
-//    }
-//
-//    @TypeConverter
-//    fun toListString(str : String) : List<String> {
-//        return str.split(",")
-//    }
+    @TypeConverter
+    fun fromListString(strList : List<String>): String {
+        return strList.joinToString(separator = "|")
+    }
+
+    @TypeConverter
+    fun toListString(str : String) : List<String> {
+        return str.split("|")
+    }
+
 }
