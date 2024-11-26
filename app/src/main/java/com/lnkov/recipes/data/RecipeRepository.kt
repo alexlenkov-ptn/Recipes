@@ -3,6 +3,8 @@ package com.lnkov.recipes.data
 import android.content.Context
 import android.util.Log
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.lnkov.recipes.RecipeApiService
 import com.lnkov.recipes.model.Category
@@ -15,6 +17,7 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 
+
 class RecipeRepository(context: Context) {
 
     private val contentType = "application/json".toMediaType()
@@ -25,11 +28,20 @@ class RecipeRepository(context: Context) {
     private val service: RecipeApiService = retrofit.create(RecipeApiService::class.java)
     private val dispatcher = Dispatchers.IO
 
+    val MIGRATION_2_3 = object : Migration(2, 3) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE RECIPE ADD COLUMN isFavorite INTEGER NOT NULL DEFAULT 0")
+        }
+    }
+
     private val db = Room.databaseBuilder(
         context = context,
         klass = AppDatabase::class.java,
         name = "database"
-    ).build()
+    )
+        .addMigrations(MIGRATION_2_3)
+        .build()
+
 
     suspend fun loadCategories(): List<Category>? = withContext(dispatcher) {
 
