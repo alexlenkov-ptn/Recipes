@@ -38,14 +38,16 @@ class RecipesListViewModel(
         viewModelScope.launch {
 
             recipeRepository.apply {
-                val category : Category? = categoryId?.let { getCategoryById(it) }
-                var recipeList : List<Recipe>? = categoryId?.let { getRecipesFromCache() }
+                val category: Category? = categoryId?.let { getCategoryById(it) }
+                var recipeList: List<Recipe>? = categoryId?.let { getRecipesFromCache() }
 
 //                category = categoryId?.let { loadCategoryById(it) }
 
-                if (recipeList == null) {
+                if (recipeList.isNullOrEmpty() ||
+                    category?.id != recipeListUiState.value?.category?.id
+                ) {
+                    deleteRecipes()
                     recipeList = categoryId?.let { loadRecipesById(it) }
-
                     loadRecipesToCache(recipeList)
                 }
 
