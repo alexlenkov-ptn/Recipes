@@ -83,21 +83,6 @@ class RecipeRepository(context: Context) {
         }
     }
 
-    suspend fun loadCategoryById(categoryId: Int): Category? = withContext(dispatcher) {
-
-        try {
-            val call: Call<Category> = service.getCategoryById(categoryId)
-            val response: Response<Category> = call.execute()
-
-            response.body()
-        } catch (e: Exception) {
-            Log.d("RecipeRepository", "Error: $e")
-
-            null
-        }
-
-    }
-
     suspend fun loadRecipeById(recipeId: Int): Recipe? = withContext(dispatcher) {
 
         try {
