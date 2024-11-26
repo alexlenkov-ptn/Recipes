@@ -41,8 +41,6 @@ class RecipesListViewModel(
                 val category: Category? = categoryId?.let { getCategoryById(it) }
                 var recipeList: List<Recipe>? = categoryId?.let { getRecipesFromCache() }
 
-//                category = categoryId?.let { loadCategoryById(it) }
-
                 if (recipeList.isNullOrEmpty() ||
                     category?.id != recipeListUiState.value?.category?.id
                 ) {
