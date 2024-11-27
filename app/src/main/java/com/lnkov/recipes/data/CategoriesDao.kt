@@ -1,4 +1,4 @@
-package com.lnkov.recipes.ui.categories
+package com.lnkov.recipes.data
 
 import androidx.room.Dao
 import androidx.room.Insert

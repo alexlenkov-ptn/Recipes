@@ -39,13 +39,9 @@ class RecipesListViewModel(
 
             recipeRepository.apply {
                 val category: Category? = categoryId?.let { getCategoryById(it) }
-
                 var recipeList: List<Recipe>? = categoryId?.let { getAllByCategoryId(categoryId) }
 
-                if (recipeList.isNullOrEmpty() ||
-                    category?.id != recipeListUiState.value?.category?.id
-                ) {
-
+                if (recipeList.isNullOrEmpty()) {
                     recipeList = categoryId?.let { loadRecipesById(it) }
 
                     recipeList?.forEach {
