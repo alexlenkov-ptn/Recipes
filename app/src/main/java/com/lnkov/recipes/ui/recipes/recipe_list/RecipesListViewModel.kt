@@ -39,13 +39,21 @@ class RecipesListViewModel(
 
             recipeRepository.apply {
                 val category: Category? = categoryId?.let { getCategoryById(it) }
-                var recipeList: List<Recipe>? = categoryId?.let { getRecipesFromCache() }
+
+                var recipeList: List<Recipe>? = categoryId?.let { getAllByCategoryId(categoryId) }
 
                 if (recipeList.isNullOrEmpty() ||
                     category?.id != recipeListUiState.value?.category?.id
                 ) {
-                    deleteRecipes()
+
                     recipeList = categoryId?.let { loadRecipesById(it) }
+
+                    recipeList?.forEach {
+                        if (categoryId != null) {
+                            it.categoryId = categoryId
+                        }
+                    }
+
                     loadRecipesToCache(recipeList)
                 }
 

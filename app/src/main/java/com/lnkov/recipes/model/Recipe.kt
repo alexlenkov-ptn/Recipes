@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
 @Parcelize
 @Serializable
 @Entity
-data class Recipe (
+data class Recipe(
     @PrimaryKey
     val id: Int,
 
@@ -25,5 +25,8 @@ data class Recipe (
 
     @ColumnInfo(name = "imageUrl")
     val imageUrl: String,
-) : Parcelable
 
+    @ColumnInfo(name = "categoryId")
+    var categoryId: Int = -1,
+
+    ) : Parcelable

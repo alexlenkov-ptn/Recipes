@@ -7,7 +7,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.lnkov.recipes.model.Recipe
-import android.graphics.drawable.Drawable
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.lnkov.recipes.data.Constants
@@ -69,24 +68,11 @@ class RecipeViewModel(
         return HashSet(sharedPreferences?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
     }
 
-    private fun getDrawable(recipe: Recipe?): Drawable? {
-        val drawableUrl = recipe?.imageUrl
-        return try {
-            Drawable.createFromStream(
-                getApplication<Application>().assets.open(drawableUrl ?: ""),
-                null
-            )
-        } catch (e: Exception) {
-            Log.d("!!!", "Image not found: $drawableUrl")
-            null
-        }
-    }
-
-
     fun loadRecipe(recipeId: Int?) {
 
         viewModelScope.launch {
-            val recipe = recipeId?.let { recipeRepository.loadRecipeById(recipeId) }
+            val recipe = recipeId?.let { recipeRepository.getRecipeByRecipeId(recipeId) }
+
             var isLoaded = false
 
             if (recipe != null) {

@@ -29,7 +29,9 @@ class RecipeRepository(context: Context) {
         context = context,
         klass = AppDatabase::class.java,
         name = Constants.DATABASE_NAME
-    ).build()
+    )
+        .fallbackToDestructiveMigration()
+        .build()
 
     suspend fun loadCategories(): List<Category>? = withContext(dispatcher) {
 
@@ -59,6 +61,14 @@ class RecipeRepository(context: Context) {
 
     suspend fun getRecipesFromCache(): List<Recipe> = withContext(dispatcher) {
         db.recipeDao().getAll()
+    }
+
+    suspend fun getAllByCategoryId(categoryId: Int) : List<Recipe> = withContext(dispatcher) {
+        db.recipeDao().getAllByCategoryId(categoryId)
+    }
+
+    suspend fun getRecipeByRecipeId(recipeId: Int) : Recipe = withContext(dispatcher) {
+        db.recipeDao().getRecipeByRecipeId(recipeId)
     }
 
     suspend fun loadRecipesToCache(recipes: List<Recipe>?) = withContext(dispatcher) {
