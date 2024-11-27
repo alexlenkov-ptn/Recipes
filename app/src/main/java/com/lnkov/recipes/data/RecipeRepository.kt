@@ -29,7 +29,9 @@ class RecipeRepository(context: Context) {
         context = context,
         klass = AppDatabase::class.java,
         name = Constants.DATABASE_NAME
-    ).build()
+    )
+        .fallbackToDestructiveMigration()
+        .build()
 
     suspend fun loadCategories(): List<Category>? = withContext(dispatcher) {
 
@@ -53,6 +55,30 @@ class RecipeRepository(context: Context) {
         db.categoryDao().addCategory(categories)
     }
 
+    suspend fun getCategoryById(categoryId: Int): Category = withContext(dispatcher) {
+        db.categoryDao().getCategoryById(categoryId)
+    }
+
+    suspend fun getRecipesFromCache(): List<Recipe> = withContext(dispatcher) {
+        db.recipeDao().getAll()
+    }
+
+    suspend fun getAllByCategoryId(categoryId: Int) : List<Recipe> = withContext(dispatcher) {
+        db.recipeDao().getAllByCategoryId(categoryId)
+    }
+
+    suspend fun getRecipeByRecipeId(recipeId: Int) : Recipe = withContext(dispatcher) {
+        db.recipeDao().getRecipeByRecipeId(recipeId)
+    }
+
+    suspend fun loadRecipesToCache(recipes: List<Recipe>?) = withContext(dispatcher) {
+        recipes?.let { db.recipeDao().addRecipes(it) }
+    }
+
+    suspend fun deleteRecipes() = withContext(dispatcher) {
+        db.recipeDao().deleteRecipes()
+    }
+
     suspend fun loadRecipesById(categoryId: Int): List<Recipe>? = withContext(dispatcher) {
 
         try {
@@ -65,21 +91,6 @@ class RecipeRepository(context: Context) {
 
             null
         }
-    }
-
-    suspend fun loadCategoryById(categoryId: Int): Category? = withContext(dispatcher) {
-
-        try {
-            val call: Call<Category> = service.getCategoryById(categoryId)
-            val response: Response<Category> = call.execute()
-
-            response.body()
-        } catch (e: Exception) {
-            Log.d("RecipeRepository", "Error: $e")
-
-            null
-        }
-
     }
 
     suspend fun loadRecipeById(recipeId: Int): Recipe? = withContext(dispatcher) {
