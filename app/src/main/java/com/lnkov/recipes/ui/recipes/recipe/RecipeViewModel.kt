@@ -1,8 +1,6 @@
 package com.lnkov.recipes.ui.recipes.recipe
 
 import android.app.Application
-import android.content.Context
-import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,8 +10,6 @@ import androidx.lifecycle.viewModelScope
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.data.RecipeRepository
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-
 
 class RecipeViewModel(
     application: Application,
@@ -22,11 +18,6 @@ class RecipeViewModel(
     init {
         Log.i("RecipeViewModel", "RecipeViewModel created")
     }
-
-//    private val sharedPreferences: SharedPreferences = application.getSharedPreferences(
-//        Constants.FAVORITES_KEY,
-//        Context.MODE_PRIVATE,
-//    )
 
     data class RecipeUiState(
         val recipe: Recipe? = null,
