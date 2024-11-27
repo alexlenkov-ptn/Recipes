@@ -100,7 +100,7 @@ class RecipeFragment : Fragment() {
                 }
             )
 
-            ibIcHeart.setOnClickListener { viewModel.onFavoritesClicked(args.recipeId.toString()) }
+            ibIcHeart.setOnClickListener { viewModel.onFavoritesClicked(args.recipeId) }
             rvRecipeIngredients.addItemDecoration(decorator)
             rvRecipeCookingMethod.addItemDecoration(decorator)
 

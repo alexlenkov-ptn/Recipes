@@ -71,9 +71,18 @@ class RecipeRepository(context: Context) {
         db.recipeDao().getRecipeByRecipeId(recipeId)
     }
 
+    suspend fun getFavoritesRecipes() : List<Recipe> = withContext(dispatcher) {
+        db.recipeDao().getFavoritesRecipes()
+    }
+
     suspend fun loadRecipesToCache(recipes: List<Recipe>?) = withContext(dispatcher) {
         recipes?.let { db.recipeDao().addRecipes(it) }
     }
+
+    suspend fun loadRecipeToCache(recipe: Recipe) = withContext(dispatcher) {
+        db.recipeDao().addRecipe(recipe)
+    }
+
 
     suspend fun deleteRecipes() = withContext(dispatcher) {
         db.recipeDao().deleteRecipes()

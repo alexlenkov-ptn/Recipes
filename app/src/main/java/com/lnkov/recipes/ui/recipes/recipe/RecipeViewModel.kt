@@ -12,19 +12,21 @@ import androidx.lifecycle.viewModelScope
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.data.RecipeRepository
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class RecipeViewModel(
     application: Application,
 ) : AndroidViewModel(application) {
+
     init {
         Log.i("RecipeViewModel", "RecipeViewModel created")
     }
 
-    private val sharedPreferences: SharedPreferences = application.getSharedPreferences(
-        Constants.FAVORITES_KEY,
-        Context.MODE_PRIVATE,
-    )
+//    private val sharedPreferences: SharedPreferences = application.getSharedPreferences(
+//        Constants.FAVORITES_KEY,
+//        Context.MODE_PRIVATE,
+//    )
 
     data class RecipeUiState(
         val recipe: Recipe? = null,
@@ -41,31 +43,31 @@ class RecipeViewModel(
 
     private val recipeRepository = RecipeRepository(application)
 
-    fun onFavoritesClicked(recipeIdString: String) {
-        val favoriteSet: HashSet<String> =
-            HashSet(sharedPreferences?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
+    fun onFavoritesClicked(recipeId: Int?) {
+        Log.d("RecipeViewModel", "recipe id: $recipeId")
 
-        Log.d("RecipeViewModel", "$recipeIdString")
+        viewModelScope.launch {
+            val recipe = recipeId?.let { recipeRepository.getRecipeByRecipeId(recipeId) }
 
-        if (favoriteSet.contains(recipeIdString)) {
-            favoriteSet.remove(recipeIdString)
-            _recipeUiState.value = recipeUiState.value?.copy(isFavorite = false)
-        } else {
-            favoriteSet.add(recipeIdString)
-            _recipeUiState.value = recipeUiState.value?.copy(isFavorite = true)
+            Log.d("RecipeViewModel", "$recipe")
+
+            if (recipe?.isFavorite == false) recipe.isFavorite = true
+            else recipe?.isFavorite = false
+
+            Log.d("RecipeViewModel", "recipe isFavorite: ${recipe?.isFavorite}")
+
+            _recipeUiState.value =
+                recipeUiState.value?.copy(isFavorite = recipe?.isFavorite ?: false)
+
+            recipe?.let { recipeRepository.loadRecipeToCache(it) }
+
+            Log.d("RecipeViewModel", "favorite state: ${_recipeUiState.value?.isFavorite}")
         }
-
-        sharedPreferences.edit().putStringSet(Constants.FAVORITES_KEY, favoriteSet).apply()
-
     }
 
     fun updateNumberOfPortions(count: Int) {
         _recipeUiState.value = recipeUiState.value?.copy(portionsCount = count)
         Log.d("!!!", "updateNumberOfPortions: ${recipeUiState.value?.portionsCount}")
-    }
-
-    private fun getFavorites(): Set<String> {
-        return HashSet(sharedPreferences?.getStringSet(Constants.FAVORITES_KEY, emptySet()))
     }
 
     fun loadRecipe(recipeId: Int?) {
@@ -80,12 +82,14 @@ class RecipeViewModel(
             }
 
             _recipeUiState.postValue(
-                recipeUiState.value?.copy(
-                    recipe = recipe,
-                    isFavorite = getFavorites().contains(recipeId.toString()),
-                    drawableUrl = "${Constants.BASE_IMAGE_URL}${recipe?.imageUrl}",
-                    isLoaded = isLoaded
-                )
+                recipe?.isFavorite?.let {
+                    recipeUiState.value?.copy(
+                        recipe = recipe,
+                        isFavorite = it,
+                        drawableUrl = "${Constants.BASE_IMAGE_URL}${recipe.imageUrl}",
+                        isLoaded = isLoaded
+                    )
+                }
             )
 
         }
