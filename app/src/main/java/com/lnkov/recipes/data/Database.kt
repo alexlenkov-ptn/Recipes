@@ -7,7 +7,7 @@ import com.lnkov.recipes.Converters
 import com.lnkov.recipes.model.Category
 import com.lnkov.recipes.model.Recipe
 
-@Database(entities = [Category::class, Recipe::class], version = 3)
+@Database(entities = [Category::class, Recipe::class], version = 4)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 

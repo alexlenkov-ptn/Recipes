@@ -1,14 +1,11 @@
 package com.lnkov.recipes.ui.recipes.favorites
 
 import android.app.Application
-import android.content.Context
-import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.data.RecipeRepository
 import com.lnkov.recipes.model.Recipe
 import kotlinx.coroutines.launch
