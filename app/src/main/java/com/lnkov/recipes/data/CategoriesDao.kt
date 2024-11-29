@@ -1,4 +1,4 @@
-package com.lnkov.recipes.ui.categories
+package com.lnkov.recipes.data
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -13,7 +13,7 @@ interface CategoriesDao {
     fun getAll(): List<Category>
 
     @Query("SELECT * FROM Category WHERE id == :categoryId")
-    fun getCategoryById(categoryId : Int) : Category
+    fun getCategoryById(categoryId: Int): Category
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addCategory(categories: List<Category>)

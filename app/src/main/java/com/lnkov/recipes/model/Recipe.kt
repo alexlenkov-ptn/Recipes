@@ -29,4 +29,7 @@ data class Recipe(
     @ColumnInfo(name = "categoryId")
     var categoryId: Int = -1,
 
-    ) : Parcelable
+    @ColumnInfo(name = "isFavorite")
+    var isFavorite: Boolean = false
+
+) : Parcelable
