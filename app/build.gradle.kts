@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     id("kotlin-parcelize")
     id("com.google.devtools.ksp") version "2.0.21-1.0.25"
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -85,4 +86,7 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
 
     ksp(libs.androidx.room.compiler)
+
+    ksp(libs.hilt.android.compiler)
+    implementation(libs.hilt.android)
 }
