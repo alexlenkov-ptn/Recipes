@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.navigation.safeargs.kotlin)
     alias(libs.plugins.kotlin.serialization)
     id("kotlin-parcelize")
-    id("com.google.devtools.ksp") version "2.0.21-1.0.28"
+    alias(libs.plugins.google.devtools.ksp)
     id("com.google.dagger.hilt.android")
 }
 
