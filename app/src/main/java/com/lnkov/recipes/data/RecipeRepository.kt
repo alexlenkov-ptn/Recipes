@@ -4,16 +4,20 @@ import android.util.Log
 import com.lnkov.recipes.RecipeApiService
 import com.lnkov.recipes.model.Category
 import com.lnkov.recipes.model.Recipe
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Response
+import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class RecipeRepository(
+class RecipeRepository @Inject constructor(
     private val appDatabase: AppDatabase,
     private val service: RecipeApiService,
-    private val dispatcher: CoroutineContext,
 ) {
+
+    private val dispatcher : CoroutineContext = Dispatchers.IO
 
     suspend fun loadCategories(): List<Category>? = withContext(dispatcher) {
 

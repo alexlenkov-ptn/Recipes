@@ -4,8 +4,8 @@ plugins {
     alias(libs.plugins.navigation.safeargs.kotlin)
     alias(libs.plugins.kotlin.serialization)
     id("kotlin-parcelize")
-    id("com.google.devtools.ksp") version "2.0.21-1.0.25"
-    alias(libs.plugins.dagger.hilt.android)
+    id("com.google.devtools.ksp") version "2.0.21-1.0.28"
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -46,6 +46,10 @@ android {
 }
 
 dependencies {
+
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.fragment.ktx)
@@ -86,7 +90,4 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
 
     ksp(libs.androidx.room.compiler)
-
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
 }
