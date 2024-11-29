@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.lnkov.recipes.R
+import com.lnkov.recipes.RecipeApplication
 import com.lnkov.recipes.databinding.FragmentRecipesListBinding
 
 class RecipesListFragment : Fragment() {
@@ -21,7 +21,15 @@ class RecipesListFragment : Fragment() {
 
     private val args: RecipesListFragmentArgs by navArgs()
 
-    private val viewModel: RecipesListViewModel by viewModels()
+    private lateinit var viewModel: RecipesListViewModel
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val appContainer = (requireActivity().application as RecipeApplication).appContainer
+        viewModel = appContainer.recipesViewModelFactory.create()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -9,11 +9,11 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.Toast
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.lnkov.recipes.R
+import com.lnkov.recipes.RecipeApplication
 import com.lnkov.recipes.databinding.FragmentRecipeBinding
 
 class RecipeFragment : Fragment() {
@@ -21,8 +21,16 @@ class RecipeFragment : Fragment() {
     private lateinit var ingredientsListAdapter: IngredientsAdapter
     private lateinit var methodAdapter: MethodAdapter
 
-    private val viewModel: RecipeViewModel by viewModels()
+    private lateinit var viewModel: RecipeViewModel
+
     private val args: RecipeFragmentArgs by navArgs()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val appContainer = (requireActivity().application as RecipeApplication).appContainer
+        viewModel = appContainer.recipeViewModelFactory.create()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

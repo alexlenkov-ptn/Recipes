@@ -1,20 +1,17 @@
 package com.lnkov.recipes.ui.recipes.favorites
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lnkov.recipes.data.RecipeRepository
 import com.lnkov.recipes.model.Recipe
 import kotlinx.coroutines.launch
 
 class FavoritesViewModel(
-    application: Application
-) : AndroidViewModel(application) {
-
-    private val recipeRepository = RecipeRepository(application)
+    private val recipeRepository: RecipeRepository,
+) : ViewModel() {
 
     private val _favoriteUiState =
         MutableLiveData<FavoritesUiState>(FavoritesUiState())

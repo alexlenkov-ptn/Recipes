@@ -1,19 +1,18 @@
 package com.lnkov.recipes.ui.recipes.recipe
 
-import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.lnkov.recipes.model.Recipe
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.data.RecipeRepository
 import kotlinx.coroutines.launch
 
 class RecipeViewModel(
-    application: Application,
-) : AndroidViewModel(application) {
+    private val recipeRepository: RecipeRepository,
+) : ViewModel() {
 
     init {
         Log.i("RecipeViewModel", "RecipeViewModel created")
@@ -31,8 +30,6 @@ class RecipeViewModel(
 
     val recipeUiState: LiveData<RecipeUiState>
         get() = _recipeUiState
-
-    private val recipeRepository = RecipeRepository(application)
 
     fun onFavoritesClicked(recipeId: Int?) {
         Log.d("RecipeViewModel", "recipe id: $recipeId")

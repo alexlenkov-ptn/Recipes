@@ -1,10 +1,9 @@
 package com.lnkov.recipes.ui.recipes.recipe_list
 
-import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.data.RecipeRepository
@@ -13,8 +12,8 @@ import com.lnkov.recipes.model.Recipe
 import kotlinx.coroutines.launch
 
 class RecipesListViewModel(
-    application: Application
-) : AndroidViewModel(application) {
+    private val recipeRepository: RecipeRepository,
+) : ViewModel() {
 
     init {
         Log.i("RecipeListViewModel", "RecipeListViewModel created")
@@ -30,8 +29,6 @@ class RecipesListViewModel(
         val drawableUrl: String? = "",
         val recipeList: List<Recipe>? = emptyList(),
     )
-
-    private val recipeRepository = RecipeRepository(application)
 
     fun loadCategory(categoryId: Int?) {
 
