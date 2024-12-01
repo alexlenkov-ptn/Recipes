@@ -2,18 +2,22 @@ package com.lnkov.recipes.data
 
 import android.util.Log
 import com.lnkov.recipes.RecipeApiService
+import com.lnkov.recipes.di.IoDispatcher
 import com.lnkov.recipes.model.Category
 import com.lnkov.recipes.model.Recipe
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Response
-import kotlin.coroutines.CoroutineContext
+import javax.inject.Inject
 
-class RecipeRepository(
-    private val appDatabase: AppDatabase,
+class RecipeRepository @Inject constructor(
     private val service: RecipeApiService,
-    private val dispatcher: CoroutineContext,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher,
+    private val recipeDao: RecipesDao,
+    private val categoryDao: CategoriesDao,
 ) {
+
 
     suspend fun loadCategories(): List<Category>? = withContext(dispatcher) {
 
@@ -30,35 +34,35 @@ class RecipeRepository(
     }
 
     suspend fun getCategoriesFromCache(): List<Category> = withContext(dispatcher) {
-        appDatabase.categoryDao().getAll()
+        categoryDao.getAll()
     }
 
     suspend fun loadCategoriesToCache(categories: List<Category>) = withContext(dispatcher) {
-        appDatabase.categoryDao().addCategory(categories)
+        categoryDao.addCategory(categories)
     }
 
     suspend fun getCategoryById(categoryId: Int): Category = withContext(dispatcher) {
-        appDatabase.categoryDao().getCategoryById(categoryId)
+        categoryDao.getCategoryById(categoryId)
     }
 
     suspend fun getAllByCategoryId(categoryId: Int): List<Recipe> = withContext(dispatcher) {
-        appDatabase.recipeDao().getAllByCategoryId(categoryId)
+        recipeDao.getAllByCategoryId(categoryId)
     }
 
     suspend fun getRecipeByRecipeId(recipeId: Int): Recipe = withContext(dispatcher) {
-        appDatabase.recipeDao().getRecipeByRecipeId(recipeId)
+        recipeDao.getRecipeByRecipeId(recipeId)
     }
 
     suspend fun getFavoritesRecipes(): List<Recipe> = withContext(dispatcher) {
-        appDatabase.recipeDao().getFavoritesRecipes()
+        recipeDao.getFavoritesRecipes()
     }
 
     suspend fun loadRecipesToCache(recipes: List<Recipe>?) = withContext(dispatcher) {
-        recipes?.let { appDatabase.recipeDao().addRecipes(it) }
+        recipeDao.addRecipes(recipes ?: emptyList())
     }
 
     suspend fun loadRecipeToCache(recipe: Recipe) = withContext(dispatcher) {
-        appDatabase.recipeDao().addRecipe(recipe)
+        recipeDao.addRecipe(recipe)
     }
 
     suspend fun loadRecipesById(categoryId: Int): List<Recipe>? = withContext(dispatcher) {

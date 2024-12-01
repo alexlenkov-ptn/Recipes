@@ -7,28 +7,26 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.lnkov.recipes.R
-import com.lnkov.recipes.RecipeApplication
 import com.lnkov.recipes.databinding.FragmentRecipesListBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RecipesListFragment : Fragment() {
     private val binding by lazy { FragmentRecipesListBinding.inflate(layoutInflater) }
-
     private lateinit var recipesListAdapter: RecipesListAdapter
-
     private val args: RecipesListFragmentArgs by navArgs()
-
-    private lateinit var viewModel: RecipesListViewModel
-
+    private val viewModel: RecipesListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val appContainer = (requireActivity().application as RecipeApplication).appContainer
-        viewModel = appContainer.recipesViewModelFactory.create()
+//        val appContainer = (requireActivity().application as RecipeApplication).appContainer
+//        viewModel = appContainer.recipesViewModelFactory.create()
     }
 
     override fun onCreateView(

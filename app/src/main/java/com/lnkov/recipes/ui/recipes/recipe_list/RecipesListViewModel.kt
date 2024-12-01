@@ -9,9 +9,12 @@ import com.lnkov.recipes.data.Constants
 import com.lnkov.recipes.data.RecipeRepository
 import com.lnkov.recipes.model.Category
 import com.lnkov.recipes.model.Recipe
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RecipesListViewModel(
+@HiltViewModel
+class RecipesListViewModel @Inject constructor(
     private val recipeRepository: RecipeRepository,
 ) : ViewModel() {
 
