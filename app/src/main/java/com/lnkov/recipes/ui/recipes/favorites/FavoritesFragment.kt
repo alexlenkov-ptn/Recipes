@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.lnkov.recipes.R
-import com.lnkov.recipes.RecipeApplication
 import com.lnkov.recipes.databinding.FragmentFavoritesBinding
 import com.lnkov.recipes.ui.recipes.recipe_list.RecipesListAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,13 +19,6 @@ class FavoritesFragment : Fragment() {
     private val binding by lazy { FragmentFavoritesBinding.inflate(layoutInflater) }
     private lateinit var recipesListAdapter: RecipesListAdapter
     private val viewModel: FavoritesViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-//        val appContainer = (requireActivity().application as RecipeApplication).appContainer
-//        viewModel = appContainer.favoritesViewModelFactory.create()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

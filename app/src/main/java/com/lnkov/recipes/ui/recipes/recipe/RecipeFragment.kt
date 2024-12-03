@@ -14,7 +14,6 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.lnkov.recipes.R
-import com.lnkov.recipes.RecipeApplication
 import com.lnkov.recipes.databinding.FragmentRecipeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,13 +24,6 @@ class RecipeFragment : Fragment() {
     private lateinit var methodAdapter: MethodAdapter
     private val viewModel: RecipeViewModel by viewModels()
     private val args: RecipeFragmentArgs by navArgs()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-//        val appContainer = (requireActivity().application as RecipeApplication).appContainer
-//        viewModel = appContainer.recipeViewModelFactory.create()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
